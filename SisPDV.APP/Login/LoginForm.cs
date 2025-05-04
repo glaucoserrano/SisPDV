@@ -14,7 +14,7 @@ namespace SisPDV.APP.Login
 
         private async void btnLogin_Click(object sender, EventArgs e)
         {
-            var userAuth = await _userService.AuthenticateUserAsync(login: txtUser.Text, password: txtPassword.Text);
+            var userAuth = await _userService.AuthenticateUserAsync(login: txtUser.Text.ToLower(), password: txtPassword.Text.ToLower());
 
             if(userAuth == null)
             {

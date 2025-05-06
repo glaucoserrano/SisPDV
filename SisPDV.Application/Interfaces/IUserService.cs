@@ -9,7 +9,8 @@ namespace SisPDV.Application.Interfaces
         Task CreateUserAsync(UserRegisterDTO request);
 
         Task<List<UserSearchResponseDTO>> FilterUsersAsync(string? name, string? login, bool active);
-        Task<User?> GetById(int id);
+        Task<User?> GetById(int? id);
         Task UpdateUserAsync(UserUpdateDTO request);
+        Task ChangeUserPassword(string login, string oldPassword, string newPassword);
     }
 }

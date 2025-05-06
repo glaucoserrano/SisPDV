@@ -34,7 +34,7 @@ namespace SisPDV.APP.Login
                     }
 
                     _currentUserService.CurrentUser = userAuth!.Name;
-                    var mainForm = new MainForm(userId: userAuth?.Id, userName: userAuth?.Name, _userService);
+                    var mainForm = new MainForm(userId: userAuth?.Id, userName: userAuth?.Name, userService: _userService);
                     mainForm.WindowState = FormWindowState.Maximized;
 
                     mainForm.FormClosed += (s, e) => this.Close();

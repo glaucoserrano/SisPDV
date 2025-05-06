@@ -39,10 +39,16 @@ namespace SisPDV.APP.Main
             return config?.numberPDV.ToString() ?? "Não configurado";
         }
 
-        private void usuáriosToolStripMenuItem_Click(object sender, EventArgs e)
+        private void MenuItemConfigUser_Click(object sender, EventArgs e)
         {
             var registerUser = new UserAddForm(_userService);
             registerUser.Show();
+        }
+
+        private void MenuItemConfigChargePassword_Click(object sender, EventArgs e)
+        {
+            var changeUserPassword = new UserChangePassword(_userID, _userService);
+            changeUserPassword.Show();
         }
     }
 }

@@ -28,6 +28,34 @@ namespace SisPDV.Application.Services
                 user.Active);
         }
 
+        public async Task ChangeUserPassword(string login, string oldPassword, string newPassword)
+        {
+            var user = await _context.users.FirstOrDefaultAsync(user => user.Login == login);
+
+            if (user == null)
+                throw new Exception("Usuário não encontrado");
+
+            if (!PasswordHelper.Verify(user.Password, oldPassword))
+                throw new Exception("Senha atual incorreta");
+
+            user.Password = PasswordHelper.ComputeSha256Hash(newPassword);
+
+            await using var transaction = await _context.Database.BeginTransactionAsync();
+
+            try
+            {
+                _context.users.Update(user);
+                await _context.SaveChangesAsync();
+
+                await transaction.CommitAsync();
+            }
+            catch
+            {
+                await transaction.RollbackAsync();
+                throw;
+            }
+        }   
+
         public async Task CreateUserAsync(UserRegisterDTO request)
         {
             using var transactions = await _context.Database.BeginTransactionAsync();
@@ -86,7 +114,7 @@ namespace SisPDV.Application.Services
             return result;
         }
 
-        public async Task<User?> GetById(int id)
+        public async Task<User?> GetById(int? id)
         {
             return await _context.users
                 .FirstOrDefaultAsync(user => user.Id == id);

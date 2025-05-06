@@ -31,12 +31,13 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             statusStrip = new StatusStrip();
             sslUser = new ToolStripStatusLabel();
-            menuConfig = new MenuStrip();
-            configuraçõesToolStripMenuItem = new ToolStripMenuItem();
-            usuáriosToolStripMenuItem = new ToolStripMenuItem();
+            manuMain = new MenuStrip();
+            menuItemConfig = new ToolStripMenuItem();
+            MenuItemConfigUser = new ToolStripMenuItem();
             iconMenuItem1 = new FontAwesome.Sharp.IconMenuItem();
+            MenuItemConfigChargePassword = new ToolStripMenuItem();
             statusStrip.SuspendLayout();
-            menuConfig.SuspendLayout();
+            manuMain.SuspendLayout();
             SuspendLayout();
             // 
             // statusStrip
@@ -53,29 +54,29 @@
             sslUser.Name = "sslUser";
             sslUser.Size = new Size(0, 17);
             // 
-            // menuConfig
+            // manuMain
             // 
-            menuConfig.Items.AddRange(new ToolStripItem[] { configuraçõesToolStripMenuItem });
-            menuConfig.Location = new Point(0, 0);
-            menuConfig.Name = "menuConfig";
-            menuConfig.Size = new Size(800, 24);
-            menuConfig.TabIndex = 1;
-            menuConfig.Text = "Configurações";
+            manuMain.Items.AddRange(new ToolStripItem[] { menuItemConfig });
+            manuMain.Location = new Point(0, 0);
+            manuMain.Name = "manuMain";
+            manuMain.Size = new Size(800, 24);
+            manuMain.TabIndex = 1;
+            manuMain.Text = "Configurações";
             // 
-            // configuraçõesToolStripMenuItem
+            // menuItemConfig
             // 
-            configuraçõesToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { usuáriosToolStripMenuItem });
-            configuraçõesToolStripMenuItem.Name = "configuraçõesToolStripMenuItem";
-            configuraçõesToolStripMenuItem.Size = new Size(96, 20);
-            configuraçõesToolStripMenuItem.Text = "Configurações";
-            configuraçõesToolStripMenuItem.TextImageRelation = TextImageRelation.TextBeforeImage;
+            menuItemConfig.DropDownItems.AddRange(new ToolStripItem[] { MenuItemConfigUser, MenuItemConfigChargePassword });
+            menuItemConfig.Name = "menuItemConfig";
+            menuItemConfig.Size = new Size(96, 20);
+            menuItemConfig.Text = "Configurações";
+            menuItemConfig.TextImageRelation = TextImageRelation.TextBeforeImage;
             // 
-            // usuáriosToolStripMenuItem
+            // MenuItemConfigUser
             // 
-            usuáriosToolStripMenuItem.Name = "usuáriosToolStripMenuItem";
-            usuáriosToolStripMenuItem.Size = new Size(180, 22);
-            usuáriosToolStripMenuItem.Text = "Usuários";
-            usuáriosToolStripMenuItem.Click += usuáriosToolStripMenuItem_Click;
+            MenuItemConfigUser.Name = "MenuItemConfigUser";
+            MenuItemConfigUser.Size = new Size(180, 22);
+            MenuItemConfigUser.Text = "Usuários";
+            MenuItemConfigUser.Click += MenuItemConfigUser_Click;
             // 
             // iconMenuItem1
             // 
@@ -86,6 +87,13 @@
             iconMenuItem1.Size = new Size(32, 19);
             iconMenuItem1.Text = "iconMenuItem1";
             // 
+            // MenuItemConfigChargePassword
+            // 
+            MenuItemConfigChargePassword.Name = "MenuItemConfigChargePassword";
+            MenuItemConfigChargePassword.Size = new Size(180, 22);
+            MenuItemConfigChargePassword.Text = "Alterar Senha";
+            MenuItemConfigChargePassword.Click += MenuItemConfigChargePassword_Click;
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -95,16 +103,16 @@
             BackgroundImageLayout = ImageLayout.Center;
             ClientSize = new Size(800, 450);
             Controls.Add(statusStrip);
-            Controls.Add(menuConfig);
+            Controls.Add(manuMain);
             FormBorderStyle = FormBorderStyle.FixedDialog;
-            MainMenuStrip = menuConfig;
+            MainMenuStrip = manuMain;
             Name = "MainForm";
             Text = "MainForm";
             WindowState = FormWindowState.Maximized;
             statusStrip.ResumeLayout(false);
             statusStrip.PerformLayout();
-            menuConfig.ResumeLayout(false);
-            menuConfig.PerformLayout();
+            manuMain.ResumeLayout(false);
+            manuMain.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -113,9 +121,10 @@
 
         private StatusStrip statusStrip;
         private ToolStripStatusLabel sslUser;
-        private MenuStrip menuConfig;
-        private ToolStripMenuItem configuraçõesToolStripMenuItem;
+        private MenuStrip manuMain;
+        private ToolStripMenuItem menuItemConfig;
         private FontAwesome.Sharp.IconMenuItem iconMenuItem1;
-        private ToolStripMenuItem usuáriosToolStripMenuItem;
+        private ToolStripMenuItem MenuItemConfigUser;
+        private ToolStripMenuItem MenuItemConfigChargePassword;
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using SisPDV.Infrastructure.Persistence;
+using SisPDV.Infrastructure.Service;
 
 namespace SisPDV.Infrastructure.Factory
 {
@@ -12,8 +13,9 @@ namespace SisPDV.Infrastructure.Factory
             var connectionString = "Host=localhost;Port=5432;Database=SisPDV;Username=postgres;Password=postgres";
 
             optionBuilder.UseNpgsql(connectionString);
+            var currentUserService = new CurrentUserService { CurrentUser = "MigrationTool" };
 
-            return new PDVDbContext(optionBuilder.Options);
+            return new PDVDbContext(optionBuilder.Options,currentUserService);
         }
     }
 }

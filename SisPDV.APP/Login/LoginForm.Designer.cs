@@ -61,7 +61,7 @@ namespace SisPDV.APP.Login
             mainPanel.RowCount = 1;
             mainPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
             mainPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            mainPanel.Size = new Size(684, 228);
+            mainPanel.Size = new Size(581, 172);
             mainPanel.TabIndex = 0;
             // 
             // leftPanel
@@ -74,11 +74,10 @@ namespace SisPDV.APP.Login
             leftPanel.Controls.Add(txtUser);
             leftPanel.Controls.Add(iconUser);
             leftPanel.Controls.Add(lblTitle);
-            leftPanel.Dock = DockStyle.Fill;
             leftPanel.Location = new Point(3, 3);
             leftPanel.Name = "leftPanel";
             leftPanel.Padding = new Padding(40);
-            leftPanel.Size = new Size(336, 222);
+            leftPanel.Size = new Size(284, 166);
             leftPanel.TabIndex = 1;
             // 
             // btnClean
@@ -92,7 +91,7 @@ namespace SisPDV.APP.Login
             btnClean.IconFont = IconFont.Auto;
             btnClean.IconSize = 16;
             btnClean.ImageAlign = ContentAlignment.MiddleLeft;
-            btnClean.Location = new Point(165, 190);
+            btnClean.Location = new Point(193, 124);
             btnClean.Name = "btnClean";
             btnClean.Size = new Size(75, 23);
             btnClean.TabIndex = 6;
@@ -111,7 +110,7 @@ namespace SisPDV.APP.Login
             btnLogin.IconFont = IconFont.Auto;
             btnLogin.IconSize = 16;
             btnLogin.ImageAlign = ContentAlignment.MiddleLeft;
-            btnLogin.Location = new Point(40, 191);
+            btnLogin.Location = new Point(68, 124);
             btnLogin.Name = "btnLogin";
             btnLogin.Size = new Size(75, 23);
             btnLogin.TabIndex = 5;
@@ -121,12 +120,13 @@ namespace SisPDV.APP.Login
             // 
             // txtPassword
             // 
-            txtPassword.Location = new Point(40, 143);
+            txtPassword.Location = new Point(75, 87);
             txtPassword.Name = "txtPassword";
             txtPassword.PlaceholderText = "Senha";
             txtPassword.Size = new Size(200, 23);
             txtPassword.TabIndex = 4;
             txtPassword.UseSystemPasswordChar = true;
+            txtPassword.KeyDown += txtPassword_KeyDown;
             // 
             // iconPassword
             // 
@@ -135,7 +135,7 @@ namespace SisPDV.APP.Login
             iconPassword.IconChar = IconChar.Lock;
             iconPassword.IconColor = Color.Gray;
             iconPassword.IconFont = IconFont.Auto;
-            iconPassword.Location = new Point(5, 139);
+            iconPassword.Location = new Point(40, 83);
             iconPassword.Name = "iconPassword";
             iconPassword.Size = new Size(32, 32);
             iconPassword.TabIndex = 3;
@@ -143,7 +143,7 @@ namespace SisPDV.APP.Login
             // 
             // txtUser
             // 
-            txtUser.Location = new Point(40, 103);
+            txtUser.Location = new Point(75, 47);
             txtUser.Name = "txtUser";
             txtUser.PlaceholderText = "Usuário";
             txtUser.Size = new Size(200, 23);
@@ -156,7 +156,7 @@ namespace SisPDV.APP.Login
             iconUser.IconChar = IconChar.User;
             iconUser.IconColor = Color.Gray;
             iconUser.IconFont = IconFont.Auto;
-            iconUser.Location = new Point(5, 99);
+            iconUser.Location = new Point(40, 43);
             iconUser.Name = "iconUser";
             iconUser.Size = new Size(32, 32);
             iconUser.TabIndex = 1;
@@ -165,9 +165,8 @@ namespace SisPDV.APP.Login
             // lblTitle
             // 
             lblTitle.AutoSize = true;
-            lblTitle.Dock = DockStyle.Top;
             lblTitle.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblTitle.Location = new Point(40, 40);
+            lblTitle.Location = new Point(68, 6);
             lblTitle.Name = "lblTitle";
             lblTitle.Size = new Size(172, 25);
             lblTitle.TabIndex = 0;
@@ -179,23 +178,24 @@ namespace SisPDV.APP.Login
             rightPanel.BackgroundImage = (Image)resources.GetObject("rightPanel.BackgroundImage");
             rightPanel.BackgroundImageLayout = ImageLayout.Zoom;
             rightPanel.Dock = DockStyle.Fill;
-            rightPanel.Location = new Point(345, 3);
+            rightPanel.Location = new Point(293, 3);
             rightPanel.Name = "rightPanel";
-            rightPanel.Size = new Size(336, 222);
+            rightPanel.Size = new Size(285, 166);
             rightPanel.TabIndex = 2;
             // 
             // LoginForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(684, 228);
+            ClientSize = new Size(581, 172);
             Controls.Add(mainPanel);
             FormBorderStyle = FormBorderStyle.FixedDialog;
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "LoginForm";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "Login - PDV";
+            Text = "Login - SisPDV";
+            FormClosing += LoginForm_FormClosing;
             mainPanel.ResumeLayout(false);
             leftPanel.ResumeLayout(false);
             leftPanel.PerformLayout();

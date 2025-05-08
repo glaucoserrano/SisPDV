@@ -114,6 +114,20 @@ namespace SisPDV.Application.Services
             return result;
         }
 
+        public async Task<List<UserSearchResponseDTO>> GetAllActiveExceptAdminAsync()
+        {
+            return await _context.users
+                .Where(user => user.Active && user.Login.ToLower() != "admin")
+                .Select(user => new UserSearchResponseDTO
+                {
+                    Id = user.Id,
+                    Name = user.Name,
+                    Login = user.Login
+                })
+                .OrderBy(user => user.Name)
+                .ToListAsync();
+        }
+
         public async Task<User?> GetById(int? id)
         {
             return await _context.users

@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using SisPDV.APP.Login;
+using SisPDV.Application.ExternalServices;
 using SisPDV.Application.Services;
 using SisPDV.Infrastructure.Persistence;
 using SisPDV.Infrastructure.Service;
@@ -29,8 +30,20 @@ namespace SisPDV.APP
             var dbContext = new PDVDbContext(options, currentUserService);
 
             var userService = new UserService(dbContext);
+            var menuService = new MenuService(dbContext);
+            var userMenuService = new UserMenuService(dbContext);
+            var companyService = new CompanyService(dbContext);
+            var cnpjService = new CnpjService();
+            var cepService = new CepService();
 
-            WindowsForms.Application.Run(new LoginForm(userService,currentUserService));
+            WindowsForms.Application.Run(new LoginForm(
+                userService,
+                currentUserService,
+                menuService,
+                userMenuService,
+                cnpjService,
+                cepService,
+                companyService));
         }
     }
 }

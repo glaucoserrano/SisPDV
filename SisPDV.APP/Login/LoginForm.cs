@@ -1,4 +1,5 @@
 ﻿using SisPDV.APP.Main;
+using SisPDV.Application.ExternalInterfaces;
 using SisPDV.Application.Interfaces;
 using SisPDV.Infrastructure.Service;
 using WindowsForms = System.Windows.Forms;
@@ -9,11 +10,28 @@ namespace SisPDV.APP.Login
     {
         private readonly IUserService _userService;
         private readonly ICurrentUserService _currentUserService;
-        public LoginForm(IUserService userService, ICurrentUserService currentUserService)
+        private readonly IMenuService _menuService;
+        private readonly IUserMenuService _userMenuService;
+        private readonly ICnpjService _cnpjService;
+        private readonly ICepService _cepService;
+        private readonly ICompanyService _companyServices;
+        public LoginForm(
+            IUserService userService, 
+            ICurrentUserService currentUserService,
+            IMenuService menuService,
+            IUserMenuService userMenuService,
+            ICnpjService cnpjService,
+            ICepService cepService,
+            ICompanyService companyServices)
         {
             InitializeComponent();
             _userService = userService;
             _currentUserService = currentUserService;
+            _menuService = menuService;
+            _userMenuService = userMenuService;
+            _cnpjService = cnpjService;
+            _cepService = cepService;
+            _companyServices = companyServices;
         }
 
         private async void btnLogin_Click(object sender, EventArgs e)
@@ -34,7 +52,15 @@ namespace SisPDV.APP.Login
                     }
 
                     _currentUserService.CurrentUser = userAuth!.Name;
-                    var mainForm = new MainForm(userId: userAuth?.Id, userName: userAuth?.Name, userService: _userService);
+                    var mainForm = new MainForm(
+                        userId: userAuth?.Id, 
+                        userName: userAuth?.Name, 
+                        userService: _userService, 
+                        menuService: _menuService,
+                        userMenuService: _userMenuService,
+                        cnpjService: _cnpjService,
+                        cepService: _cepService,
+                        companyService: _companyServices);
                     mainForm.WindowState = FormWindowState.Maximized;
 
                     mainForm.FormClosed += (s, e) => this.Close();

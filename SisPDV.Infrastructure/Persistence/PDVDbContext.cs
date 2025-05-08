@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SisPDV.Domain.Entities;
 using SisPDV.Domain.Entities.Base;
-using SisPDV.Domain.Helpers;
+using SisPDV.Infrastructure.Persistence.Seed;
 using SisPDV.Infrastructure.Service;
 
 namespace SisPDV.Infrastructure.Persistence
@@ -14,6 +14,13 @@ namespace SisPDV.Infrastructure.Persistence
             _currentUser = currentUser;
         }
         public DbSet<User> users { get; set; }
+        public DbSet<Menu> menus { get; set; }
+        public DbSet<UserMenu> userMenu { get; set; }
+        public DbSet<Company> company { get; set; }
+        public DbSet<Config> configs { get; set; }
+        public DbSet<PrintSector> printsectors { get; set; }
+        public DbSet<SystemValidation> systemValidation { get; set; }
+
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
             var entries = ChangeTracker.Entries<AuditableEntity>();
@@ -50,6 +57,18 @@ namespace SisPDV.Infrastructure.Persistence
                 Active = true
             };
             modelBuilder.Entity<User>().HasData(admin);
+
+            modelBuilder.SeedMenus();
+
+            modelBuilder.Entity<UserMenu>()
+                .HasOne(um => um.User)
+                .WithMany()
+                .HasForeignKey(um => um.UserId);
+
+            modelBuilder.Entity<UserMenu>()
+                .HasOne(um => um.Menu)
+                .WithMany()
+                .HasForeignKey(um => um.MenuId);
         }
 
     }

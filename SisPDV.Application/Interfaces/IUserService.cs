@@ -12,5 +12,6 @@ namespace SisPDV.Application.Interfaces
         Task<User?> GetById(int? id);
         Task UpdateUserAsync(UserUpdateDTO request);
         Task ChangeUserPassword(string login, string oldPassword, string newPassword);
+        Task<List<UserSearchResponseDTO>> GetAllActiveExceptAdminAsync();
     }
 }

@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using SisPDV.Infrastructure.Persistence;
@@ -11,9 +12,11 @@ using SisPDV.Infrastructure.Persistence;
 namespace SisPDV.Infrastructure.Migrations
 {
     [DbContext(typeof(PDVDbContext))]
-    partial class PDVDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250508192406_AddMenuConfig")]
+    partial class AddMenuConfig
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -166,51 +169,6 @@ namespace SisPDV.Infrastructure.Migrations
 
                     b.Property<int>("Model")
                         .HasColumnType("integer");
-
-                    b.Property<string>("NFeDestinationEmail")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
-
-                    b.Property<bool>("NFeEnabled")
-                        .HasColumnType("boolean");
-
-                    b.Property<int>("NFeEnvironment")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("NFeFinality")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("NFeInitialNumber")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("NFeModel")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("NFePaymentForm")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("NFePresenceIndicator")
-                        .HasColumnType("integer");
-
-                    b.Property<bool>("NFePrint")
-                        .HasColumnType("boolean");
-
-                    b.Property<bool>("NFeSavePDF")
-                        .HasColumnType("boolean");
-
-                    b.Property<int>("NFeSerial")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("NFeVersionDF")
-                        .IsRequired()
-                        .HasMaxLength(5)
-                        .HasColumnType("character varying(5)");
-
-                    b.Property<string>("NFeXmlPath")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
 
                     b.Property<bool>("OrderPrint")
                         .HasColumnType("boolean");

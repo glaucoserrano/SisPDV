@@ -47,10 +47,50 @@ namespace SisPDV.Domain.Entities
         [Required, MaxLength(255)]
         public string XMLPath { get; set; } = string.Empty;//Caminho para gerar os Path XML
 
+        // NF-e (Modelo 55)
+        public bool NFeEnabled { get; set; } = false; // Habilitar uso de NF-e
 
+        [Required, MaxLength(5)]
+        public string NFeVersionDF { get; set; } = "4.00"; // Versão do XML da NF-e
+
+        [Required]
+        public int NFeModel { get; set; } = 55; // Modelo fiscal da NF-e
+
+        [Required]
+        public int NFeSerial { get; set; }
+
+        [Required]
+        public int NFeInitialNumber { get; set; }
+
+        [Required, MaxLength(255)]
+        public string NFeXmlPath { get; set; } = string.Empty;
+
+        [Required]
+        public EnvironmentNFCe NFeEnvironment { get; set; } = EnvironmentNFCe.Homologacao;
+
+        public bool NFePrint { get; set; } = false;
+
+        public bool NFeSavePDF { get; set; } = false;
+
+        [MaxLength(100)]
+        public string NFeDestinationEmail { get; set; } = string.Empty;
+
+        [Required]
+        public NFeFinality NFeFinality { get; set; } = NFeFinality.Normal;
+
+        [Required]
+        public PresenceIndicator NFePresenceIndicator { get; set; } = PresenceIndicator.Presencial;
+
+        [Required]
+        public PaymentForm NFePaymentForm { get; set; } = PaymentForm.AVista;
         //Configuraçoes Gerais
         public bool UseStockControl { get; set; } // Usar Controle de Estoque
         public bool SalesZeroStock { get; set; } //Permite venda com estoque zerado
         public bool OrderPrint { get; set; } // Imprimir Pedido
+        
+        [MaxLength(255)]
+        public string BackupPath { get; set; } = string.Empty; // Caminho do backup automático
+
+        public bool AutoCloseOrder { get; set; } // Fechar automaticamente pedidos ao emitir NFC-e
     }
 }

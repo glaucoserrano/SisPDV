@@ -1,5 +1,6 @@
 ﻿using SisPDV.APP.CompanyMenu;
 using SisPDV.APP.Config;
+using SisPDV.APP.ConfigMenu;
 using SisPDV.APP.PermissionMenu;
 using SisPDV.APP.User;
 using SisPDV.Application.ExternalInterfaces;
@@ -16,6 +17,8 @@ namespace SisPDV.APP.Main
         private readonly IMenuService _menuService;
         private readonly IUserMenuService _userMenuService;
         private readonly ICompanyService _companyService;
+        private readonly IPrinterSerctorsServices _printerSectorsServices;
+        private readonly IConfigService _configServices;
         private readonly ICnpjService _cnpjService;
         private readonly ICepService _cepService;
         private readonly int? _userID;
@@ -30,7 +33,9 @@ namespace SisPDV.APP.Main
             IUserMenuService userMenuService,
             ICnpjService cnpjService,
             ICepService cepService,
-            ICompanyService companyService)
+            ICompanyService companyService,
+            IPrinterSerctorsServices printerSectorsServices,
+            IConfigService configServices)
         {
             InitializeComponent();
             _userID = userId;
@@ -41,6 +46,8 @@ namespace SisPDV.APP.Main
             _cnpjService = cnpjService;
             _cepService = cepService;
             _companyService = companyService;
+            _printerSectorsServices = printerSectorsServices;
+            _configServices = configServices;
 
             string? version = Assembly.
                 GetExecutingAssembly().
@@ -52,6 +59,8 @@ namespace SisPDV.APP.Main
             _menuService = menuService;
             _cepService = cepService;
             _companyService = companyService;
+            _printerSectorsServices = printerSectorsServices;
+            _configServices = configServices;
         }
         private async void MainForm_Load(object sender, EventArgs e)
         {
@@ -129,8 +138,9 @@ namespace SisPDV.APP.Main
                 {
                     "UserAddForm" => new UserAddForm(_userService),
                     "UserChangePassword" => new UserChangePassword(_userID, _userService),
-                    "PermissionMenuForm" => new PermissionMenuForm(_userService,_menuService,_userMenuService),
-                    "CompanyForm" => new CompanyForm(_cnpjService,_cepService,_companyService,_userID,_userService),
+                    "PermissionMenuForm" => new PermissionMenuForm(_userService, _menuService, _userMenuService),
+                    "CompanyForm" => new CompanyForm(_cnpjService, _cepService, _companyService, _userID, _userService),
+                    "ConfigForm" => new ConfigForm(_printerSectorsServices,_configServices),
                     _ => null
                 };
                 form?.ShowDialog();

@@ -7,6 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="DTOs\PrinterSector\**" />
+    <EmbeddedResource Remove="DTOs\PrinterSector\**" />
+    <None Remove="DTOs\PrinterSector\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Remove="Class1.cs" />
     <Compile Remove="Interfaces\ICurrentUserService.cs" />
   </ItemGroup>

@@ -57,6 +57,16 @@ namespace SisPDV.Infrastructure.Persistence.Seed
                     Order = 4,
                     Visible = true,
                     CreatedBy = "System"
+                },
+                new Menu
+                {
+                    Id = 6,
+                    ParentId = 1,
+                    Title = "Configurações",
+                    FormName = "ConfigForm",
+                    Order = 5,
+                    Visible = true,
+                    CreatedBy = "System"
                 }
             );
         }

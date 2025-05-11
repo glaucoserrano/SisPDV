@@ -32,6 +32,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SisPDV.Application\SisPDV.Application.csproj" />
+    <ProjectReference Include="..\SisPDV.Domain\SisPDV.Domain.csproj" />
   </ItemGroup>
 
   <ItemGroup>

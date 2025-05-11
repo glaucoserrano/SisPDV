@@ -3,8 +3,8 @@ using SisPDV.Application.ExternalInterfaces;
 using SisPDV.Application.Interfaces;
 using SisPDV.Domain.Entities;
 using SisPDV.Domain.Enum;
+using SisPDV.Domain.Helpers;
 using System.ComponentModel;
-using System.Threading.Tasks;
 
 namespace SisPDV.APP.CompanyMenu
 {
@@ -112,7 +112,8 @@ namespace SisPDV.APP.CompanyMenu
 
         private async void txtCNPJ_Leave(object sender, EventArgs e)
         {
-            var cnpj = txtCNPJ.Text.Replace(".", "").Replace("/", "").Replace("-", "");
+            //var cnpj = txtCNPJ.Text.Replace(".", "").Replace("/", "").Replace("-", "");
+            var cnpj = FormatHelper.OnlyNumber(txtCNPJ.Text);
             if (cnpj.Length > 0)
             {
                 var cnpjDTO = await _cnpjService.GetCNPJAsync(cnpj);
@@ -129,7 +130,8 @@ namespace SisPDV.APP.CompanyMenu
 
         private async void txtCEP_Leave(object sender, EventArgs e)
         {
-            var cep = txtCEP.Text.Replace("-", "");
+            //var cep = txtCEP.Text.Replace("-", "");
+            var cep = FormatHelper.OnlyNumber(txtCEP.Text);
             if (cep.Length > 0)
             {
                 var cepDto = await _cepService.GetCepsync(cep);
@@ -153,7 +155,8 @@ namespace SisPDV.APP.CompanyMenu
                 var newCompany = new CompanyDTO
                 {
                     Id = 0,
-                    CNPJ = txtCNPJ.Text.Replace(".", "").Replace("/", "").Replace("-", ""),
+                    //CNPJ = txtCNPJ.Text.Replace(".", "").Replace("/", "").Replace("-", ""),
+                    CNPJ = FormatHelper.OnlyNumber(txtCNPJ.Text),
                     CompanyName = txtCompanyName.Text,
                     FantasyName = txtFantasyName.Text,
                     IE = txtIE.Text,
@@ -161,11 +164,13 @@ namespace SisPDV.APP.CompanyMenu
                     UF = txtUF.Text,
                     City = txtCity.Text,
                     CityCode = !string.IsNullOrEmpty(txtCityCode.Text) ? Convert.ToInt32(txtCityCode.Text) : 0,
-                    CEP = txtCEP.Text.Replace("-", ""),
+                    //CEP = txtCEP.Text.Replace("-", ""),
+                    CEP = FormatHelper.OnlyNumber(txtCEP.Text),
                     Street = txtStreet.Text,
                     Number = txtNumber.Text,
                     District = txtDistrict.Text,
-                    Phone = txtPhone.Text.Replace("(", "").Replace(")", "").Replace("-", ""),
+                    //Phone = txtPhone.Text.Replace("(", "").Replace(")", "").Replace("-", ""),
+                    Phone = FormatHelper.OnlyNumber(txtPhone.Text),
                     Email = txtEmail.Text,
                     TaxRegime = (TaxRegime)cmbTaxRegime.SelectedValue!
                 };
@@ -195,14 +200,16 @@ namespace SisPDV.APP.CompanyMenu
                     UF = txtUF.Text,
                     City = txtCity.Text,
                     CityCode = Convert.ToInt32(txtCityCode.Text),
-                    CEP = txtCEP.Text.Replace("-", ""),
+                    //CEP = txtCEP.Text.Replace("-", ""),
+                    CEP = FormatHelper.OnlyNumber(txtCEP.Text),
                     Street = txtStreet.Text,
                     Number = txtNumber.Text,
                     District = txtDistrict.Text,
-                    Phone = txtPhone.Text.Replace("(", "").Replace(")", "").Replace("-", ""),
+                    //Phone = txtPhone.Text.Replace("(", "").Replace(")", "").Replace("-", ""),
+                    Phone = FormatHelper.OnlyNumber(txtPhone.Text),
                     Email = txtEmail.Text,
                     TaxRegime = (TaxRegime)cmbTaxRegime.SelectedValue!
-                };
+                }; 
 
                 var Validate = await validateDate(oldCompany);
                 if (!Validate)

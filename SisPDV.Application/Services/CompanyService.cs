@@ -6,7 +6,6 @@ using SisPDV.Domain.Entities;
 using SisPDV.Domain.Enum;
 using SisPDV.Domain.Helpers;
 using SisPDV.Infrastructure.Persistence;
-using System.ComponentModel.DataAnnotations;
 
 namespace SisPDV.Application.Services
 {
@@ -68,19 +67,19 @@ namespace SisPDV.Application.Services
                     if (existsCompany == null)
                         throw new Exception("Empresa não encontrada");
 
-                    existsCompany.CompanyName = request.CompanyName;
-                    existsCompany.FantasyName = request.FantasyName;
-                    existsCompany.IE = request.IE;
-                    existsCompany.IM = request.IM;
-                    existsCompany.UF = request.UF;
-                    existsCompany.City = request.City;
+                    existsCompany.CompanyName = request.CompanyName!;
+                    existsCompany.FantasyName = request.FantasyName!;
+                    existsCompany.IE = request.IE!;
+                    existsCompany.IM = request.IM!;
+                    existsCompany.UF = request.UF!;
+                    existsCompany.City = request.City!;
                     existsCompany.CityCode = request.CityCode;
-                    existsCompany.CEP = request.CEP;
-                    existsCompany.Street = request.Street;
-                    existsCompany.Number = request.Number;
-                    existsCompany.District = request.District;
-                    existsCompany.Phone = request.Phone;
-                    existsCompany.Email = request.Email;
+                    existsCompany.CEP = request.CEP!;
+                    existsCompany.Street = request.Street!;
+                    existsCompany.Number = request.Number!;
+                    existsCompany.District = request.District!;
+                    existsCompany.Phone = request.Phone!;
+                    existsCompany.Email = request.Email!;
                     existsCompany.TaxRegime = request.TaxRegime;
 
                     _context.company.Update(existsCompany);

@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SisPDV.Domain.Entities;
 using SisPDV.Domain.Entities.Base;
+using SisPDV.Domain.Helpers;
 using SisPDV.Infrastructure.Persistence.Seed;
 using SisPDV.Infrastructure.Service;
 
@@ -20,6 +21,8 @@ namespace SisPDV.Infrastructure.Persistence
         public DbSet<Config> configs { get; set; }
         public DbSet<PrintSector> printsectors { get; set; }
         public DbSet<SystemValidation> systemValidation { get; set; }
+        public DbSet<EncryptionSettings> encryptionSettings { get; set; }
+        public DbSet<Person> person { get; set; }
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
@@ -48,6 +51,13 @@ namespace SisPDV.Infrastructure.Persistence
         {
             base.OnModelCreating(modelBuilder);
 
+            modelBuilder.Entity<EncryptionSettings>().HasData(new EncryptionSettings
+            {
+                Id = 1,
+                Key = "AASvR6fTZLkKC9wtDhwW22AQlJaVWAvPCldjvZB1jNI=",
+                IV = "E30yy3FYLt0NbFZNs4VbWg =="
+            });
+
             var admin = new User
             {
                 Id = 1,
@@ -57,6 +67,7 @@ namespace SisPDV.Infrastructure.Persistence
                 Active = true
             };
             modelBuilder.Entity<User>().HasData(admin);
+
 
             modelBuilder.SeedMenus();
 

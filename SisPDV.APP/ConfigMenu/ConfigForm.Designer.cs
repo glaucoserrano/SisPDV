@@ -41,14 +41,15 @@
             chkUseStockControl = new CheckBox();
             txtCashNumber = new TextBox();
             tabNFCe = new TabPage();
-            groupBox2 = new GroupBox();
+            chkEnableNFCe = new CheckBox();
+            grbNFCe = new GroupBox();
             cmbEnvironment = new ComboBox();
             lblEnvironment = new Label();
             txtInitialNumber = new TextBox();
             lblInitialNumber = new Label();
             txtSerial = new TextBox();
             lblSerial = new Label();
-            textBox1 = new TextBox();
+            txtNFCEModel = new TextBox();
             lblModel = new Label();
             txtVersionDF = new TextBox();
             lblVersionDF = new Label();
@@ -68,7 +69,8 @@
             dgvPrintSectors = new DataGridView();
             chkPrinterSector = new CheckBox();
             tabNFe = new TabPage();
-            groupBox4 = new GroupBox();
+            chkEnableNFe = new CheckBox();
+            grbNFe = new GroupBox();
             cmbNFePayment = new ComboBox();
             lblNFePayment = new Label();
             cmbNFePresence = new ComboBox();
@@ -79,7 +81,7 @@
             lblNFeEmail = new Label();
             chkNFeSavePDF = new CheckBox();
             chkNFePrint = new CheckBox();
-            iconButton1 = new FontAwesome.Sharp.IconButton();
+            btnXMLPathNFe = new FontAwesome.Sharp.IconButton();
             txtNFeXmlPath = new TextBox();
             lblNFeXmlPath = new Label();
             cmbNFeEnvironment = new ComboBox();
@@ -90,12 +92,10 @@
             lblNFeSerial = new Label();
             txtNFeModel = new TextBox();
             lblNFeModel = new Label();
-            textBox2 = new TextBox();
+            txtVersionNFe = new TextBox();
             lblNFEVersion = new Label();
-            chkEnableNFe = new CheckBox();
             tabDigitalCertificate = new TabPage();
-            groupBox5 = new GroupBox();
-            chkCertificateA1 = new CheckBox();
+            grbCertificateDigital = new GroupBox();
             txtPasswordCertificate = new TextBox();
             lbltxtPasswordCertificate = new Label();
             btnSelectCertificate = new FontAwesome.Sharp.IconButton();
@@ -104,18 +104,19 @@
             panel1 = new Panel();
             btnCancel = new FontAwesome.Sharp.IconButton();
             btnSave = new FontAwesome.Sharp.IconButton();
+            chkCertificateA1 = new CheckBox();
             tabConfig.SuspendLayout();
             tabGeneral.SuspendLayout();
             groupBox1.SuspendLayout();
             tabNFCe.SuspendLayout();
-            groupBox2.SuspendLayout();
+            grbNFCe.SuspendLayout();
             tabPrinters.SuspendLayout();
             groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvPrintSectors).BeginInit();
             tabNFe.SuspendLayout();
-            groupBox4.SuspendLayout();
+            grbNFe.SuspendLayout();
             tabDigitalCertificate.SuspendLayout();
-            groupBox5.SuspendLayout();
+            grbCertificateDigital.SuspendLayout();
             panel1.SuspendLayout();
             SuspendLayout();
             // 
@@ -258,7 +259,8 @@
             // 
             // tabNFCe
             // 
-            tabNFCe.Controls.Add(groupBox2);
+            tabNFCe.Controls.Add(chkEnableNFCe);
+            tabNFCe.Controls.Add(grbNFCe);
             tabNFCe.Location = new Point(4, 24);
             tabNFCe.Name = "tabNFCe";
             tabNFCe.Padding = new Padding(3);
@@ -267,49 +269,61 @@
             tabNFCe.Text = "Configurações NFC-e";
             tabNFCe.UseVisualStyleBackColor = true;
             // 
-            // groupBox2
+            // chkEnableNFCe
             // 
-            groupBox2.BackColor = SystemColors.Control;
-            groupBox2.Controls.Add(cmbEnvironment);
-            groupBox2.Controls.Add(lblEnvironment);
-            groupBox2.Controls.Add(txtInitialNumber);
-            groupBox2.Controls.Add(lblInitialNumber);
-            groupBox2.Controls.Add(txtSerial);
-            groupBox2.Controls.Add(lblSerial);
-            groupBox2.Controls.Add(textBox1);
-            groupBox2.Controls.Add(lblModel);
-            groupBox2.Controls.Add(txtVersionDF);
-            groupBox2.Controls.Add(lblVersionDF);
-            groupBox2.Controls.Add(chkPrintNFCe);
-            groupBox2.Controls.Add(btnSelectXMLPath);
-            groupBox2.Controls.Add(txtXMLPath);
-            groupBox2.Controls.Add(lblXMLPath);
-            groupBox2.Controls.Add(cmbTypeEmission);
-            groupBox2.Controls.Add(lblTypeEmission);
-            groupBox2.Controls.Add(txtCSCId);
-            groupBox2.Controls.Add(lblCSCId);
-            groupBox2.Controls.Add(txtCSC);
-            groupBox2.Controls.Add(lblCSC);
-            groupBox2.Dock = DockStyle.Fill;
-            groupBox2.Location = new Point(3, 3);
-            groupBox2.Name = "groupBox2";
-            groupBox2.Size = new Size(755, 317);
-            groupBox2.TabIndex = 0;
-            groupBox2.TabStop = false;
+            chkEnableNFCe.BackColor = SystemColors.Control;
+            chkEnableNFCe.FlatStyle = FlatStyle.Flat;
+            chkEnableNFCe.Location = new Point(8, 3);
+            chkEnableNFCe.Name = "chkEnableNFCe";
+            chkEnableNFCe.Size = new Size(166, 19);
+            chkEnableNFCe.TabIndex = 37;
+            chkEnableNFCe.Text = "Habilitar emissão de NF-e";
+            chkEnableNFCe.UseVisualStyleBackColor = false;
+            chkEnableNFCe.CheckedChanged += chkEnableNFCe_CheckedChanged;
+            // 
+            // grbNFCe
+            // 
+            grbNFCe.BackColor = SystemColors.Control;
+            grbNFCe.Controls.Add(cmbEnvironment);
+            grbNFCe.Controls.Add(lblEnvironment);
+            grbNFCe.Controls.Add(txtInitialNumber);
+            grbNFCe.Controls.Add(lblInitialNumber);
+            grbNFCe.Controls.Add(txtSerial);
+            grbNFCe.Controls.Add(lblSerial);
+            grbNFCe.Controls.Add(txtNFCEModel);
+            grbNFCe.Controls.Add(lblModel);
+            grbNFCe.Controls.Add(txtVersionDF);
+            grbNFCe.Controls.Add(lblVersionDF);
+            grbNFCe.Controls.Add(chkPrintNFCe);
+            grbNFCe.Controls.Add(btnSelectXMLPath);
+            grbNFCe.Controls.Add(txtXMLPath);
+            grbNFCe.Controls.Add(lblXMLPath);
+            grbNFCe.Controls.Add(cmbTypeEmission);
+            grbNFCe.Controls.Add(lblTypeEmission);
+            grbNFCe.Controls.Add(txtCSCId);
+            grbNFCe.Controls.Add(lblCSCId);
+            grbNFCe.Controls.Add(txtCSC);
+            grbNFCe.Controls.Add(lblCSC);
+            grbNFCe.Dock = DockStyle.Fill;
+            grbNFCe.Location = new Point(3, 3);
+            grbNFCe.Name = "grbNFCe";
+            grbNFCe.Size = new Size(755, 317);
+            grbNFCe.TabIndex = 0;
+            grbNFCe.TabStop = false;
             // 
             // cmbEnvironment
             // 
             cmbEnvironment.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbEnvironment.FormattingEnabled = true;
-            cmbEnvironment.Location = new Point(129, 45);
+            cmbEnvironment.Location = new Point(119, 65);
             cmbEnvironment.Name = "cmbEnvironment";
-            cmbEnvironment.Size = new Size(500, 23);
+            cmbEnvironment.Size = new Size(504, 23);
             cmbEnvironment.TabIndex = 34;
             // 
             // lblEnvironment
             // 
             lblEnvironment.AutoSize = true;
-            lblEnvironment.Location = new Point(5, 48);
+            lblEnvironment.Location = new Point(5, 68);
             lblEnvironment.Name = "lblEnvironment";
             lblEnvironment.Size = new Size(59, 15);
             lblEnvironment.TabIndex = 33;
@@ -317,7 +331,7 @@
             // 
             // txtInitialNumber
             // 
-            txtInitialNumber.Location = new Point(480, 16);
+            txtInitialNumber.Location = new Point(573, 36);
             txtInitialNumber.MaxLength = 5;
             txtInitialNumber.Name = "txtInitialNumber";
             txtInitialNumber.Size = new Size(50, 23);
@@ -328,7 +342,7 @@
             // lblInitialNumber
             // 
             lblInitialNumber.AutoSize = true;
-            lblInitialNumber.Location = new Point(389, 19);
+            lblInitialNumber.Location = new Point(482, 39);
             lblInitialNumber.Name = "lblInitialNumber";
             lblInitialNumber.Size = new Size(85, 15);
             lblInitialNumber.TabIndex = 31;
@@ -336,7 +350,7 @@
             // 
             // txtSerial
             // 
-            txtSerial.Location = new Point(333, 16);
+            txtSerial.Location = new Point(426, 36);
             txtSerial.MaxLength = 5;
             txtSerial.Name = "txtSerial";
             txtSerial.Size = new Size(50, 23);
@@ -347,27 +361,27 @@
             // lblSerial
             // 
             lblSerial.AutoSize = true;
-            lblSerial.Location = new Point(295, 19);
+            lblSerial.Location = new Point(388, 39);
             lblSerial.Name = "lblSerial";
             lblSerial.Size = new Size(32, 15);
             lblSerial.TabIndex = 29;
             lblSerial.Text = "Série";
             // 
-            // textBox1
+            // txtNFCEModel
             // 
-            textBox1.Location = new Point(239, 16);
-            textBox1.MaxLength = 5;
-            textBox1.Name = "textBox1";
-            textBox1.ReadOnly = true;
-            textBox1.Size = new Size(50, 23);
-            textBox1.TabIndex = 28;
-            textBox1.Text = "65";
-            textBox1.TextAlign = HorizontalAlignment.Right;
+            txtNFCEModel.Location = new Point(332, 36);
+            txtNFCEModel.MaxLength = 5;
+            txtNFCEModel.Name = "txtNFCEModel";
+            txtNFCEModel.ReadOnly = true;
+            txtNFCEModel.Size = new Size(50, 23);
+            txtNFCEModel.TabIndex = 28;
+            txtNFCEModel.Text = "65";
+            txtNFCEModel.TextAlign = HorizontalAlignment.Right;
             // 
             // lblModel
             // 
             lblModel.AutoSize = true;
-            lblModel.Location = new Point(185, 19);
+            lblModel.Location = new Point(278, 39);
             lblModel.Name = "lblModel";
             lblModel.Size = new Size(48, 15);
             lblModel.TabIndex = 27;
@@ -375,18 +389,19 @@
             // 
             // txtVersionDF
             // 
-            txtVersionDF.Location = new Point(129, 16);
+            txtVersionDF.Location = new Point(222, 36);
             txtVersionDF.MaxLength = 5;
             txtVersionDF.Name = "txtVersionDF";
             txtVersionDF.Size = new Size(50, 23);
             txtVersionDF.TabIndex = 26;
             txtVersionDF.Text = "4.00";
             txtVersionDF.TextAlign = HorizontalAlignment.Right;
+            txtVersionDF.KeyPress += txtVersionDF_KeyPress;
             // 
             // lblVersionDF
             // 
             lblVersionDF.AutoSize = true;
-            lblVersionDF.Location = new Point(6, 19);
+            lblVersionDF.Location = new Point(119, 39);
             lblVersionDF.Name = "lblVersionDF";
             lblVersionDF.Size = new Size(97, 15);
             lblVersionDF.TabIndex = 25;
@@ -395,7 +410,7 @@
             // chkPrintNFCe
             // 
             chkPrintNFCe.FlatStyle = FlatStyle.Flat;
-            chkPrintNFCe.Location = new Point(536, 19);
+            chkPrintNFCe.Location = new Point(629, 35);
             chkPrintNFCe.Name = "chkPrintNFCe";
             chkPrintNFCe.Size = new Size(119, 19);
             chkPrintNFCe.TabIndex = 24;
@@ -412,25 +427,26 @@
             btnSelectXMLPath.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnSelectXMLPath.IconSize = 16;
             btnSelectXMLPath.ImageAlign = ContentAlignment.MiddleLeft;
-            btnSelectXMLPath.Location = new Point(643, 159);
+            btnSelectXMLPath.Location = new Point(643, 180);
             btnSelectXMLPath.Name = "btnSelectXMLPath";
             btnSelectXMLPath.Size = new Size(103, 23);
             btnSelectXMLPath.TabIndex = 23;
             btnSelectXMLPath.Text = "    Selecionar...\n\n";
             btnSelectXMLPath.UseVisualStyleBackColor = false;
+            btnSelectXMLPath.Click += btnSelectXMLPath_Click;
             // 
             // txtXMLPath
             // 
-            txtXMLPath.Location = new Point(129, 160);
+            txtXMLPath.Location = new Point(119, 181);
             txtXMLPath.Name = "txtXMLPath";
             txtXMLPath.ReadOnly = true;
-            txtXMLPath.Size = new Size(500, 23);
+            txtXMLPath.Size = new Size(504, 23);
             txtXMLPath.TabIndex = 22;
             // 
             // lblXMLPath
             // 
             lblXMLPath.AutoSize = true;
-            lblXMLPath.Location = new Point(5, 163);
+            lblXMLPath.Location = new Point(5, 184);
             lblXMLPath.Name = "lblXMLPath";
             lblXMLPath.Size = new Size(83, 15);
             lblXMLPath.TabIndex = 21;
@@ -440,15 +456,15 @@
             // 
             cmbTypeEmission.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbTypeEmission.FormattingEnabled = true;
-            cmbTypeEmission.Location = new Point(129, 131);
+            cmbTypeEmission.Location = new Point(119, 152);
             cmbTypeEmission.Name = "cmbTypeEmission";
-            cmbTypeEmission.Size = new Size(500, 23);
+            cmbTypeEmission.Size = new Size(504, 23);
             cmbTypeEmission.TabIndex = 20;
             // 
             // lblTypeEmission
             // 
             lblTypeEmission.AutoSize = true;
-            lblTypeEmission.Location = new Point(5, 134);
+            lblTypeEmission.Location = new Point(5, 155);
             lblTypeEmission.Name = "lblTypeEmission";
             lblTypeEmission.Size = new Size(92, 15);
             lblTypeEmission.TabIndex = 19;
@@ -456,15 +472,15 @@
             // 
             // txtCSCId
             // 
-            txtCSCId.Location = new Point(129, 102);
+            txtCSCId.Location = new Point(119, 123);
             txtCSCId.Name = "txtCSCId";
-            txtCSCId.Size = new Size(500, 23);
+            txtCSCId.Size = new Size(504, 23);
             txtCSCId.TabIndex = 18;
             // 
             // lblCSCId
             // 
             lblCSCId.AutoSize = true;
-            lblCSCId.Location = new Point(5, 105);
+            lblCSCId.Location = new Point(5, 126);
             lblCSCId.Name = "lblCSCId";
             lblCSCId.Size = new Size(43, 15);
             lblCSCId.TabIndex = 17;
@@ -472,15 +488,15 @@
             // 
             // txtCSC
             // 
-            txtCSC.Location = new Point(129, 73);
+            txtCSC.Location = new Point(119, 94);
             txtCSC.Name = "txtCSC";
-            txtCSC.Size = new Size(500, 23);
+            txtCSC.Size = new Size(504, 23);
             txtCSC.TabIndex = 16;
             // 
             // lblCSC
             // 
             lblCSC.AutoSize = true;
-            lblCSC.Location = new Point(5, 76);
+            lblCSC.Location = new Point(5, 97);
             lblCSC.Name = "lblCSC";
             lblCSC.Size = new Size(71, 15);
             lblCSC.TabIndex = 15;
@@ -558,7 +574,8 @@
             // 
             // tabNFe
             // 
-            tabNFe.Controls.Add(groupBox4);
+            tabNFe.Controls.Add(chkEnableNFe);
+            tabNFe.Controls.Add(grbNFe);
             tabNFe.Location = new Point(4, 24);
             tabNFe.Name = "tabNFe";
             tabNFe.Padding = new Padding(3);
@@ -567,45 +584,56 @@
             tabNFe.Text = "NF-e";
             tabNFe.UseVisualStyleBackColor = true;
             // 
-            // groupBox4
+            // chkEnableNFe
             // 
-            groupBox4.BackColor = SystemColors.Control;
-            groupBox4.Controls.Add(cmbNFePayment);
-            groupBox4.Controls.Add(lblNFePayment);
-            groupBox4.Controls.Add(cmbNFePresence);
-            groupBox4.Controls.Add(lblNFePresence);
-            groupBox4.Controls.Add(cmbNFeFinality);
-            groupBox4.Controls.Add(lblNFeFinality);
-            groupBox4.Controls.Add(txtNFeEmail);
-            groupBox4.Controls.Add(lblNFeEmail);
-            groupBox4.Controls.Add(chkNFeSavePDF);
-            groupBox4.Controls.Add(chkNFePrint);
-            groupBox4.Controls.Add(iconButton1);
-            groupBox4.Controls.Add(txtNFeXmlPath);
-            groupBox4.Controls.Add(lblNFeXmlPath);
-            groupBox4.Controls.Add(cmbNFeEnvironment);
-            groupBox4.Controls.Add(lblNFeEnvironment);
-            groupBox4.Controls.Add(txtNFeInitialNumber);
-            groupBox4.Controls.Add(lblNFeInitialNumber);
-            groupBox4.Controls.Add(txtNFeSerial);
-            groupBox4.Controls.Add(lblNFeSerial);
-            groupBox4.Controls.Add(txtNFeModel);
-            groupBox4.Controls.Add(lblNFeModel);
-            groupBox4.Controls.Add(textBox2);
-            groupBox4.Controls.Add(lblNFEVersion);
-            groupBox4.Controls.Add(chkEnableNFe);
-            groupBox4.Dock = DockStyle.Fill;
-            groupBox4.Location = new Point(3, 3);
-            groupBox4.Name = "groupBox4";
-            groupBox4.Size = new Size(755, 317);
-            groupBox4.TabIndex = 0;
-            groupBox4.TabStop = false;
+            chkEnableNFe.BackColor = SystemColors.Control;
+            chkEnableNFe.FlatStyle = FlatStyle.Flat;
+            chkEnableNFe.Location = new Point(9, 6);
+            chkEnableNFe.Name = "chkEnableNFe";
+            chkEnableNFe.Size = new Size(166, 19);
+            chkEnableNFe.TabIndex = 26;
+            chkEnableNFe.Text = "Habilitar emissão de NF-e";
+            chkEnableNFe.UseVisualStyleBackColor = false;
+            chkEnableNFe.CheckedChanged += chkEnableNFe_CheckedChanged;
+            // 
+            // grbNFe
+            // 
+            grbNFe.BackColor = SystemColors.Control;
+            grbNFe.Controls.Add(cmbNFePayment);
+            grbNFe.Controls.Add(lblNFePayment);
+            grbNFe.Controls.Add(cmbNFePresence);
+            grbNFe.Controls.Add(lblNFePresence);
+            grbNFe.Controls.Add(cmbNFeFinality);
+            grbNFe.Controls.Add(lblNFeFinality);
+            grbNFe.Controls.Add(txtNFeEmail);
+            grbNFe.Controls.Add(lblNFeEmail);
+            grbNFe.Controls.Add(chkNFeSavePDF);
+            grbNFe.Controls.Add(chkNFePrint);
+            grbNFe.Controls.Add(btnXMLPathNFe);
+            grbNFe.Controls.Add(txtNFeXmlPath);
+            grbNFe.Controls.Add(lblNFeXmlPath);
+            grbNFe.Controls.Add(cmbNFeEnvironment);
+            grbNFe.Controls.Add(lblNFeEnvironment);
+            grbNFe.Controls.Add(txtNFeInitialNumber);
+            grbNFe.Controls.Add(lblNFeInitialNumber);
+            grbNFe.Controls.Add(txtNFeSerial);
+            grbNFe.Controls.Add(lblNFeSerial);
+            grbNFe.Controls.Add(txtNFeModel);
+            grbNFe.Controls.Add(lblNFeModel);
+            grbNFe.Controls.Add(txtVersionNFe);
+            grbNFe.Controls.Add(lblNFEVersion);
+            grbNFe.Dock = DockStyle.Fill;
+            grbNFe.Location = new Point(3, 3);
+            grbNFe.Name = "grbNFe";
+            grbNFe.Size = new Size(755, 317);
+            grbNFe.TabIndex = 0;
+            grbNFe.TabStop = false;
             // 
             // cmbNFePayment
             // 
             cmbNFePayment.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbNFePayment.FormattingEnabled = true;
-            cmbNFePayment.Location = new Point(130, 264);
+            cmbNFePayment.Location = new Point(130, 221);
             cmbNFePayment.Name = "cmbNFePayment";
             cmbNFePayment.Size = new Size(401, 23);
             cmbNFePayment.TabIndex = 48;
@@ -613,7 +641,7 @@
             // lblNFePayment
             // 
             lblNFePayment.AutoSize = true;
-            lblNFePayment.Location = new Point(6, 267);
+            lblNFePayment.Location = new Point(6, 224);
             lblNFePayment.Name = "lblNFePayment";
             lblNFePayment.Size = new Size(121, 15);
             lblNFePayment.TabIndex = 47;
@@ -623,7 +651,7 @@
             // 
             cmbNFePresence.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbNFePresence.FormattingEnabled = true;
-            cmbNFePresence.Location = new Point(130, 235);
+            cmbNFePresence.Location = new Point(130, 192);
             cmbNFePresence.Name = "cmbNFePresence";
             cmbNFePresence.Size = new Size(401, 23);
             cmbNFePresence.TabIndex = 46;
@@ -631,7 +659,7 @@
             // lblNFePresence
             // 
             lblNFePresence.AutoSize = true;
-            lblNFePresence.Location = new Point(6, 238);
+            lblNFePresence.Location = new Point(6, 195);
             lblNFePresence.Name = "lblNFePresence";
             lblNFePresence.Size = new Size(123, 15);
             lblNFePresence.TabIndex = 45;
@@ -641,7 +669,7 @@
             // 
             cmbNFeFinality.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbNFeFinality.FormattingEnabled = true;
-            cmbNFeFinality.Location = new Point(130, 206);
+            cmbNFeFinality.Location = new Point(130, 163);
             cmbNFeFinality.Name = "cmbNFeFinality";
             cmbNFeFinality.Size = new Size(401, 23);
             cmbNFeFinality.TabIndex = 44;
@@ -649,7 +677,7 @@
             // lblNFeFinality
             // 
             lblNFeFinality.AutoSize = true;
-            lblNFeFinality.Location = new Point(6, 209);
+            lblNFeFinality.Location = new Point(6, 166);
             lblNFeFinality.Name = "lblNFeFinality";
             lblNFeFinality.Size = new Size(61, 15);
             lblNFeFinality.TabIndex = 43;
@@ -657,7 +685,7 @@
             // 
             // txtNFeEmail
             // 
-            txtNFeEmail.Location = new Point(130, 177);
+            txtNFeEmail.Location = new Point(130, 134);
             txtNFeEmail.Name = "txtNFeEmail";
             txtNFeEmail.Size = new Size(401, 23);
             txtNFeEmail.TabIndex = 42;
@@ -665,7 +693,7 @@
             // lblNFeEmail
             // 
             lblNFeEmail.AutoSize = true;
-            lblNFeEmail.Location = new Point(6, 180);
+            lblNFeEmail.Location = new Point(6, 137);
             lblNFeEmail.Name = "lblNFeEmail";
             lblNFeEmail.Size = new Size(107, 15);
             lblNFeEmail.TabIndex = 41;
@@ -674,7 +702,7 @@
             // chkNFeSavePDF
             // 
             chkNFeSavePDF.FlatStyle = FlatStyle.Flat;
-            chkNFeSavePDF.Location = new Point(130, 152);
+            chkNFeSavePDF.Location = new Point(130, 115);
             chkNFeSavePDF.Name = "chkNFeSavePDF";
             chkNFeSavePDF.Size = new Size(184, 19);
             chkNFeSavePDF.TabIndex = 40;
@@ -684,33 +712,34 @@
             // chkNFePrint
             // 
             chkNFePrint.FlatStyle = FlatStyle.Flat;
-            chkNFePrint.Location = new Point(6, 152);
+            chkNFePrint.Location = new Point(6, 115);
             chkNFePrint.Name = "chkNFePrint";
             chkNFePrint.Size = new Size(119, 19);
             chkNFePrint.TabIndex = 39;
             chkNFePrint.Text = "Imprimir NF-e";
             chkNFePrint.UseVisualStyleBackColor = true;
             // 
-            // iconButton1
+            // btnXMLPathNFe
             // 
-            iconButton1.BackColor = Color.WhiteSmoke;
-            iconButton1.FlatAppearance.BorderColor = Color.LightGray;
-            iconButton1.FlatStyle = FlatStyle.Flat;
-            iconButton1.IconChar = FontAwesome.Sharp.IconChar.FolderOpen;
-            iconButton1.IconColor = Color.Gray;
-            iconButton1.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            iconButton1.IconSize = 16;
-            iconButton1.ImageAlign = ContentAlignment.MiddleLeft;
-            iconButton1.Location = new Point(526, 123);
-            iconButton1.Name = "iconButton1";
-            iconButton1.Size = new Size(103, 23);
-            iconButton1.TabIndex = 38;
-            iconButton1.Text = "    Selecionar...\n\n";
-            iconButton1.UseVisualStyleBackColor = false;
+            btnXMLPathNFe.BackColor = Color.WhiteSmoke;
+            btnXMLPathNFe.FlatAppearance.BorderColor = Color.LightGray;
+            btnXMLPathNFe.FlatStyle = FlatStyle.Flat;
+            btnXMLPathNFe.IconChar = FontAwesome.Sharp.IconChar.FolderOpen;
+            btnXMLPathNFe.IconColor = Color.Gray;
+            btnXMLPathNFe.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            btnXMLPathNFe.IconSize = 16;
+            btnXMLPathNFe.ImageAlign = ContentAlignment.MiddleLeft;
+            btnXMLPathNFe.Location = new Point(526, 85);
+            btnXMLPathNFe.Name = "btnXMLPathNFe";
+            btnXMLPathNFe.Size = new Size(103, 23);
+            btnXMLPathNFe.TabIndex = 38;
+            btnXMLPathNFe.Text = "    Selecionar...\n\n";
+            btnXMLPathNFe.UseVisualStyleBackColor = false;
+            btnXMLPathNFe.Click += btnXMLPathNFe_Click;
             // 
             // txtNFeXmlPath
             // 
-            txtNFeXmlPath.Location = new Point(94, 123);
+            txtNFeXmlPath.Location = new Point(94, 86);
             txtNFeXmlPath.Name = "txtNFeXmlPath";
             txtNFeXmlPath.ReadOnly = true;
             txtNFeXmlPath.Size = new Size(426, 23);
@@ -719,7 +748,7 @@
             // lblNFeXmlPath
             // 
             lblNFeXmlPath.AutoSize = true;
-            lblNFeXmlPath.Location = new Point(6, 126);
+            lblNFeXmlPath.Location = new Point(6, 89);
             lblNFeXmlPath.Name = "lblNFeXmlPath";
             lblNFeXmlPath.Size = new Size(83, 15);
             lblNFeXmlPath.TabIndex = 36;
@@ -729,7 +758,7 @@
             // 
             cmbNFeEnvironment.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbNFeEnvironment.FormattingEnabled = true;
-            cmbNFeEnvironment.Location = new Point(94, 94);
+            cmbNFeEnvironment.Location = new Point(94, 57);
             cmbNFeEnvironment.Name = "cmbNFeEnvironment";
             cmbNFeEnvironment.Size = new Size(426, 23);
             cmbNFeEnvironment.TabIndex = 35;
@@ -737,7 +766,7 @@
             // lblNFeEnvironment
             // 
             lblNFeEnvironment.AutoSize = true;
-            lblNFeEnvironment.Location = new Point(6, 97);
+            lblNFeEnvironment.Location = new Point(6, 60);
             lblNFeEnvironment.Name = "lblNFeEnvironment";
             lblNFeEnvironment.Size = new Size(59, 15);
             lblNFeEnvironment.TabIndex = 34;
@@ -745,15 +774,17 @@
             // 
             // txtNFeInitialNumber
             // 
-            txtNFeInitialNumber.Location = new Point(529, 65);
+            txtNFeInitialNumber.Location = new Point(529, 28);
             txtNFeInitialNumber.Name = "txtNFeInitialNumber";
             txtNFeInitialNumber.Size = new Size(100, 23);
             txtNFeInitialNumber.TabIndex = 33;
+            txtNFeInitialNumber.TextAlign = HorizontalAlignment.Right;
+            txtNFeInitialNumber.KeyPress += txtNFeInitialNumber_KeyPress;
             // 
             // lblNFeInitialNumber
             // 
             lblNFeInitialNumber.AutoSize = true;
-            lblNFeInitialNumber.Location = new Point(444, 68);
+            lblNFeInitialNumber.Location = new Point(444, 31);
             lblNFeInitialNumber.Name = "lblNFeInitialNumber";
             lblNFeInitialNumber.Size = new Size(85, 15);
             lblNFeInitialNumber.TabIndex = 32;
@@ -761,15 +792,17 @@
             // 
             // txtNFeSerial
             // 
-            txtNFeSerial.Location = new Point(358, 65);
+            txtNFeSerial.Location = new Point(358, 28);
             txtNFeSerial.Name = "txtNFeSerial";
             txtNFeSerial.Size = new Size(80, 23);
             txtNFeSerial.TabIndex = 31;
+            txtNFeSerial.TextAlign = HorizontalAlignment.Right;
+            txtNFeSerial.KeyPress += txtNFeSerial_KeyPress;
             // 
             // lblNFeSerial
             // 
             lblNFeSerial.AutoSize = true;
-            lblNFeSerial.Location = new Point(320, 68);
+            lblNFeSerial.Location = new Point(320, 31);
             lblNFeSerial.Name = "lblNFeSerial";
             lblNFeSerial.Size = new Size(32, 15);
             lblNFeSerial.TabIndex = 30;
@@ -777,51 +810,46 @@
             // 
             // txtNFeModel
             // 
-            txtNFeModel.Location = new Point(234, 65);
+            txtNFeModel.Location = new Point(234, 28);
             txtNFeModel.Name = "txtNFeModel";
             txtNFeModel.ReadOnly = true;
             txtNFeModel.Size = new Size(80, 23);
             txtNFeModel.TabIndex = 29;
             txtNFeModel.Text = "55";
+            txtNFeModel.TextAlign = HorizontalAlignment.Right;
+            txtNFeModel.KeyPress += txtNFeModel_KeyPress;
             // 
             // lblNFeModel
             // 
             lblNFeModel.AutoSize = true;
-            lblNFeModel.Location = new Point(180, 68);
+            lblNFeModel.Location = new Point(180, 31);
             lblNFeModel.Name = "lblNFeModel";
             lblNFeModel.Size = new Size(48, 15);
             lblNFeModel.TabIndex = 28;
             lblNFeModel.Text = "Modelo";
             // 
-            // textBox2
+            // txtVersionNFe
             // 
-            textBox2.Location = new Point(94, 65);
-            textBox2.Name = "textBox2";
-            textBox2.Size = new Size(80, 23);
-            textBox2.TabIndex = 27;
+            txtVersionNFe.Location = new Point(94, 28);
+            txtVersionNFe.Name = "txtVersionNFe";
+            txtVersionNFe.Size = new Size(80, 23);
+            txtVersionNFe.TabIndex = 27;
+            txtVersionNFe.TextAlign = HorizontalAlignment.Right;
+            txtVersionNFe.KeyPress += txtVersionNFe_KeyPress;
             // 
             // lblNFEVersion
             // 
             lblNFEVersion.AutoSize = true;
-            lblNFEVersion.Location = new Point(6, 68);
+            lblNFEVersion.Location = new Point(6, 31);
             lblNFEVersion.Name = "lblNFEVersion";
             lblNFEVersion.Size = new Size(68, 15);
             lblNFEVersion.TabIndex = 26;
             lblNFEVersion.Text = "Versão XML";
             // 
-            // chkEnableNFe
-            // 
-            chkEnableNFe.FlatStyle = FlatStyle.Flat;
-            chkEnableNFe.Location = new Point(6, 30);
-            chkEnableNFe.Name = "chkEnableNFe";
-            chkEnableNFe.Size = new Size(166, 19);
-            chkEnableNFe.TabIndex = 25;
-            chkEnableNFe.Text = "Habilitar emissão de NF-e";
-            chkEnableNFe.UseVisualStyleBackColor = true;
-            // 
             // tabDigitalCertificate
             // 
-            tabDigitalCertificate.Controls.Add(groupBox5);
+            tabDigitalCertificate.Controls.Add(chkCertificateA1);
+            tabDigitalCertificate.Controls.Add(grbCertificateDigital);
             tabDigitalCertificate.Location = new Point(4, 24);
             tabDigitalCertificate.Name = "tabDigitalCertificate";
             tabDigitalCertificate.Padding = new Padding(3);
@@ -830,32 +858,20 @@
             tabDigitalCertificate.Text = "Certificado Digital";
             tabDigitalCertificate.UseVisualStyleBackColor = true;
             // 
-            // groupBox5
+            // grbCertificateDigital
             // 
-            groupBox5.BackColor = SystemColors.Control;
-            groupBox5.Controls.Add(chkCertificateA1);
-            groupBox5.Controls.Add(txtPasswordCertificate);
-            groupBox5.Controls.Add(lbltxtPasswordCertificate);
-            groupBox5.Controls.Add(btnSelectCertificate);
-            groupBox5.Controls.Add(txtDigitalCertificate);
-            groupBox5.Controls.Add(lblDigitalCertificate);
-            groupBox5.Dock = DockStyle.Fill;
-            groupBox5.Location = new Point(3, 3);
-            groupBox5.Name = "groupBox5";
-            groupBox5.Size = new Size(755, 317);
-            groupBox5.TabIndex = 0;
-            groupBox5.TabStop = false;
-            // 
-            // chkCertificateA1
-            // 
-            chkCertificateA1.AutoSize = true;
-            chkCertificateA1.FlatStyle = FlatStyle.Flat;
-            chkCertificateA1.Location = new Point(647, 52);
-            chkCertificateA1.Name = "chkCertificateA1";
-            chkCertificateA1.Size = new Size(98, 19);
-            chkCertificateA1.TabIndex = 20;
-            chkCertificateA1.Text = "Certificado A1";
-            chkCertificateA1.UseVisualStyleBackColor = true;
+            grbCertificateDigital.BackColor = SystemColors.Control;
+            grbCertificateDigital.Controls.Add(txtPasswordCertificate);
+            grbCertificateDigital.Controls.Add(lbltxtPasswordCertificate);
+            grbCertificateDigital.Controls.Add(btnSelectCertificate);
+            grbCertificateDigital.Controls.Add(txtDigitalCertificate);
+            grbCertificateDigital.Controls.Add(lblDigitalCertificate);
+            grbCertificateDigital.Dock = DockStyle.Fill;
+            grbCertificateDigital.Location = new Point(3, 3);
+            grbCertificateDigital.Name = "grbCertificateDigital";
+            grbCertificateDigital.Size = new Size(755, 317);
+            grbCertificateDigital.TabIndex = 0;
+            grbCertificateDigital.TabStop = false;
             // 
             // txtPasswordCertificate
             // 
@@ -890,6 +906,7 @@
             btnSelectCertificate.TabIndex = 17;
             btnSelectCertificate.Text = "    Selecionar...\n\n";
             btnSelectCertificate.UseVisualStyleBackColor = false;
+            btnSelectCertificate.Click += btnSelectCertificate_Click;
             // 
             // txtDigitalCertificate
             // 
@@ -933,6 +950,7 @@
             btnCancel.TabIndex = 10;
             btnCancel.Text = "     Cancelar";
             btnCancel.UseVisualStyleBackColor = false;
+            btnCancel.Click += btnCancel_Click;
             // 
             // btnSave
             // 
@@ -952,6 +970,19 @@
             btnSave.UseVisualStyleBackColor = false;
             btnSave.Click += btnSave_Click;
             // 
+            // chkCertificateA1
+            // 
+            chkCertificateA1.AutoSize = true;
+            chkCertificateA1.BackColor = SystemColors.Control;
+            chkCertificateA1.FlatStyle = FlatStyle.Flat;
+            chkCertificateA1.Location = new Point(8, 3);
+            chkCertificateA1.Name = "chkCertificateA1";
+            chkCertificateA1.Size = new Size(98, 19);
+            chkCertificateA1.TabIndex = 21;
+            chkCertificateA1.Text = "Certificado A1";
+            chkCertificateA1.UseVisualStyleBackColor = false;
+            chkCertificateA1.CheckedChanged += chkCertificateA1_CheckedChanged;
+            // 
             // ConfigForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -968,18 +999,19 @@
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
             tabNFCe.ResumeLayout(false);
-            groupBox2.ResumeLayout(false);
-            groupBox2.PerformLayout();
+            grbNFCe.ResumeLayout(false);
+            grbNFCe.PerformLayout();
             tabPrinters.ResumeLayout(false);
             groupBox3.ResumeLayout(false);
             groupBox3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dgvPrintSectors).EndInit();
             tabNFe.ResumeLayout(false);
-            groupBox4.ResumeLayout(false);
-            groupBox4.PerformLayout();
+            grbNFe.ResumeLayout(false);
+            grbNFe.PerformLayout();
             tabDigitalCertificate.ResumeLayout(false);
-            groupBox5.ResumeLayout(false);
-            groupBox5.PerformLayout();
+            tabDigitalCertificate.PerformLayout();
+            grbCertificateDigital.ResumeLayout(false);
+            grbCertificateDigital.PerformLayout();
             panel1.ResumeLayout(false);
             ResumeLayout(false);
         }
@@ -1002,7 +1034,7 @@
         private Panel panel1;
         private FontAwesome.Sharp.IconButton btnCancel;
         private FontAwesome.Sharp.IconButton btnSave;
-        private GroupBox groupBox2;
+        private GroupBox grbNFCe;
         private FontAwesome.Sharp.IconButton btnSelectXMLPath;
         private TextBox txtXMLPath;
         private Label lblXMLPath;
@@ -1019,12 +1051,10 @@
         private DataGridView dgvPrintSectors;
         private FontAwesome.Sharp.IconButton btnAddSector;
         private TabPage tabNFe;
-        private GroupBox groupBox4;
-        private CheckBox chkEnableNFe;
+        private GroupBox grbNFe;
         private Label lblVersionDF;
         private TabPage tabDigitalCertificate;
-        private GroupBox groupBox5;
-        private CheckBox chkCertificateA1;
+        private GroupBox grbCertificateDigital;
         private TextBox txtPasswordCertificate;
         private Label lbltxtPasswordCertificate;
         private FontAwesome.Sharp.IconButton btnSelectCertificate;
@@ -1032,7 +1062,7 @@
         private Label lblDigitalCertificate;
         private TextBox txtVersionDF;
         private Label lblModel;
-        private TextBox textBox1;
+        private TextBox txtNFCEModel;
         private Label lblSerial;
         private TextBox txtSerial;
         private Label lblInitialNumber;
@@ -1043,7 +1073,7 @@
         private Label lblNFeSerial;
         private TextBox txtNFeModel;
         private Label lblNFeModel;
-        private TextBox textBox2;
+        private TextBox txtVersionNFe;
         private Label lblNFeXmlPath;
         private ComboBox cmbNFeEnvironment;
         private Label lblNFeEnvironment;
@@ -1051,7 +1081,7 @@
         private Label lblNFeInitialNumber;
         private TextBox txtNFeSerial;
         private CheckBox chkNFePrint;
-        private FontAwesome.Sharp.IconButton iconButton1;
+        private FontAwesome.Sharp.IconButton btnXMLPathNFe;
         private TextBox txtNFeXmlPath;
         private Label lblNFePresence;
         private ComboBox cmbNFeFinality;
@@ -1062,5 +1092,8 @@
         private ComboBox cmbNFePayment;
         private Label lblNFePayment;
         private ComboBox cmbNFePresence;
+        private CheckBox chkEnableNFCe;
+        private CheckBox chkEnableNFe;
+        private CheckBox chkCertificateA1;
     }
 }

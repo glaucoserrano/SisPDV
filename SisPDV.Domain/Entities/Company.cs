@@ -43,7 +43,7 @@ namespace SisPDV.Domain.Entities
         [MaxLength(10)]
         public string Number { get; set; } = string.Empty; //Numero
 
-        [MaxLength(50)]
+        [Required, MaxLength(50)]
         public string District { get; set; } = string.Empty; //Bairro
 
         [MaxLength(20)]
@@ -54,5 +54,12 @@ namespace SisPDV.Domain.Entities
         
         [Required]
         public TaxRegime TaxRegime { get; set; } //Regime Tributário
+
+        [Required]
+        public string Country { get; set; } = "Brasil"; // xPais
+
+        [Required]
+        public string CountryCode { get; set; } = "1058"; // cPais
+
     }
 }

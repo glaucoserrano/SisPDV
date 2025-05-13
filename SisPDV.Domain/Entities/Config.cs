@@ -19,6 +19,8 @@ namespace SisPDV.Domain.Entities
         public bool CertificateA1 { get; set; } // Certificado A1 ou A3
 
         //Configuração de NFC-e
+        public bool NFCeEnabled { get; set; } = false; // Habilitar uso de NF-e
+
         [Required, MaxLength(5)]
         public string VersionDF { get; set; } = "4.00"; // Versão da NFC-e
 
@@ -82,7 +84,7 @@ namespace SisPDV.Domain.Entities
         public PresenceIndicator NFePresenceIndicator { get; set; } = PresenceIndicator.Presencial;
 
         [Required]
-        public PaymentForm NFePaymentForm { get; set; } = PaymentForm.AVista;
+        public PaymentType NFePaymentForm { get; set; } = PaymentType.AVista;
         //Configuraçoes Gerais
         public bool UseStockControl { get; set; } // Usar Controle de Estoque
         public bool SalesZeroStock { get; set; } //Permite venda com estoque zerado

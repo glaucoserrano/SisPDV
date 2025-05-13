@@ -10,5 +10,6 @@ namespace SisPDV.Application.Interfaces
         Task SaveAsync(ConfigDTO request);
         Task<ValidationResults> SaveAsyncConfig(int cashNumber, List<PrintSectorsDTO> requestPrintSector,
             ConfigDTO requestConfig, string pathSystem);
+        Task<(ConfigDTO, List<PrintSectorsDTO>)> GetFullConfigAsync();
     }
 }

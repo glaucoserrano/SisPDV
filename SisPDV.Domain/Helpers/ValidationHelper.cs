@@ -1,7 +1,4 @@
-﻿using System.Reflection;
-using System.Text.RegularExpressions;
-
-namespace SisPDV.Domain.Helpers
+﻿namespace SisPDV.Domain.Helpers
 {
     public class ValidationHelper
     {

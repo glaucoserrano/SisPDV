@@ -1,6 +1,6 @@
 ﻿namespace SisPDV.Domain.Enum
 {
-    public enum PaymentForm
+    public enum PaymentType
     {
         AVista = 1,
         APrazo = 2,

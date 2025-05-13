@@ -10,6 +10,7 @@ namespace SisPDV.Application.DTOs.Config
         public bool CertificateA1 { get; set; }
 
         // NFC-e
+        public bool NFCeEnabled { get; set; }
         public string VersionDF { get; set; } = "4.00";
         public int Model { get; set; } = 65;
         public int Serial { get; set; }
@@ -34,7 +35,7 @@ namespace SisPDV.Application.DTOs.Config
         public string NFeDestinationEmail { get; set; } = string.Empty;
         public NFeFinality NFeFinality { get; set; }
         public PresenceIndicator NFePresenceIndicator { get; set; }
-        public PaymentForm NFePaymentForm { get; set; }
+        public PaymentType NFePaymentForm { get; set; }
 
         // Gerais
         public bool UseStockControl { get; set; }

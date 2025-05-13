@@ -1,10 +1,13 @@
 ﻿using SisPDV.APP.CompanyMenu;
 using SisPDV.APP.Config;
 using SisPDV.APP.ConfigMenu;
+using SisPDV.APP.Helpers;
 using SisPDV.APP.PermissionMenu;
+using SisPDV.APP.PersonMenu;
 using SisPDV.APP.User;
 using SisPDV.Application.ExternalInterfaces;
 using SisPDV.Application.Interfaces;
+using SisPDV.Domain.Entities;
 using System.Reflection;
 using System.Text.Json;
 using WindowsForms = System.Windows.Forms;
@@ -21,6 +24,8 @@ namespace SisPDV.APP.Main
         private readonly IConfigService _configServices;
         private readonly ICnpjService _cnpjService;
         private readonly ICepService _cepService;
+        private readonly IPersonService _personService;
+
         private readonly int? _userID;
         private readonly string? _userName;
 
@@ -35,7 +40,9 @@ namespace SisPDV.APP.Main
             ICepService cepService,
             ICompanyService companyService,
             IPrinterSerctorsServices printerSectorsServices,
-            IConfigService configServices)
+            IConfigService configServices,
+            IPersonService personService
+           )
         {
             InitializeComponent();
             _userID = userId;
@@ -48,6 +55,7 @@ namespace SisPDV.APP.Main
             _companyService = companyService;
             _printerSectorsServices = printerSectorsServices;
             _configServices = configServices;
+            _personService = personService;
 
             string? version = Assembly.
                 GetExecutingAssembly().
@@ -56,11 +64,7 @@ namespace SisPDV.APP.Main
 
             this.Text = $"SisPDV - Sistema de Vendas versão: {version}";
             sslUser.Text = $"Usuário: {_userName} - Caixa {GetPDVNumber()} - Data/Hora {DateTime.Now.ToString("dd/MM/yyyy HH:mm")}";
-            _menuService = menuService;
-            _cepService = cepService;
-            _companyService = companyService;
-            _printerSectorsServices = printerSectorsServices;
-            _configServices = configServices;
+            
         }
         private async void MainForm_Load(object sender, EventArgs e)
         {
@@ -82,13 +86,15 @@ namespace SisPDV.APP.Main
         }
         private static string GetPDVNumber()
         {
-            string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "config-caixa.json");
-            if (!File.Exists(path))
+            string path = AppDomain.CurrentDomain.BaseDirectory;
+
+            var cashNumber = CashNumberHelper.GetCashNumber(path);
+
+            if(cashNumber == 0 )
                 return "Não configurado";
 
-            var json = File.ReadAllText(path);
-            var config = JsonSerializer.Deserialize<PDVConfig>(json);
-            return config?.numberPDV.ToString() ?? "Não configurado";
+            return cashNumber.ToString() ?? "Não configurado";
+
         }
 
         private async Task LoadMenuAsync()
@@ -140,7 +146,8 @@ namespace SisPDV.APP.Main
                     "UserChangePassword" => new UserChangePassword(_userID, _userService),
                     "PermissionMenuForm" => new PermissionMenuForm(_userService, _menuService, _userMenuService),
                     "CompanyForm" => new CompanyForm(_cnpjService, _cepService, _companyService, _userID, _userService),
-                    "ConfigForm" => new ConfigForm(_printerSectorsServices,_configServices),
+                    "ConfigForm" => new ConfigForm(_printerSectorsServices, _configServices),
+                    "PersonForm" => new PersonForm(_cepService, _personService),
                     _ => null
                 };
                 form?.ShowDialog();

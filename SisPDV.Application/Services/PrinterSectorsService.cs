@@ -1,4 +1,5 @@
-﻿using SisPDV.Application.DTOs.Config.PrintSector;
+﻿using Microsoft.EntityFrameworkCore;
+using SisPDV.Application.DTOs.Config.PrintSector;
 using SisPDV.Application.DTOs.Validation;
 using SisPDV.Application.Interfaces;
 using SisPDV.Domain.Entities;
@@ -14,6 +15,31 @@ namespace SisPDV.Application.Services
         public PrinterSectorsService(PDVDbContext context)
         {
             _context = context;
+        }
+
+        public async Task<bool> RemovePrintSectors(int id)
+        {
+            using var transactions = await _context!.Database.BeginTransactionAsync();
+            var sector = await _context.printsectors.FirstOrDefaultAsync(p => p.Id == id);
+
+            if ( sector == null )
+            {
+                return false;
+            }
+            try
+            {
+                _context.printsectors.Remove(sector);
+                await _context.SaveChangesAsync();
+                await transactions.CommitAsync();
+
+                return true;
+            }
+            catch
+            {
+                await transactions.RollbackAsync();
+                return false;
+            }
+
         }
 
         public async Task SaveAsync(List<PrintSectorsDTO> request)

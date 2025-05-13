@@ -67,6 +67,26 @@ namespace SisPDV.Infrastructure.Persistence.Seed
                     Order = 5,
                     Visible = true,
                     CreatedBy = "System"
+                },
+                new Menu
+                {
+                    Id = 7,
+                    ParentId = null,
+                    Title = "Cadastro",
+                    FormName = null,
+                    Order = 6,
+                    Visible = true,
+                    CreatedBy = "System"
+                },
+                new Menu
+                {
+                    Id = 8,
+                    ParentId = 7,
+                    Title = "Cadastro de Pessoas (Cliente, Fornecedor, Transportadora)",
+                    FormName = "PersonForm",
+                    Order = 6,
+                    Visible = true,
+                    CreatedBy = "System"
                 }
             );
         }

@@ -7,5 +7,6 @@ namespace SisPDV.Application.Interfaces
     {
         Task<ValidationResults> Validate(List<PrintSectorsDTO> request);
         Task SaveAsync(List<PrintSectorsDTO> request);
+        Task<bool> RemovePrintSectors(int id);
     }
 }

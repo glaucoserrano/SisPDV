@@ -23,6 +23,7 @@ namespace SisPDV.Infrastructure.Persistence
         public DbSet<SystemValidation> systemValidation { get; set; }
         public DbSet<EncryptionSettings> encryptionSettings { get; set; }
         public DbSet<Person> person { get; set; }
+        public DbSet<ProductTypes> productTypes { get; set; }
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
@@ -80,6 +81,10 @@ namespace SisPDV.Infrastructure.Persistence
                 .HasOne(um => um.Menu)
                 .WithMany()
                 .HasForeignKey(um => um.MenuId);
+
+            modelBuilder.Entity<ProductTypes>()
+                .Property(p => p.IVA)
+                .HasColumnType("decimal(5,2)");
         }
 
     }

@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using SisPDV.Infrastructure.Persistence;
@@ -11,9 +12,11 @@ using SisPDV.Infrastructure.Persistence;
 namespace SisPDV.Infrastructure.Migrations
 {
     [DbContext(typeof(PDVDbContext))]
-    partial class PDVDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250516112921_CreateTableProductTypes")]
+    partial class CreateTableProductTypes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -626,9 +629,6 @@ namespace SisPDV.Infrastructure.Migrations
                     b.Property<int?>("CST_CSOSN")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("CST_ICMS")
-                        .HasColumnType("integer");
-
                     b.Property<int?>("CST_PIS")
                         .HasColumnType("integer");
 
@@ -644,10 +644,6 @@ namespace SisPDV.Infrastructure.Migrations
                     b.Property<string>("NCM")
                         .HasMaxLength(20)
                         .HasColumnType("character varying(20)");
-
-                    b.Property<string>("Notes")
-                        .HasMaxLength(500)
-                        .HasColumnType("character varying(500)");
 
                     b.Property<int?>("Origin")
                         .HasColumnType("integer");

@@ -87,6 +87,16 @@ namespace SisPDV.Infrastructure.Persistence.Seed
                     Order = 6,
                     Visible = true,
                     CreatedBy = "System"
+                },
+                new Menu
+                {
+                    Id = 9,
+                    ParentId = 7,
+                    Title = "Tipo de Produtos",
+                    FormName = "TypeProductsForm",
+                    Order = 7,
+                    Visible = true,
+                    CreatedBy = "System"
                 }
             );
         }

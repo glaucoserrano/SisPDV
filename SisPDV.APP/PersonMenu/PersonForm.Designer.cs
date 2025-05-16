@@ -61,6 +61,22 @@
             chkSupplier = new CheckBox();
             chkCarrier = new CheckBox();
             tabSearch = new TabPage();
+            grbSearch = new GroupBox();
+            panel1 = new Panel();
+            groupBox2 = new GroupBox();
+            rdbSearchCompany = new RadioButton();
+            rdbSearchIndividual = new RadioButton();
+            btnSearch = new FontAwesome.Sharp.IconButton();
+            grbTypeSearch = new GroupBox();
+            chkSearchClient = new CheckBox();
+            chkSearchSupplier = new CheckBox();
+            chkSearchCarrier = new CheckBox();
+            chkSearchActive = new CheckBox();
+            txtSerachCNPJ = new MaskedTextBox();
+            lblSearchCNPJ = new Label();
+            txtSearchName = new TextBox();
+            lblSearchName = new Label();
+            dgvPerson = new DataGridView();
             tabControl.SuspendLayout();
             tabRegister.SuspendLayout();
             grpIdentification.SuspendLayout();
@@ -69,6 +85,12 @@
             grpContact.SuspendLayout();
             grpAddress.SuspendLayout();
             grpType.SuspendLayout();
+            tabSearch.SuspendLayout();
+            grbSearch.SuspendLayout();
+            panel1.SuspendLayout();
+            groupBox2.SuspendLayout();
+            grbTypeSearch.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvPerson).BeginInit();
             SuspendLayout();
             // 
             // tabControl
@@ -125,6 +147,7 @@
             btnClean.TabIndex = 10;
             btnClean.Text = "   Limpar";
             btnClean.UseVisualStyleBackColor = false;
+            btnClean.Click += btnClean_Click;
             // 
             // btnSave
             // 
@@ -548,12 +571,187 @@
             // 
             // tabSearch
             // 
+            tabSearch.Controls.Add(grbSearch);
             tabSearch.Location = new Point(4, 24);
             tabSearch.Name = "tabSearch";
             tabSearch.Size = new Size(792, 422);
             tabSearch.TabIndex = 1;
             tabSearch.Text = "Consulta";
             tabSearch.UseVisualStyleBackColor = true;
+            // 
+            // grbSearch
+            // 
+            grbSearch.BackColor = SystemColors.Control;
+            grbSearch.Controls.Add(panel1);
+            grbSearch.Controls.Add(dgvPerson);
+            grbSearch.Dock = DockStyle.Fill;
+            grbSearch.Location = new Point(0, 0);
+            grbSearch.Name = "grbSearch";
+            grbSearch.Size = new Size(792, 422);
+            grbSearch.TabIndex = 0;
+            grbSearch.TabStop = false;
+            grbSearch.Text = "Consulta";
+            // 
+            // panel1
+            // 
+            panel1.Controls.Add(groupBox2);
+            panel1.Controls.Add(btnSearch);
+            panel1.Controls.Add(grbTypeSearch);
+            panel1.Controls.Add(chkSearchActive);
+            panel1.Controls.Add(txtSerachCNPJ);
+            panel1.Controls.Add(lblSearchCNPJ);
+            panel1.Controls.Add(txtSearchName);
+            panel1.Controls.Add(lblSearchName);
+            panel1.Location = new Point(3, 22);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(786, 118);
+            panel1.TabIndex = 1;
+            // 
+            // groupBox2
+            // 
+            groupBox2.Controls.Add(rdbSearchCompany);
+            groupBox2.Controls.Add(rdbSearchIndividual);
+            groupBox2.Location = new Point(311, 7);
+            groupBox2.Name = "groupBox2";
+            groupBox2.Size = new Size(151, 45);
+            groupBox2.TabIndex = 22;
+            groupBox2.TabStop = false;
+            groupBox2.Text = "Tipo de Pessoa";
+            // 
+            // rdbSearchCompany
+            // 
+            rdbSearchCompany.AutoSize = true;
+            rdbSearchCompany.Checked = true;
+            rdbSearchCompany.FlatStyle = FlatStyle.Flat;
+            rdbSearchCompany.Location = new Point(68, 18);
+            rdbSearchCompany.Name = "rdbSearchCompany";
+            rdbSearchCompany.Size = new Size(64, 19);
+            rdbSearchCompany.TabIndex = 1;
+            rdbSearchCompany.TabStop = true;
+            rdbSearchCompany.Text = "Jurídica";
+            rdbSearchCompany.UseVisualStyleBackColor = true;
+            rdbSearchCompany.CheckedChanged += rdbSearchCompany_CheckedChanged;
+            // 
+            // rdbSearchIndividual
+            // 
+            rdbSearchIndividual.AutoSize = true;
+            rdbSearchIndividual.FlatStyle = FlatStyle.Flat;
+            rdbSearchIndividual.Location = new Point(8, 18);
+            rdbSearchIndividual.Name = "rdbSearchIndividual";
+            rdbSearchIndividual.Size = new Size(53, 19);
+            rdbSearchIndividual.TabIndex = 0;
+            rdbSearchIndividual.Text = "Física";
+            rdbSearchIndividual.UseVisualStyleBackColor = true;
+            rdbSearchIndividual.CheckedChanged += rdbSearchIndividual_CheckedChanged;
+            // 
+            // btnSearch
+            // 
+            btnSearch.FlatStyle = FlatStyle.Flat;
+            btnSearch.IconChar = FontAwesome.Sharp.IconChar.Search;
+            btnSearch.IconColor = Color.Black;
+            btnSearch.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            btnSearch.IconSize = 16;
+            btnSearch.ImageAlign = ContentAlignment.MiddleLeft;
+            btnSearch.Location = new Point(689, 78);
+            btnSearch.Name = "btnSearch";
+            btnSearch.Size = new Size(89, 24);
+            btnSearch.TabIndex = 21;
+            btnSearch.Text = "   Pesquisar";
+            btnSearch.UseVisualStyleBackColor = true;
+            btnSearch.Click += btnSearch_Click;
+            // 
+            // grbTypeSearch
+            // 
+            grbTypeSearch.Controls.Add(chkSearchClient);
+            grbTypeSearch.Controls.Add(chkSearchSupplier);
+            grbTypeSearch.Controls.Add(chkSearchCarrier);
+            grbTypeSearch.Location = new Point(5, 58);
+            grbTypeSearch.Name = "grbTypeSearch";
+            grbTypeSearch.Size = new Size(337, 50);
+            grbTypeSearch.TabIndex = 20;
+            grbTypeSearch.TabStop = false;
+            grbTypeSearch.Text = "Tipo";
+            // 
+            // chkSearchClient
+            // 
+            chkSearchClient.FlatStyle = FlatStyle.Flat;
+            chkSearchClient.Location = new Point(10, 20);
+            chkSearchClient.Name = "chkSearchClient";
+            chkSearchClient.Size = new Size(84, 24);
+            chkSearchClient.TabIndex = 0;
+            chkSearchClient.Text = "Cliente";
+            // 
+            // chkSearchSupplier
+            // 
+            chkSearchSupplier.FlatStyle = FlatStyle.Flat;
+            chkSearchSupplier.Location = new Point(100, 20);
+            chkSearchSupplier.Name = "chkSearchSupplier";
+            chkSearchSupplier.Size = new Size(104, 24);
+            chkSearchSupplier.TabIndex = 1;
+            chkSearchSupplier.Text = "Fornecedor";
+            // 
+            // chkSearchCarrier
+            // 
+            chkSearchCarrier.FlatStyle = FlatStyle.Flat;
+            chkSearchCarrier.Location = new Point(210, 20);
+            chkSearchCarrier.Name = "chkSearchCarrier";
+            chkSearchCarrier.Size = new Size(104, 24);
+            chkSearchCarrier.TabIndex = 2;
+            chkSearchCarrier.Text = "Transportadora";
+            // 
+            // chkSearchActive
+            // 
+            chkSearchActive.FlatStyle = FlatStyle.Flat;
+            chkSearchActive.Location = new Point(593, 27);
+            chkSearchActive.Name = "chkSearchActive";
+            chkSearchActive.Size = new Size(104, 24);
+            chkSearchActive.TabIndex = 19;
+            chkSearchActive.Text = "Ativo";
+            // 
+            // txtSerachCNPJ
+            // 
+            txtSerachCNPJ.Location = new Point(468, 29);
+            txtSerachCNPJ.Mask = "99,999,999/9999-99";
+            txtSerachCNPJ.Name = "txtSerachCNPJ";
+            txtSerachCNPJ.Size = new Size(119, 23);
+            txtSerachCNPJ.TabIndex = 18;
+            // 
+            // lblSearchCNPJ
+            // 
+            lblSearchCNPJ.AutoSize = true;
+            lblSearchCNPJ.Location = new Point(468, 11);
+            lblSearchCNPJ.Name = "lblSearchCNPJ";
+            lblSearchCNPJ.Size = new Size(66, 15);
+            lblSearchCNPJ.TabIndex = 2;
+            lblSearchCNPJ.Text = "CPF / CNPJ";
+            // 
+            // txtSearchName
+            // 
+            txtSearchName.Location = new Point(5, 29);
+            txtSearchName.Name = "txtSearchName";
+            txtSearchName.PlaceholderText = "Nome / Razão Social";
+            txtSearchName.Size = new Size(300, 23);
+            txtSearchName.TabIndex = 1;
+            // 
+            // lblSearchName
+            // 
+            lblSearchName.AutoSize = true;
+            lblSearchName.Location = new Point(5, 11);
+            lblSearchName.Name = "lblSearchName";
+            lblSearchName.Size = new Size(116, 15);
+            lblSearchName.TabIndex = 0;
+            lblSearchName.Text = "Nome / Razão Social";
+            // 
+            // dgvPerson
+            // 
+            dgvPerson.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvPerson.Dock = DockStyle.Bottom;
+            dgvPerson.Location = new Point(3, 146);
+            dgvPerson.Name = "dgvPerson";
+            dgvPerson.RowHeadersVisible = false;
+            dgvPerson.Size = new Size(786, 273);
+            dgvPerson.TabIndex = 0;
+            dgvPerson.CellDoubleClick += dgvPerson_CellDoubleClick;
             // 
             // PersonForm
             // 
@@ -581,6 +779,14 @@
             grpAddress.ResumeLayout(false);
             grpAddress.PerformLayout();
             grpType.ResumeLayout(false);
+            tabSearch.ResumeLayout(false);
+            grbSearch.ResumeLayout(false);
+            panel1.ResumeLayout(false);
+            panel1.PerformLayout();
+            groupBox2.ResumeLayout(false);
+            groupBox2.PerformLayout();
+            grbTypeSearch.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)dgvPerson).EndInit();
             ResumeLayout(false);
         }
 
@@ -634,5 +840,21 @@
         private RadioButton rdbIndicatorIsento;
         private RadioButton rdbIndicatorContribuinteICMS;
         private RadioButton rdbIndicatorNaoContribuinte;
+        private GroupBox grbSearch;
+        private DataGridView dgvPerson;
+        private Panel panel1;
+        private Label lblSearchCNPJ;
+        private TextBox txtSearchName;
+        private Label lblSearchName;
+        private GroupBox grbTypeSearch;
+        private CheckBox chkSearchClient;
+        private CheckBox chkSearchSupplier;
+        private CheckBox chkSearchCarrier;
+        private CheckBox chkSearchActive;
+        private MaskedTextBox txtSerachCNPJ;
+        private FontAwesome.Sharp.IconButton btnSearch;
+        private GroupBox groupBox2;
+        private RadioButton rdbSearchCompany;
+        private RadioButton rdbSearchIndividual;
     }
 }

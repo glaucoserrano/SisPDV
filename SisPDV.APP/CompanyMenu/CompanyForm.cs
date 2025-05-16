@@ -16,7 +16,7 @@ namespace SisPDV.APP.CompanyMenu
         private readonly ICompanyService _companyService;
         private readonly IUserService _userService;
 
-        private Company? _actualCompany;
+        private CompanyDTO? _actualCompany;
 
         public CompanyForm(ICnpjService cnpjService,
             ICepService cepService,
@@ -57,7 +57,7 @@ namespace SisPDV.APP.CompanyMenu
             }
         }
 
-        private void FillFields(Company actualCompany)
+        private void FillFields(CompanyDTO actualCompany)
         {
             if (actualCompany == null)
                 return;

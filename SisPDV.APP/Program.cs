@@ -36,6 +36,7 @@ namespace SisPDV.APP
             var printerSectorService = new PrinterSectorsService(dbContext);
             var configService = new ConfigService(dbContext);
             var PersonService = new PersonService(dbContext);
+            var productTypeService = new ProductTypeService(dbContext);
             
 
             var cnpjService = new CnpjService();
@@ -51,7 +52,8 @@ namespace SisPDV.APP
                 companyService,
                 printerSectorService,
                 configService,
-                PersonService));
+                PersonService,
+                productTypeService));
         }
     }
 }

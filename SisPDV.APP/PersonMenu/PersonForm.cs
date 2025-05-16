@@ -7,6 +7,7 @@ using SisPDV.Domain.Entities;
 using SisPDV.Domain.Enum;
 using SisPDV.Domain.Helpers;
 using System;
+using System.Threading.Tasks;
 using System.Xml.Linq;
 
 namespace SisPDV.APP.PersonMenu
@@ -42,7 +43,7 @@ namespace SisPDV.APP.PersonMenu
                 txtCNPJ.Mask = "000,000,000-00"; // CPF
                 txtCNPJ.Text = string.Empty;
                 txtIE.Text = "ISENTO";
-                rdbIndicatorIsento.Checked = true;
+                rdbIndicatorNaoContribuinte.Checked = true;
             }
 
         }
@@ -51,6 +52,8 @@ namespace SisPDV.APP.PersonMenu
         {
             rdoPersonTypeCompany.Checked = true;
             rdbIndicatorContribuinteICMS.Checked = true;
+
+            ConfigSearchGrid();
 
         }
 
@@ -105,7 +108,7 @@ namespace SisPDV.APP.PersonMenu
         {
             _idPerson = personExists!.Id;
             txtName.Text = personExists.Name;
-            txtCNPJ.Text = personExists.CNPJ_CPF;
+            //txtCNPJ.Text = personExists.CNPJ_CPF;
             txtIE.Text = personExists.IE;
             switch (personExists.IEIndicator)
             {
@@ -129,7 +132,7 @@ namespace SisPDV.APP.PersonMenu
             //txt.Text = personExists.IM;
             txtEmail.Text = personExists.Email;
             txtPhone.Text = personExists.Phone;
-
+            txtCNPJ.Text = personExists.CNPJ_CPF;
             txtCEP.Text = personExists.ZipCode;
             txtStreet.Text = personExists.Street;
             txtNumber.Text = personExists.Number;
@@ -159,16 +162,18 @@ namespace SisPDV.APP.PersonMenu
 
             if (!results)
                 return;
+
+            await _personService.SaveAsync(request);
+
             if(_idPerson == 0)
             {
-                await _personService.SaveAsync(request);
+                MessageBox.Show("Cadastro salvo com sucesso", "Sis_PDV", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-            else if(_idPerson != 0)
+            else
             {
-
+                MessageBox.Show("Cadastro alterado com sucesso", "Sis_PDV", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-
-
+            CleanData();
         }
 
         private PersonDTO BuildPersonDTOFromForm()
@@ -182,9 +187,9 @@ namespace SisPDV.APP.PersonMenu
                 IEIndicator = GetSelectedIEIndicator(),
                 //IM = txtIM.Text.Trim(),
                 Email = txtEmail.Text.Trim(),
-                Phone = txtPhone.Text.Trim(),
+                Phone = FormatHelper.OnlyNumber(txtPhone.Text).Trim(),
 
-                ZipCode = txtCEP.Text.Trim(),
+                ZipCode = FormatHelper.OnlyNumber(txtCEP.Text).Trim(),
                 Street = txtStreet.Text.Trim(),
                 Number = txtNumber.Text.Trim(),
                 Complement = txtComplement.Text.Trim(),
@@ -224,6 +229,125 @@ namespace SisPDV.APP.PersonMenu
                 return false;
             }
             return true;
+        }
+        private void ConfigSearchGrid()
+        {
+            dgvPerson.AutoGenerateColumns = false;
+            dgvPerson.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvPerson.MultiSelect = false;
+            dgvPerson.ReadOnly = true;
+
+            dgvPerson.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                HeaderText = "CPF/CNPJ",
+                DataPropertyName = "CNPJ_CPF",
+                Width = 260
+            });
+
+            dgvPerson.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                HeaderText = "Nome",
+                DataPropertyName = "Name",
+                Width = 262
+            });
+
+            dgvPerson.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                HeaderText = "Tipo",
+                DataPropertyName = "Types", // Ex: Cliente, Transportadora
+                Width = 260
+            });
+        }
+
+        private async void btnSearch_Click(object sender, EventArgs e)
+        {
+            var name = txtSearchName.Text.Trim();
+            var doc = FormatHelper.OnlyNumber(txtSerachCNPJ.Text).Trim();
+            var active = chkSearchActive.Checked;
+            var filterClient = chkSearchClient.Checked;
+            var filterSupplier = chkSearchSupplier.Checked;
+            var filterCarrier = chkSearchCarrier.Checked;
+
+            var persons = await _personService.SearchAsync(
+                name, doc, active, filterClient, filterSupplier, filterCarrier);
+
+
+            var data = persons.Select(p => new PersonGridDTO
+            {
+                Id = p.Id,
+                CNPJ_CPF = p.CNPJ_CPF,
+                Name = p.Name,
+                IsCustomer = p.IsCustomer,
+                IsSupplier = p.IsSupplier,
+                IsCarrier = p.IsCarrier
+            }).ToList();
+
+            dgvPerson.DataSource = data;
+        }
+
+        private void rdbSearchCompany_CheckedChanged(object sender, EventArgs e)
+        {
+            txtSerachCNPJ.Mask = "00,000,000/0000-00"; // CNPJ
+            txtSerachCNPJ.Text = string.Empty;
+        }
+
+        private void rdbSearchIndividual_CheckedChanged(object sender, EventArgs e)
+        {
+            txtSerachCNPJ.Mask = "000,000,000-00"; // CPF
+            txtSerachCNPJ.Text = string.Empty;
+        }
+
+        private async void dgvPerson_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                var selectedPerson = dgvPerson.Rows[e.RowIndex].DataBoundItem as PersonGridDTO;
+
+                if (selectedPerson != null)
+                {
+                    var person = await _personService.GetByDocument(FormatHelper.OnlyNumber(selectedPerson.CNPJ_CPF));
+
+                    FillFormWithPerson(person);
+
+                    tabControl.SelectedTab = tabRegister;
+                }
+            }
+        }
+        private void CleanData()
+        {
+            _idPerson = 0;
+            txtName.Text = string.Empty;
+            txtCNPJ.Text = string.Empty;
+            txtIE.Text = string.Empty;
+            rdbIndicatorContribuinteICMS.Checked = true;
+
+            txtEmail.Text = string.Empty;
+            txtPhone.Text = string.Empty;
+
+            txtCEP.Text = string.Empty;
+            txtStreet.Text = string.Empty;
+            txtNumber.Text = string.Empty;
+            txtComplement.Text = string.Empty;
+            txtDistrict.Text = string.Empty;
+            txtCity.Text = string.Empty;
+            txtUF.Text = string.Empty;
+
+            txtCityCode.Text = string.Empty;
+
+            rdoPersonTypeCompany.Checked = true;
+            rdoPersonTypeIndividual.Checked = false;
+
+            chkClient.Checked = false;
+            chkSupplier.Checked = false;
+            chkCarrier.Checked = false;
+            chkActive.Checked = true;
+
+            txtName.Focus();
+        }
+
+        private void btnClean_Click(object sender, EventArgs e)
+        {
+            CleanData();
         }
     }
 }

@@ -52,11 +52,11 @@
         }
         public static bool JustDecimal(string existingText, char text)
         {           
-            if (!char.IsControl(text) && !char.IsDigit(text) && text != '.')
+            if (!char.IsControl(text) && !char.IsDigit(text) && text != ',')
                 return  true;
 
             // Impede mais de um ponto decimal
-            if (text == '.' && existingText.Contains('.'))
+            if (text == ',' && existingText.Contains(','))
                 return true;
 
             return false;

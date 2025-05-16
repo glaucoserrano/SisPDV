@@ -18,9 +18,29 @@ namespace SisPDV.Application.Services
             _context = context;
         }
 
-        public async Task<Company?> GetAsync()
+        public async Task<CompanyDTO?> GetAsync()
         {
-            return await _context.company.FirstOrDefaultAsync();
+            var company = await _context.company.FirstOrDefaultAsync();
+
+            return new CompanyDTO
+            {
+                Id = company!.Id,
+                FantasyName = company.FantasyName,
+                CompanyName = company.CompanyName,
+                CNPJ = company.CNPJ,
+                IE = company.IE,
+                IM = company.IM,
+                UF = company.UF,
+                City = company.City,
+                CityCode = company.CityCode,
+                CEP = company.CEP,
+                Street = company.Street,
+                Number = company.Number,
+                District = company.District,
+                Phone = company.Phone,
+                Email = company.Email,
+                TaxRegime = company.TaxRegime
+            };
         }
 
         public async Task<string?> GetCnpjHashAsync()

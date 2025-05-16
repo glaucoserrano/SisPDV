@@ -6,7 +6,7 @@ namespace SisPDV.Application.Interfaces
 {
     public interface ICompanyService
     {
-        Task<Company?> GetAsync();
+        Task<CompanyDTO?> GetAsync();
         Task SaveAsync(CompanyDTO request);
         Task SaveCnpjHashAsync(string cnpj);
         Task<string?> GetCnpjHashAsync();

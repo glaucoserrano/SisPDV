@@ -4,6 +4,7 @@ using SisPDV.APP.ConfigMenu;
 using SisPDV.APP.Helpers;
 using SisPDV.APP.PermissionMenu;
 using SisPDV.APP.PersonMenu;
+using SisPDV.APP.Products.TypeProductsMenu;
 using SisPDV.APP.User;
 using SisPDV.Application.ExternalInterfaces;
 using SisPDV.Application.Interfaces;
@@ -25,6 +26,7 @@ namespace SisPDV.APP.Main
         private readonly ICnpjService _cnpjService;
         private readonly ICepService _cepService;
         private readonly IPersonService _personService;
+        private readonly IProductTypeService _productTypeService;
 
         private readonly int? _userID;
         private readonly string? _userName;
@@ -41,7 +43,8 @@ namespace SisPDV.APP.Main
             ICompanyService companyService,
             IPrinterSerctorsServices printerSectorsServices,
             IConfigService configServices,
-            IPersonService personService
+            IPersonService personService,
+            IProductTypeService productTypeService
            )
         {
             InitializeComponent();
@@ -56,6 +59,7 @@ namespace SisPDV.APP.Main
             _printerSectorsServices = printerSectorsServices;
             _configServices = configServices;
             _personService = personService;
+            _productTypeService = productTypeService;
 
             string? version = Assembly.
                 GetExecutingAssembly().
@@ -148,6 +152,7 @@ namespace SisPDV.APP.Main
                     "CompanyForm" => new CompanyForm(_cnpjService, _cepService, _companyService, _userID, _userService),
                     "ConfigForm" => new ConfigForm(_printerSectorsServices, _configServices),
                     "PersonForm" => new PersonForm(_cepService, _personService),
+                    "TypeProductsForm" => new TypeProductsForm(_companyService, _productTypeService),
                     _ => null
                 };
                 form?.ShowDialog();

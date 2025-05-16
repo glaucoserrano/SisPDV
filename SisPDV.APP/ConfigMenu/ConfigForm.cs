@@ -53,9 +53,9 @@ namespace SisPDV.APP.ConfigMenu
 
         private async void ConfigForm_Load(object sender, EventArgs e)
         {
+            LoadComboBox();
             ConfigGrid();
             PutPrintOnGrid();
-            LoadComboBox();
 
             await loadConfigs();
             
@@ -82,11 +82,11 @@ namespace SisPDV.APP.ConfigMenu
             txtNFCEModel.Text = config.Model.ToString();
             txtSerial.Text = config.Serial.ToString();
             txtInitialNumber.Text = config.InitialNumber.ToString();
-            cmbEnvironment.SelectedItem = config.Environment;
+            cmbEnvironment.SelectedValue = (int)config.Environment;
             txtCSC.Text = config.CSC;
             txtCSCId.Text = config.CSCId;
             chkPrintNFCe.Checked = config.Print;
-            cmbTypeEmission.SelectedItem = config.TypeEmission;
+            cmbTypeEmission.SelectedValue = (int)config.TypeEmission;
             txtXMLPath.Text = config.XMLPath;
 
             chkEnableNFe.Checked = config.NFeEnabled;
@@ -97,13 +97,13 @@ namespace SisPDV.APP.ConfigMenu
             txtNFeSerial.Text = config.NFeSerial.ToString();
             txtNFeInitialNumber.Text = config.NFeInitialNumber.ToString();
             txtNFeXmlPath.Text = config.NFeXmlPath;
-            cmbNFeEnvironment.SelectedItem = config.NFeEnvironment;
+            cmbNFeEnvironment.SelectedValue = (int)config.NFeEnvironment;
             chkNFePrint.Checked = config.NFePrint;
             chkNFeSavePDF.Checked = config.NFeSavePDF;
             txtNFeEmail.Text = config.NFeDestinationEmail;
-            cmbNFeFinality.SelectedItem = config.NFeFinality;
-            cmbNFePresence.SelectedItem = config.NFePresenceIndicator;
-            cmbNFePayment.SelectedItem = config.NFePaymentForm;
+            cmbNFeFinality.SelectedValue = (int)config.NFeFinality;
+            cmbNFePresence.SelectedValue= (int)config.NFePresenceIndicator;
+            cmbNFePayment.SelectedValue = (int)config.NFePaymentForm;
 
             chkUseStockControl.Checked = config.UseStockControl;
             chkSalesZeroStock.Checked = config.SalesZeroStock;
@@ -143,12 +143,12 @@ namespace SisPDV.APP.ConfigMenu
 
         private void LoadComboBox()
         {
-            LoadEnumToComboBox<EnvironmentNFCe>(cmbEnvironment); //Combo Ambiente NFC-e 
-            LoadEnumToComboBox<EnvironmentNFCe>(cmbNFeEnvironment); // Combo Ambiente NF-e
-            LoadEnumToComboBox<NFeFinality>(cmbNFeFinality); //Combo Finalidade NF-e
-            LoadEnumToComboBox<PaymentType>(cmbNFePayment); // Combo Forma de Pagamento Nfe
-            LoadEnumToComboBox<PresenceIndicator>(cmbNFePresence); // Combo Indicador de Presença do Pagador NF-e
-            LoadEnumToComboBox<TypeEmission>(cmbTypeEmission); // Tipo de Emissão NFC-e
+            LoadEnumToComboHelper.LoadEnumToComboBox<EnvironmentNFCe>(cmbEnvironment); //Combo Ambiente NFC-e 
+            LoadEnumToComboHelper.LoadEnumToComboBox<EnvironmentNFCe>(cmbNFeEnvironment); // Combo Ambiente NF-e
+            LoadEnumToComboHelper.LoadEnumToComboBox<NFeFinality>(cmbNFeFinality); //Combo Finalidade NF-e
+            LoadEnumToComboHelper.LoadEnumToComboBox<PaymentType>(cmbNFePayment); // Combo Forma de Pagamento Nfe
+            LoadEnumToComboHelper.LoadEnumToComboBox<PresenceIndicator>(cmbNFePresence); // Combo Indicador de Presença do Pagador NF-e
+            LoadEnumToComboHelper.LoadEnumToComboBox<TypeEmission>(cmbTypeEmission); // Tipo de Emissão NFC-e
         }
 
         private void ConfigGrid()
@@ -581,23 +581,6 @@ namespace SisPDV.APP.ConfigMenu
         {
             grbCertificateDigital.Enabled = chkCertificateA1.Checked;
         }
-        private void LoadEnumToComboBox<TEnum>(ComboBox comboBox) where TEnum : struct, Enum
-        {
-            var items = Enum.GetValues(typeof(TEnum))
-                            .Cast<TEnum>()
-                            .Select(e => new
-                            {
-                                Value = Convert.ToInt32(e),
-                                Description = $"{Convert.ToInt32(e)} - {e}"
-                            })
-                            .ToList();
-
-            // Adiciona o item padrão "0 - Selecione" no início da lista
-            items.Insert(0, new { Value = 0, Description = "0 - Selecione" });
-
-            comboBox.DataSource = items;
-            comboBox.DisplayMember = "Description";
-            comboBox.ValueMember = "Value";
-        }
     }
+
 }

@@ -19,7 +19,9 @@ namespace SisPDV.APP.Login
         private readonly IConfigService _configServices;
         private readonly IPersonService _personService;
         private readonly IProductTypeService _productTypeService;
-        
+        private readonly ICfopService _cfopService;
+        private readonly IUnityService _unityService;
+
         public LoginForm(
             IUserService userService, 
             ICurrentUserService currentUserService,
@@ -31,7 +33,9 @@ namespace SisPDV.APP.Login
             IPrinterSerctorsServices printerSectorsServices,
             IConfigService configServices,
             IPersonService personService,
-            IProductTypeService productTypeService)
+            IProductTypeService productTypeService,
+            ICfopService cfopService,
+            IUnityService unityService)
         {
             InitializeComponent();
             _userService = userService;
@@ -45,6 +49,8 @@ namespace SisPDV.APP.Login
             _configServices = configServices;
             _personService = personService;
             _productTypeService = productTypeService;
+            _cfopService = cfopService;
+            _unityService = unityService;
         }
 
         private async void btnLogin_Click(object sender, EventArgs e)
@@ -77,7 +83,9 @@ namespace SisPDV.APP.Login
                         printerSectorsServices: _printerSectorsServices,
                         configServices: _configServices,
                         personService: _personService,
-                        productTypeService: _productTypeService);
+                        productTypeService: _productTypeService,
+                        cfopService: _cfopService,
+                        unityService: _unityService);
                     mainForm.WindowState = FormWindowState.Maximized;
 
                     mainForm.FormClosed += (s, e) => this.Close();

@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using SisPDV.Infrastructure.Persistence;
@@ -11,9 +12,11 @@ using SisPDV.Infrastructure.Persistence;
 namespace SisPDV.Infrastructure.Migrations
 {
     [DbContext(typeof(PDVDbContext))]
-    partial class PDVDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250519114333_AddSeedProductFormMenu")]
+    partial class AddSeedProductFormMenu
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,68 +24,6 @@ namespace SisPDV.Infrastructure.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
-
-            modelBuilder.Entity("SisPDV.Domain.Entities.Cfop", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Code")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("cfops");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Code = "5102",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedBy = "System",
-                            Description = "Venda de mercadoria adquirida ou recebida de terceiros",
-                            UpdatedBy = ""
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Code = "5101",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedBy = "System",
-                            Description = "Venda de produção do estabelecimento",
-                            UpdatedBy = ""
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Code = "5405",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedBy = "System",
-                            Description = "Venda de mercadoria adquirida de terceiros, com ST",
-                            UpdatedBy = ""
-                        });
-                });
 
             modelBuilder.Entity("SisPDV.Domain.Entities.Company", b =>
                 {
@@ -504,18 +445,6 @@ namespace SisPDV.Infrastructure.Migrations
                             Title = "Tipo de Produtos",
                             UpdatedBy = "",
                             Visible = true
-                        },
-                        new
-                        {
-                            Id = 10,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedBy = "System",
-                            FormName = "ProductForm",
-                            Order = 8,
-                            ParentId = 7,
-                            Title = "Cadastro de Produtos",
-                            UpdatedBy = "",
-                            Visible = true
                         });
                 });
 
@@ -690,6 +619,10 @@ namespace SisPDV.Infrastructure.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("CFOP")
+                        .HasMaxLength(10)
+                        .HasColumnType("character varying(10)");
+
                     b.Property<int?>("CST_COFINS")
                         .HasColumnType("integer");
 
@@ -700,9 +633,6 @@ namespace SisPDV.Infrastructure.Migrations
                         .HasColumnType("integer");
 
                     b.Property<int?>("CST_PIS")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("CfopId")
                         .HasColumnType("integer");
 
                     b.Property<DateTime>("CreatedAt")
@@ -738,8 +668,6 @@ namespace SisPDV.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CfopId");
-
                     b.ToTable("productTypes");
                 });
 
@@ -758,113 +686,6 @@ namespace SisPDV.Infrastructure.Migrations
                     b.HasKey("id");
 
                     b.ToTable("systemValidation");
-                });
-
-            modelBuilder.Entity("SisPDV.Domain.Entities.Unity", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Acronym")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("unities");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Acronym = "UN",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedBy = "System",
-                            Description = "Unidade",
-                            UpdatedBy = ""
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Acronym = "KG",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedBy = "System",
-                            Description = "Quilograma",
-                            UpdatedBy = ""
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Acronym = "LT",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedBy = "System",
-                            Description = "Litro",
-                            UpdatedBy = ""
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Acronym = "PC",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedBy = "System",
-                            Description = "Peça",
-                            UpdatedBy = ""
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Acronym = "CX",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedBy = "System",
-                            Description = "Caixa",
-                            UpdatedBy = ""
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Acronym = "MT",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedBy = "System",
-                            Description = "Metro",
-                            UpdatedBy = ""
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Acronym = "DZ",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedBy = "System",
-                            Description = "Dúzia",
-                            UpdatedBy = ""
-                        },
-                        new
-                        {
-                            Id = 8,
-                            Acronym = "SC",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedBy = "System",
-                            Description = "Saco",
-                            UpdatedBy = ""
-                        });
                 });
 
             modelBuilder.Entity("SisPDV.Domain.Entities.User", b =>
@@ -962,17 +783,6 @@ namespace SisPDV.Infrastructure.Migrations
                         .HasForeignKey("ParentId");
 
                     b.Navigation("Parent");
-                });
-
-            modelBuilder.Entity("SisPDV.Domain.Entities.ProductTypes", b =>
-                {
-                    b.HasOne("SisPDV.Domain.Entities.Cfop", "Cfop")
-                        .WithMany()
-                        .HasForeignKey("CfopId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Cfop");
                 });
 
             modelBuilder.Entity("SisPDV.Domain.Entities.UserMenu", b =>

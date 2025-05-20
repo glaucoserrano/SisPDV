@@ -24,6 +24,8 @@ namespace SisPDV.Infrastructure.Persistence
         public DbSet<EncryptionSettings> encryptionSettings { get; set; }
         public DbSet<Person> person { get; set; }
         public DbSet<ProductTypes> productTypes { get; set; }
+        public DbSet<Cfop> cfops { get; set; }
+        public DbSet<Unity> unities { get; set; }
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
@@ -71,6 +73,8 @@ namespace SisPDV.Infrastructure.Persistence
 
 
             modelBuilder.SeedMenus();
+            modelBuilder.SeedCfops();
+            modelBuilder.SeedUnitys();
 
             modelBuilder.Entity<UserMenu>()
                 .HasOne(um => um.User)
@@ -85,6 +89,12 @@ namespace SisPDV.Infrastructure.Persistence
             modelBuilder.Entity<ProductTypes>()
                 .Property(p => p.IVA)
                 .HasColumnType("decimal(5,2)");
+
+            modelBuilder.Entity<ProductTypes>()
+                .HasOne(pt => pt.Cfop)
+                .WithMany()
+                .HasForeignKey(pt => pt.CfopId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
 
     }

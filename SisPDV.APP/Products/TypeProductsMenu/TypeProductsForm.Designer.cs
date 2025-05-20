@@ -39,7 +39,6 @@
             lblCSTPIS = new Label();
             cmbCST_CSOSN = new ComboBox();
             lblCST = new Label();
-            txtCFOP = new TextBox();
             lblCFOP = new Label();
             cmbOrigin = new ComboBox();
             lblOrigin = new Label();
@@ -51,6 +50,7 @@
             lblTypeName = new Label();
             grpList = new GroupBox();
             dgvTypes = new DataGridView();
+            cmbCfop = new ComboBox();
             grpFields.SuspendLayout();
             grpList.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvTypes).BeginInit();
@@ -58,6 +58,7 @@
             // 
             // grpFields
             // 
+            grpFields.Controls.Add(cmbCfop);
             grpFields.Controls.Add(btnClean);
             grpFields.Controls.Add(btnSave);
             grpFields.Controls.Add(txtNotes);
@@ -68,7 +69,6 @@
             grpFields.Controls.Add(lblCSTPIS);
             grpFields.Controls.Add(cmbCST_CSOSN);
             grpFields.Controls.Add(lblCST);
-            grpFields.Controls.Add(txtCFOP);
             grpFields.Controls.Add(lblCFOP);
             grpFields.Controls.Add(cmbOrigin);
             grpFields.Controls.Add(lblOrigin);
@@ -192,13 +192,6 @@
             lblCST.TabIndex = 10;
             lblCST.Text = "CST/CSON";
             // 
-            // txtCFOP
-            // 
-            txtCFOP.Location = new Point(150, 107);
-            txtCFOP.Name = "txtCFOP";
-            txtCFOP.Size = new Size(250, 23);
-            txtCFOP.TabIndex = 9;
-            // 
             // lblCFOP
             // 
             lblCFOP.AutoSize = true;
@@ -300,6 +293,15 @@
             dgvTypes.TabIndex = 0;
             dgvTypes.CellDoubleClick += dgvTypes_CellDoubleClick;
             // 
+            // cmbCfop
+            // 
+            cmbCfop.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbCfop.FormattingEnabled = true;
+            cmbCfop.Location = new Point(150, 107);
+            cmbCfop.Name = "cmbCfop";
+            cmbCfop.Size = new Size(250, 23);
+            cmbCfop.TabIndex = 26;
+            // 
             // TypeProductsForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -335,7 +337,6 @@
         private Label lblIVA;
         private TextBox txtNCM;
         private Label lblCST;
-        private TextBox txtCFOP;
         private Label lblCFOP;
         private ComboBox cmbCSTPIS;
         private Label lblCSTPIS;
@@ -348,5 +349,6 @@
         private FontAwesome.Sharp.IconButton btnSave;
         private GroupBox grpList;
         private DataGridView dgvTypes;
+        private ComboBox cmbCfop;
     }
 }

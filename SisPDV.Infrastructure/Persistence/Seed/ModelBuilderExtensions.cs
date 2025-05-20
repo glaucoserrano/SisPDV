@@ -97,6 +97,103 @@ namespace SisPDV.Infrastructure.Persistence.Seed
                     Order = 7,
                     Visible = true,
                     CreatedBy = "System"
+                },
+                new Menu
+                {
+                    Id = 10,
+                    ParentId = 7,
+                    Title = "Cadastro de Produtos",
+                    FormName = "ProductForm",
+                    Order = 8,
+                    Visible = true,
+                    CreatedBy = "System"
+                }
+            );
+        }
+        public static void SeedCfops(this ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Cfop>().HasData(
+                new Cfop
+                {
+                    Id = 1,
+                    Code = "5102",
+                    Description = "Venda de mercadoria adquirida ou recebida de terceiros",
+                    CreatedBy = "System"
+                },
+                new Cfop
+                {
+                    Id = 2,
+                    Code = "5101",
+                    Description = "Venda de produção do estabelecimento",
+                    CreatedBy = "System"
+                },
+                new Cfop
+                {
+                    Id = 3,
+                    Code = "5405",
+                    Description = "Venda de mercadoria adquirida de terceiros, com ST",
+                    CreatedBy = "System"
+                }
+            );
+        }
+        public static void SeedUnitys(this ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Unity>().HasData(
+                new Unity
+                {
+                    Id = 1,
+                    Acronym = "UN",
+                    Description = "Unidade",
+                    CreatedBy = "System"
+                },
+                new Unity
+                {
+                    Id = 2,
+                    Acronym = "KG",
+                    Description = "Quilograma",
+                    CreatedBy = "System"
+                },
+                new Unity
+                {
+                    Id = 3,
+                    Acronym = "LT",
+                    Description = "Litro",
+                    CreatedBy = "System"
+                },
+                new Unity
+                {
+                    Id = 4,
+                    Acronym = "PC",
+                    Description = "Peça",
+                    CreatedBy = "System"
+                },
+                new Unity
+                {
+                    Id = 5,
+                    Acronym = "CX",
+                    Description = "Caixa",
+                    CreatedBy = "System"
+                },
+                new Unity
+                {
+                    Id = 6,
+                    Acronym = "MT",
+                    Description = "Metro",
+                    CreatedBy = "System"
+                },
+                new Unity
+                {
+                    Id = 7,
+                    Acronym = "DZ",
+                    Description = "Dúzia",
+                    CreatedBy = "System"
+                },
+                new Unity
+                {
+                    Id = 8,
+                    Acronym = "SC",
+                    Description = "Saco",
+                    CreatedBy = "System"
                 }
             );
         }

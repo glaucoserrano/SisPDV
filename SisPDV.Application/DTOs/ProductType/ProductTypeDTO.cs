@@ -1,4 +1,5 @@
-﻿using SisPDV.Domain.Enum;
+﻿using SisPDV.Domain.Entities;
+using SisPDV.Domain.Enum;
 
 namespace SisPDV.Application.DTOs.ProductType
 {
@@ -8,7 +9,7 @@ namespace SisPDV.Application.DTOs.ProductType
         public string Type { get; set; } = string.Empty;
         public string? NCM { get; set; }
         public decimal? IVA { get; set; }
-        public string? CFOP { get; set; }
+        public int CfopId { get; set; }
         public ProductOrigin? Origin { get; set; }
         public CSOSN? CST_CSOSN { get; set; }
         public CST_ICMS? CST_ICMS { get; set; }

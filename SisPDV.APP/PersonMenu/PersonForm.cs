@@ -107,6 +107,13 @@ namespace SisPDV.APP.PersonMenu
         private void FillFormWithPerson(PersonDTO? personExists)
         {
             _idPerson = personExists!.Id;
+
+
+            if (personExists.PersonType == PersonType.Company)
+                rdoPersonTypeCompany.Checked = true;
+            else
+                rdoPersonTypeIndividual.Checked = true;
+
             txtName.Text = personExists.Name;
             //txtCNPJ.Text = personExists.CNPJ_CPF;
             txtIE.Text = personExists.IE;
@@ -142,10 +149,6 @@ namespace SisPDV.APP.PersonMenu
             txtUF.Text = personExists.State;
             txtCityCode.Text = personExists.CityCode.ToString();
 
-            if (personExists.PersonType == PersonType.Company)
-                rdoPersonTypeCompany.Checked = true;
-            else
-                rdoPersonTypeIndividual.Checked = true;
 
             chkClient.Checked = personExists.IsCustomer;
             chkSupplier.Checked = personExists.IsSupplier;

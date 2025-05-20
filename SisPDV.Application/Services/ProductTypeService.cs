@@ -28,7 +28,7 @@ namespace SisPDV.Application.Services
                     Type = p.Type,
                     NCM = p.NCM,
                     IVA = p.IVA,
-                    CFOP = p.CFOP,
+                    CfopId = p.CfopId,
                     Origin = p.Origin,
                     CST_CSOSN = p.CST_CSOSN,
                     CST_ICMS = p.CST_ICMS,
@@ -49,7 +49,7 @@ namespace SisPDV.Application.Services
             if (string.IsNullOrWhiteSpace(resquest.NCM))
                 errors.Add("O campo 'NCM' é obrigatório.");
 
-            if (string.IsNullOrWhiteSpace(resquest.CFOP))
+            if (resquest.CfopId == 0)
                 errors.Add("O campo 'CFOP' é obrigatório.");
 
             if (!resquest.Origin.HasValue)
@@ -89,7 +89,7 @@ namespace SisPDV.Application.Services
                         Type = request.Type,
                         NCM = request.NCM,
                         IVA = request.IVA,
-                        CFOP = request.CFOP,
+                        CfopId = request.CfopId,
                         Origin = request.Origin,
                         CST_CSOSN = request.CST_CSOSN,
                         CST_ICMS = request.CST_ICMS,
@@ -105,7 +105,7 @@ namespace SisPDV.Application.Services
                     existingProductType.Type = request.Type;
                     existingProductType.NCM = request.NCM;
                     existingProductType.IVA = request.IVA;
-                    existingProductType.CFOP = request.CFOP;
+                    existingProductType.CfopId = request.CfopId;
                     existingProductType.Origin = request.Origin;
                     existingProductType.CST_CSOSN = request.CST_CSOSN;
                     existingProductType.CST_ICMS = request.CST_ICMS;
@@ -138,7 +138,7 @@ namespace SisPDV.Application.Services
                 Type = entity.Type,
                 NCM = entity.NCM,
                 IVA = entity.IVA,
-                CFOP = entity.CFOP,
+                CfopId = entity.CfopId,
                 Origin = entity.Origin,
                 CST_CSOSN = entity.CST_CSOSN,
                 CST_ICMS = entity.CST_ICMS,

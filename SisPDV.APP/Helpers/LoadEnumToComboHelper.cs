@@ -26,7 +26,7 @@ namespace SisPDV.APP.Helpers
             comboBox.DisplayMember = "Description";
             comboBox.ValueMember = "Value";
         }
-        public static string GetEnumDescription<TEnum>(TEnum value) where TEnum : struct, Enum
+        private static string GetEnumDescription<TEnum>(TEnum value) where TEnum : struct, Enum
         {
             var fi = value.GetType().GetField(value.ToString());
             var attributes = (DescriptionAttribute[])fi.GetCustomAttributes(typeof(DescriptionAttribute), false);

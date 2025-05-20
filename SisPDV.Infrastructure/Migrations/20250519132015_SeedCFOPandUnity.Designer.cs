@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using SisPDV.Infrastructure.Persistence;
@@ -11,9 +12,11 @@ using SisPDV.Infrastructure.Persistence;
 namespace SisPDV.Infrastructure.Migrations
 {
     [DbContext(typeof(PDVDbContext))]
-    partial class PDVDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250519132015_SeedCFOPandUnity")]
+    partial class SeedCFOPandUnity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -60,7 +63,7 @@ namespace SisPDV.Infrastructure.Migrations
                             Id = 1,
                             Code = "5102",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedBy = "System",
+                            CreatedBy = "",
                             Description = "Venda de mercadoria adquirida ou recebida de terceiros",
                             UpdatedBy = ""
                         },
@@ -69,7 +72,7 @@ namespace SisPDV.Infrastructure.Migrations
                             Id = 2,
                             Code = "5101",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedBy = "System",
+                            CreatedBy = "",
                             Description = "Venda de produção do estabelecimento",
                             UpdatedBy = ""
                         },
@@ -78,7 +81,7 @@ namespace SisPDV.Infrastructure.Migrations
                             Id = 3,
                             Code = "5405",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedBy = "System",
+                            CreatedBy = "",
                             Description = "Venda de mercadoria adquirida de terceiros, com ST",
                             UpdatedBy = ""
                         });
@@ -690,6 +693,10 @@ namespace SisPDV.Infrastructure.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("CFOP")
+                        .HasMaxLength(10)
+                        .HasColumnType("character varying(10)");
+
                     b.Property<int?>("CST_COFINS")
                         .HasColumnType("integer");
 
@@ -700,9 +707,6 @@ namespace SisPDV.Infrastructure.Migrations
                         .HasColumnType("integer");
 
                     b.Property<int?>("CST_PIS")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("CfopId")
                         .HasColumnType("integer");
 
                     b.Property<DateTime>("CreatedAt")
@@ -737,8 +741,6 @@ namespace SisPDV.Infrastructure.Migrations
                         .HasColumnType("text");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CfopId");
 
                     b.ToTable("productTypes");
                 });
@@ -798,7 +800,7 @@ namespace SisPDV.Infrastructure.Migrations
                             Id = 1,
                             Acronym = "UN",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedBy = "System",
+                            CreatedBy = "",
                             Description = "Unidade",
                             UpdatedBy = ""
                         },
@@ -807,7 +809,7 @@ namespace SisPDV.Infrastructure.Migrations
                             Id = 2,
                             Acronym = "KG",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedBy = "System",
+                            CreatedBy = "",
                             Description = "Quilograma",
                             UpdatedBy = ""
                         },
@@ -816,7 +818,7 @@ namespace SisPDV.Infrastructure.Migrations
                             Id = 3,
                             Acronym = "LT",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedBy = "System",
+                            CreatedBy = "",
                             Description = "Litro",
                             UpdatedBy = ""
                         },
@@ -825,7 +827,7 @@ namespace SisPDV.Infrastructure.Migrations
                             Id = 4,
                             Acronym = "PC",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedBy = "System",
+                            CreatedBy = "",
                             Description = "Peça",
                             UpdatedBy = ""
                         },
@@ -834,7 +836,7 @@ namespace SisPDV.Infrastructure.Migrations
                             Id = 5,
                             Acronym = "CX",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedBy = "System",
+                            CreatedBy = "",
                             Description = "Caixa",
                             UpdatedBy = ""
                         },
@@ -843,7 +845,7 @@ namespace SisPDV.Infrastructure.Migrations
                             Id = 6,
                             Acronym = "MT",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedBy = "System",
+                            CreatedBy = "",
                             Description = "Metro",
                             UpdatedBy = ""
                         },
@@ -852,7 +854,7 @@ namespace SisPDV.Infrastructure.Migrations
                             Id = 7,
                             Acronym = "DZ",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedBy = "System",
+                            CreatedBy = "",
                             Description = "Dúzia",
                             UpdatedBy = ""
                         },
@@ -861,7 +863,7 @@ namespace SisPDV.Infrastructure.Migrations
                             Id = 8,
                             Acronym = "SC",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedBy = "System",
+                            CreatedBy = "",
                             Description = "Saco",
                             UpdatedBy = ""
                         });
@@ -962,17 +964,6 @@ namespace SisPDV.Infrastructure.Migrations
                         .HasForeignKey("ParentId");
 
                     b.Navigation("Parent");
-                });
-
-            modelBuilder.Entity("SisPDV.Domain.Entities.ProductTypes", b =>
-                {
-                    b.HasOne("SisPDV.Domain.Entities.Cfop", "Cfop")
-                        .WithMany()
-                        .HasForeignKey("CfopId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Cfop");
                 });
 
             modelBuilder.Entity("SisPDV.Domain.Entities.UserMenu", b =>

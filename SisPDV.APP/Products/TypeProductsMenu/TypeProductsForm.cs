@@ -1,12 +1,11 @@
 ﻿using SisPDV.APP.Helpers;
+using SisPDV.Application.DTOs.Cfop;
 using SisPDV.Application.DTOs.Company;
 using SisPDV.Application.DTOs.ProductType;
-using SisPDV.Application.DTOs.Validation;
 using SisPDV.Application.Interfaces;
 using SisPDV.Domain.Enum;
 using SisPDV.Domain.Helpers;
 using System.Globalization;
-using System.Threading.Tasks;
 
 namespace SisPDV.APP.Products.TypeProductsMenu
 {
@@ -14,14 +13,19 @@ namespace SisPDV.APP.Products.TypeProductsMenu
     {
         private readonly ICompanyService _companyService;
         private readonly IProductTypeService _productTypeService;
+        private readonly ICfopService _cfopService;
         private CompanyDTO? _company;
         private int _idProductType;
 
-        public TypeProductsForm(ICompanyService companyService, IProductTypeService productTypeService)
+        public TypeProductsForm(
+            ICompanyService companyService, 
+            IProductTypeService productTypeService,
+            ICfopService cfopService)
         {
             InitializeComponent();
             _companyService = companyService;
             _productTypeService = productTypeService;
+            _cfopService = cfopService;
         }
 
         private async void TypeProductsForm_Load(object sender, EventArgs e)
@@ -30,7 +34,7 @@ namespace SisPDV.APP.Products.TypeProductsMenu
             _company = await _companyService.GetAsync();
 
             configTypesGrid();
-            loadComboEnum();
+            loadCombos();
             await LoadProductTypesGridAsync();
         }
 
@@ -44,13 +48,13 @@ namespace SisPDV.APP.Products.TypeProductsMenu
                 p.Type,
                 p.NCM,
                 p.IVA,
-                p.CFOP,
+                p.CfopId,
                 Origin = p.Origin?.ToString(),
 
             }).ToList();
         }
 
-        private void loadComboEnum()
+        private async void loadCombos()
         {
             LoadEnumToComboHelper.LoadEnumToComboBox<ProductOrigin>(cmbOrigin);
 
@@ -64,6 +68,11 @@ namespace SisPDV.APP.Products.TypeProductsMenu
             }
             LoadEnumToComboHelper.LoadEnumToComboBox<CST_COFINS>(cmbCSTCOFINS);
             LoadEnumToComboHelper.LoadEnumToComboBox<CST_PIS>(cmbCSTPIS);
+            await ComboHelper.LoadComboBoxAsync<CfopDTO>(combobox: cmbCfop, () => _cfopService.GetCfopAsync(),
+                nameof(CfopDTO.Display),
+                nameof(CfopDTO.Id),
+                defaultDisplay: "Selecione",
+                defaultValue: 0);
         }
 
         private void configTypesGrid()
@@ -140,7 +149,7 @@ namespace SisPDV.APP.Products.TypeProductsMenu
                 Type = txtTypeName.Text.Trim(),
                 NCM = string.IsNullOrWhiteSpace(txtNCM.Text) ? null : txtNCM.Text.Trim(),
                 IVA = string.IsNullOrWhiteSpace(txtIVA.Text) ? null : decimal.Parse(txtIVA.Text, new CultureInfo("pt-BR")),
-                CFOP = string.IsNullOrWhiteSpace(txtCFOP.Text) ? null : txtCFOP.Text.Trim(),
+                CfopId = (int) cmbCfop.SelectedValue!,
                 Origin = cmbOrigin.SelectedValue is int origin && origin >= 0 ? (ProductOrigin?)origin : null,
                 CST_PIS = cmbCSTPIS.SelectedValue is int pis && pis > 0 ? (CST_PIS?)pis : null,
                 CST_COFINS = cmbCSTCOFINS.SelectedValue is int cofins && cofins > 0 ? (CST_COFINS?)cofins : null,
@@ -189,7 +198,7 @@ namespace SisPDV.APP.Products.TypeProductsMenu
             txtTypeName.Clear();
             txtNCM.Clear();
             txtIVA.Clear();
-            txtCFOP.Clear();
+            
             txtNotes.Clear();
 
             // Seleciona o primeiro item ("0 - Selecione") nos combos
@@ -197,6 +206,7 @@ namespace SisPDV.APP.Products.TypeProductsMenu
             cmbCST_CSOSN.SelectedIndex = 0;
             cmbCSTPIS.SelectedIndex = 0;
             cmbCSTCOFINS.SelectedIndex = 0;
+            cmbCfop.SelectedIndex = 0;
 
             // Se desejar dar foco no primeiro campo
             txtTypeName.Focus();
@@ -241,9 +251,10 @@ namespace SisPDV.APP.Products.TypeProductsMenu
                 txtTypeName.Text = productType.Type ?? "";
                 txtNCM.Text = productType.NCM ?? "";
                 txtIVA.Text = productType.IVA?.ToString("N2") ?? "";
-                txtCFOP.Text = productType.CFOP ?? "";
+               
                 txtNotes.Text = productType.Notes ?? "";
 
+                cmbCfop.SelectedValue = Convert.ToInt32(productType.CfopId);
                 cmbOrigin.SelectedValue = productType.Origin.HasValue ? (int)productType.Origin.Value : 0;
 
                 if (_company!.TaxRegime == TaxRegime.SimplesNacional)

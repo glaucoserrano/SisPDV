@@ -1,9 +1,11 @@
-﻿using SisPDV.APP.CompanyMenu;
+﻿using Microsoft.EntityFrameworkCore.Storage.Json;
+using SisPDV.APP.CompanyMenu;
 using SisPDV.APP.Config;
 using SisPDV.APP.ConfigMenu;
 using SisPDV.APP.Helpers;
 using SisPDV.APP.PermissionMenu;
 using SisPDV.APP.PersonMenu;
+using SisPDV.APP.ProductMenu;
 using SisPDV.APP.Products.TypeProductsMenu;
 using SisPDV.APP.User;
 using SisPDV.Application.ExternalInterfaces;
@@ -27,6 +29,8 @@ namespace SisPDV.APP.Main
         private readonly ICepService _cepService;
         private readonly IPersonService _personService;
         private readonly IProductTypeService _productTypeService;
+        private readonly ICfopService _cfopService;
+        private readonly IUnityService _unityService;
 
         private readonly int? _userID;
         private readonly string? _userName;
@@ -44,7 +48,9 @@ namespace SisPDV.APP.Main
             IPrinterSerctorsServices printerSectorsServices,
             IConfigService configServices,
             IPersonService personService,
-            IProductTypeService productTypeService
+            IProductTypeService productTypeService,
+            ICfopService cfopService,
+            IUnityService unityService
            )
         {
             InitializeComponent();
@@ -60,6 +66,8 @@ namespace SisPDV.APP.Main
             _configServices = configServices;
             _personService = personService;
             _productTypeService = productTypeService;
+            _cfopService = cfopService;
+            _unityService = unityService;
 
             string? version = Assembly.
                 GetExecutingAssembly().
@@ -152,7 +160,8 @@ namespace SisPDV.APP.Main
                     "CompanyForm" => new CompanyForm(_cnpjService, _cepService, _companyService, _userID, _userService),
                     "ConfigForm" => new ConfigForm(_printerSectorsServices, _configServices),
                     "PersonForm" => new PersonForm(_cepService, _personService),
-                    "TypeProductsForm" => new TypeProductsForm(_companyService, _productTypeService),
+                    "TypeProductsForm" => new TypeProductsForm(_companyService, _productTypeService,_cfopService),
+                    "ProductForm" => new ProductForm(_productTypeService, _cfopService, _companyService, _unityService ),
                     _ => null
                 };
                 form?.ShowDialog();

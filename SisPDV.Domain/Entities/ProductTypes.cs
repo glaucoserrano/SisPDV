@@ -17,8 +17,7 @@ namespace SisPDV.Domain.Entities
 
         public decimal? IVA { get; set; }
 
-        [MaxLength(10)]
-        public string? CFOP { get; set; }
+        public int CfopId { get; set; }
 
         public ProductOrigin? Origin { get; set; }
         public CSOSN? CST_CSOSN { get; set; }
@@ -28,5 +27,7 @@ namespace SisPDV.Domain.Entities
 
         [MaxLength(500)]
         public string? Notes { get; set; }
+
+        public virtual Cfop? Cfop { get; set; }
     }
 }

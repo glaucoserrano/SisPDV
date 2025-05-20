@@ -35,13 +35,13 @@ namespace SisPDV.APP.ProductMenu
         private async void ProductForm_Load(object sender, EventArgs e)
         {
             _company = await _companyService.GetAsync();
-            LoadComboProductType();
-            LoadComboCfops();
-            LoadCombosUnity();
+            await LoadComboProductType();
+            await LoadComboCfops();
+            await LoadCombosUnity();
             LoadEnumCombo();
         }
 
-        private async void LoadCombosUnity()
+        private async Task LoadCombosUnity()
         {
             await ComboHelper.LoadComboBoxAsync(
                 cmbUnity,
@@ -64,7 +64,7 @@ namespace SisPDV.APP.ProductMenu
             }
         }
 
-        private async void LoadComboCfops()
+        private async Task LoadComboCfops()
         {
             await ComboHelper.LoadComboBoxAsync(
                 cmbCFOP,
@@ -75,7 +75,7 @@ namespace SisPDV.APP.ProductMenu
                 defaultValue: 0);
         }
 
-        private async void LoadComboProductType()
+        private async Task LoadComboProductType()
         {
             await ComboHelper.LoadComboBoxAsync(
                 cmbProductType,

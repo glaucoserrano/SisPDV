@@ -27,18 +27,21 @@ namespace SisPDV.APP
             var options = new DbContextOptionsBuilder<PDVDbContext>()
                 .UseNpgsql(connectionString)
                 .Options;
-            var dbContext = new PDVDbContext(options, currentUserService);
 
-            var userService = new UserService(dbContext);
-            var menuService = new MenuService(dbContext);
-            var userMenuService = new UserMenuService(dbContext);
-            var companyService = new CompanyService(dbContext);
-            var printerSectorService = new PrinterSectorsService(dbContext);
-            var configService = new ConfigService(dbContext);
-            var PersonService = new PersonService(dbContext);
-            var productTypeService = new ProductTypeService(dbContext);
-            var cfopService = new CfopService(dbContext);
-            var unityService = new UnityService(dbContext);
+            using( var dbContext = new PDVDbContext(options, currentUserService))
+            {
+
+                var userService = new UserService(dbContext);
+                var menuService = new MenuService(dbContext);
+                var userMenuService = new UserMenuService(dbContext);
+                var companyService = new CompanyService(dbContext);
+                var printerSectorService = new PrinterSectorsService(dbContext);
+                var configService = new ConfigService(dbContext);
+                var PersonService = new PersonService(dbContext);
+                var productTypeService = new ProductTypeService(dbContext);
+                var cfopService = new CfopService(dbContext);
+                var unityService = new UnityService(dbContext);
+            
 
 
             var cnpjService = new CnpjService();
@@ -58,6 +61,7 @@ namespace SisPDV.APP
                 productTypeService,
                 cfopService,
                 unityService));
+            }
         }
     }
 }

@@ -62,6 +62,7 @@
             lblMinStock = new Label();
             lblStock = new Label();
             gbGeneral = new GroupBox();
+            txtProductId = new TextBox();
             chkAticve = new CheckBox();
             cmbUnity = new ComboBox();
             lblUnity = new Label();
@@ -73,7 +74,6 @@
             lblDescricao = new Label();
             txtBarCode = new TextBox();
             lblBarCode = new Label();
-            txtProductId = new TextBox();
             lblProductId = new Label();
             cmbProductType = new ComboBox();
             lblProductType = new Label();
@@ -242,6 +242,7 @@
             chkPrintersSector.TabIndex = 22;
             chkPrintersSector.Text = "Impressora em Setores";
             chkPrintersSector.UseVisualStyleBackColor = true;
+            chkPrintersSector.CheckedChanged += chkPrintersSector_CheckedChanged;
             // 
             // btnClean
             // 
@@ -521,6 +522,7 @@
             // 
             // gbGeneral
             // 
+            gbGeneral.Controls.Add(txtProductId);
             gbGeneral.Controls.Add(chkAticve);
             gbGeneral.Controls.Add(cmbUnity);
             gbGeneral.Controls.Add(lblUnity);
@@ -532,7 +534,6 @@
             gbGeneral.Controls.Add(lblDescricao);
             gbGeneral.Controls.Add(txtBarCode);
             gbGeneral.Controls.Add(lblBarCode);
-            gbGeneral.Controls.Add(txtProductId);
             gbGeneral.Controls.Add(lblProductId);
             gbGeneral.Controls.Add(cmbProductType);
             gbGeneral.Controls.Add(lblProductType);
@@ -543,9 +544,18 @@
             gbGeneral.TabStop = false;
             gbGeneral.Text = "Informações Gerais";
             // 
+            // txtProductId
+            // 
+            txtProductId.Location = new Point(361, 16);
+            txtProductId.Name = "txtProductId";
+            txtProductId.Size = new Size(102, 23);
+            txtProductId.TabIndex = 21;
+            // 
             // chkAticve
             // 
             chkAticve.AutoSize = true;
+            chkAticve.Checked = true;
+            chkAticve.CheckState = CheckState.Checked;
             chkAticve.Location = new Point(6, 121);
             chkAticve.Name = "chkAticve";
             chkAticve.Size = new Size(54, 19);
@@ -637,14 +647,6 @@
             lblBarCode.TabIndex = 10;
             lblBarCode.Text = "Código de Barras";
             // 
-            // txtProductId
-            // 
-            txtProductId.Enabled = false;
-            txtProductId.Location = new Point(363, 16);
-            txtProductId.Name = "txtProductId";
-            txtProductId.Size = new Size(100, 23);
-            txtProductId.TabIndex = 9;
-            // 
             // lblProductId
             // 
             lblProductId.AutoSize = true;
@@ -662,6 +664,7 @@
             cmbProductType.Name = "cmbProductType";
             cmbProductType.Size = new Size(200, 23);
             cmbProductType.TabIndex = 7;
+            cmbProductType.SelectedIndexChanged += cmbProductType_SelectedIndexChanged;
             // 
             // lblProductType
             // 
@@ -743,7 +746,6 @@
             ResumeLayout(false);
         }
         private Label lblProductType;
-        private TextBox txtProductId;
         private Label lblProductId;
         private ComboBox cmbProductType;
         private TextBox txtRefSupplier;
@@ -798,5 +800,6 @@
         private CheckBox chkFractional;
         private TextBox textBox1;
         private Label lblNotes;
+        private TextBox txtProductId;
     }
 }

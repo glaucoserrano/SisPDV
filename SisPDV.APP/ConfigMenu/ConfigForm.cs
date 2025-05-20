@@ -1,6 +1,7 @@
 ﻿using SisPDV.APP.Helpers;
 using SisPDV.Application.DTOs.Config;
 using SisPDV.Application.DTOs.Config.PrintSector;
+using SisPDV.Application.Helper;
 using SisPDV.Application.Interfaces;
 using SisPDV.Domain.Enum;
 using SisPDV.Domain.Helpers;
@@ -15,7 +16,7 @@ namespace SisPDV.APP.ConfigMenu
     {
         private readonly IPrinterSerctorsServices _printerSectors;
         private readonly IConfigService _configServices;
-        private readonly IEncryptionService encryptionService;
+
         public ConfigForm(
             IPrinterSerctorsServices printerSectorsService,
             IConfigService configServices
@@ -45,10 +46,11 @@ namespace SisPDV.APP.ConfigMenu
             }
         }
 
-        private void chkPrinterSector_CheckedChanged(object sender, EventArgs e)
+        private async void chkPrinterSector_CheckedChanged(object sender, EventArgs e)
         {
             dgvPrintSectors.Visible = chkPrinterSector.Checked;
             btnAddSector.Visible = chkPrinterSector.Checked;
+            
         }
 
         private async void ConfigForm_Load(object sender, EventArgs e)
@@ -110,17 +112,11 @@ namespace SisPDV.APP.ConfigMenu
             chkOrderPrint.Checked = config.OrderPrint;
             txtBackupPath.Text = config.BackupPath;
             chkAutoCloseOrder.Checked = config.AutoCloseOrder;
+            chkPrinterSector.Checked = config.UsePrintSector;
 
-            if (printerSectors.Count > 0)
-            {
+            if (chkPrinterSector.Checked)
                 LoadPrintSectors(printerSectors);
-                chkPrinterSector.Checked = true;
-            }
-            else
-            {
-                chkPrinterSector.Checked = false;
-            }
-
+                
         }
 
         private void LoadPrintSectors(List<PrintSectorsDTO> printerSectors)
@@ -386,6 +382,8 @@ namespace SisPDV.APP.ConfigMenu
             else
             {
                 MessageBox.Show("Configurações salvas com sucesso", "SisPDV", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                var config = await _configServices.GetConfigAsync();
+                SystemConfig.Load(config);
             }
         }
 
@@ -431,7 +429,8 @@ namespace SisPDV.APP.ConfigMenu
                 SalesZeroStock = chkSalesZeroStock.Checked,
                 OrderPrint = chkOrderPrint.Checked,
                 BackupPath = txtBackupPath.Text.Trim(),
-                AutoCloseOrder = chkAutoCloseOrder.Checked
+                AutoCloseOrder = chkAutoCloseOrder.Checked,
+                UsePrintSector = chkPrinterSector.Checked
 
             };
         }

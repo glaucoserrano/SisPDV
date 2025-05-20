@@ -24,6 +24,57 @@ namespace SisPDV.Application.Services
             _encryptionServices = new EncryptionService(context);
         }
 
+        public async Task<ConfigDTO> GetConfigAsync()
+        {
+            var entity = await _context.configs.FirstOrDefaultAsync();
+
+            var config = new ConfigDTO()
+            {
+                DigitalCertificate = entity!.DigitalCertificate,
+                PasswordCertificate = string.IsNullOrWhiteSpace(entity.PasswordCertificate)
+                            ? string.Empty
+                            : await _encryptionServices.DecryptAsync(entity.PasswordCertificate), // Helper que criamos
+                CertificateA1 = entity.CertificateA1,
+
+                // NFC-e
+                NFCeEnabled = entity.NFCeEnabled,
+                VersionDF = entity.VersionDF,
+                Model = entity.Model,
+                Serial = entity.Serial,
+                InitialNumber = entity.InitialNumber,
+                Environment = entity.Environment,
+                CSC = entity.CSC,
+                CSCId = entity.CSCId,
+                Print = entity.Print,
+                TypeEmission = entity.TypeEmission,
+                XMLPath = entity.XMLPath,
+
+                // NF-e
+                NFeEnabled = entity.NFeEnabled,
+                NFeVersionDF = entity.NFeVersionDF,
+                NFeModel = entity.NFeModel,
+                NFeSerial = entity.NFeSerial,
+                NFeInitialNumber = entity.NFeInitialNumber,
+                NFeXmlPath = entity.NFeXmlPath,
+                NFeEnvironment = entity.NFeEnvironment,
+                NFePrint = entity.NFePrint,
+                NFeSavePDF = entity.NFeSavePDF,
+                NFeDestinationEmail = entity.NFeDestinationEmail,
+                NFeFinality = entity.NFeFinality,
+                NFePresenceIndicator = entity.NFePresenceIndicator,
+                NFePaymentForm = entity.NFePaymentForm,
+
+                // Gerais
+                UseStockControl = entity.UseStockControl,
+                SalesZeroStock = entity.SalesZeroStock,
+                OrderPrint = entity.OrderPrint,
+                BackupPath = entity.BackupPath,
+                AutoCloseOrder = entity.AutoCloseOrder,
+                UsePrintSector = entity.UsePrintSector
+            };
+            return config;
+        }
+
         public async Task<(ConfigDTO, List<PrintSectorsDTO>)> GetFullConfigAsync()
         {
             var entity = await _context.configs.FirstOrDefaultAsync();
@@ -74,6 +125,7 @@ namespace SisPDV.Application.Services
                 OrderPrint = entity.OrderPrint,
                 BackupPath = entity.BackupPath,
                 AutoCloseOrder = entity.AutoCloseOrder,
+                UsePrintSector = entity.UsePrintSector
             };
 
             var printers = printerSectors.Select(p => new PrintSectorsDTO
@@ -87,6 +139,23 @@ namespace SisPDV.Application.Services
             }).ToList();
 
             return (config, printers);
+        }
+
+        public async Task<List<PrintSectorsDTO>> GetPrinterSectorAsync()
+        {
+            var printerSectors = await _context.printsectors.ToListAsync();
+
+            var printers = printerSectors.Select(p => new PrintSectorsDTO
+            {
+                Id = p.Id,
+                SectorName = p.SectorName,
+                PrinterName = p.PrinterName,
+                NumberOfCopies = p.NumberOfCopies,
+                Active = p.Active,
+                IsDefault = p.IsDefault
+            }).ToList();
+
+            return (printers);
         }
 
         public async  Task SaveAsync(ConfigDTO request)
@@ -139,6 +208,7 @@ namespace SisPDV.Application.Services
                 configs.OrderPrint = request.OrderPrint;
                 configs.BackupPath = request.BackupPath;
                 configs.AutoCloseOrder = request.AutoCloseOrder;
+                configs.UsePrintSector = request.UsePrintSector;
 
                 await _context.SaveChangesAsync();
                 await transactions.CommitAsync();

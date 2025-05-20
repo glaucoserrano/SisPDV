@@ -94,5 +94,7 @@ namespace SisPDV.Domain.Entities
         public string BackupPath { get; set; } = string.Empty; // Caminho do backup automático
 
         public bool AutoCloseOrder { get; set; } // Fechar automaticamente pedidos ao emitir NFC-e
+
+        public bool UsePrintSector { get; set; }
     }
 }

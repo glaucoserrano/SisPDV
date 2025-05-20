@@ -1,5 +1,6 @@
 ﻿using SisPDV.APP.Main;
 using SisPDV.Application.ExternalInterfaces;
+using SisPDV.Application.Helper;
 using SisPDV.Application.Interfaces;
 using SisPDV.Infrastructure.Service;
 using WindowsForms = System.Windows.Forms;
@@ -69,6 +70,9 @@ namespace SisPDV.APP.Login
                         MessageBox.Show("Usuário ou Senha Inválido", "SisPDV", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         return;
                     }
+
+                    var config = await _configServices.GetConfigAsync();
+                    SystemConfig.Load(config);
 
                     _currentUserService.CurrentUser = userAuth!.Name;
                     var mainForm = new MainForm(

@@ -161,7 +161,12 @@ namespace SisPDV.APP.Main
                     "ConfigForm" => new ConfigForm(_printerSectorsServices, _configServices),
                     "PersonForm" => new PersonForm(_cepService, _personService),
                     "TypeProductsForm" => new TypeProductsForm(_companyService, _productTypeService,_cfopService),
-                    "ProductForm" => new ProductForm(_productTypeService, _cfopService, _companyService, _unityService ),
+                    "ProductForm" => new ProductForm(
+                        _productTypeService, 
+                        _cfopService, 
+                        _companyService, 
+                        _unityService,
+                        _configServices),
                     _ => null
                 };
                 form?.ShowDialog();

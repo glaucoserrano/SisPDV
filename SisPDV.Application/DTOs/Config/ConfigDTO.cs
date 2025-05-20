@@ -43,5 +43,7 @@ namespace SisPDV.Application.DTOs.Config
         public bool OrderPrint { get; set; }
         public string BackupPath { get; set; } = string.Empty;
         public bool AutoCloseOrder { get; set; }
+
+        public bool UsePrintSector { get; set; }
     }
 }

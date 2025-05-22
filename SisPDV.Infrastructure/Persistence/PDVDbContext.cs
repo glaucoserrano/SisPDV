@@ -26,6 +26,9 @@ namespace SisPDV.Infrastructure.Persistence
         public DbSet<ProductTypes> productTypes { get; set; }
         public DbSet<Cfop> cfops { get; set; }
         public DbSet<Unity> unities { get; set; }
+        public DbSet<Product> products { get; set; }
+        public DbSet<Category> categories { get; set; }
+        public DbSet<ProductStock> productStock { get; set; }
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {

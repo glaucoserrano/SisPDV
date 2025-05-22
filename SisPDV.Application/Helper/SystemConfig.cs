@@ -13,5 +13,7 @@ namespace SisPDV.Application.Helper
 
         public static bool UseStockControl => Current.UseStockControl;
         public static bool UsePrintSector => Current.UsePrintSector;
+        public static bool SalesZeroStock => Current.SalesZeroStock;
+
     }
 }

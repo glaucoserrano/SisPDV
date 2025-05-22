@@ -22,7 +22,7 @@
             tabControl = new TabControl();
             tabRegister = new TabPage();
             groupBox1 = new GroupBox();
-            textBox1 = new TextBox();
+            txtNotes = new TextBox();
             lblNotes = new Label();
             chkService = new CheckBox();
             chkFractional = new CheckBox();
@@ -70,7 +70,7 @@
             lblCategory = new Label();
             txtRefSupplier = new TextBox();
             lblRefSupplier = new Label();
-            txtDescricao = new TextBox();
+            txtDescription = new TextBox();
             lblDescricao = new Label();
             txtBarCode = new TextBox();
             lblBarCode = new Label();
@@ -122,7 +122,7 @@
             // 
             // groupBox1
             // 
-            groupBox1.Controls.Add(textBox1);
+            groupBox1.Controls.Add(txtNotes);
             groupBox1.Controls.Add(lblNotes);
             groupBox1.Controls.Add(chkService);
             groupBox1.Controls.Add(chkFractional);
@@ -134,13 +134,13 @@
             groupBox1.TabStop = false;
             groupBox1.Text = "Outras";
             // 
-            // textBox1
+            // txtNotes
             // 
-            textBox1.Location = new Point(20, 55);
-            textBox1.Multiline = true;
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(840, 40);
-            textBox1.TabIndex = 27;
+            txtNotes.Location = new Point(20, 55);
+            txtNotes.Multiline = true;
+            txtNotes.Name = "txtNotes";
+            txtNotes.Size = new Size(840, 40);
+            txtNotes.TabIndex = 27;
             // 
             // lblNotes
             // 
@@ -277,6 +277,7 @@
             btnSave.TabIndex = 11;
             btnSave.Text = "   Salvar";
             btnSave.UseVisualStyleBackColor = false;
+            btnSave.Click += btnSave_Click;
             // 
             // gbFiscalPricing
             // 
@@ -325,6 +326,7 @@
             txtCEST.Name = "txtCEST";
             txtCEST.Size = new Size(80, 23);
             txtCEST.TabIndex = 28;
+            txtCEST.KeyPress += txtCEST_KeyPress;
             // 
             // lblCEST
             // 
@@ -341,6 +343,7 @@
             txtNCM.Name = "txtNCM";
             txtNCM.Size = new Size(80, 23);
             txtNCM.TabIndex = 26;
+            txtNCM.KeyPress += txtNCM_KeyPress;
             // 
             // lblNCM
             // 
@@ -373,8 +376,10 @@
             // 
             txtSalePrice.Location = new Point(218, 37);
             txtSalePrice.Name = "txtSalePrice";
+            txtSalePrice.PlaceholderText = "0,00";
             txtSalePrice.Size = new Size(100, 23);
             txtSalePrice.TabIndex = 22;
+            txtSalePrice.KeyPress += txtSalePrice_KeyPress;
             // 
             // lblSalePrice
             // 
@@ -405,8 +410,10 @@
             // 
             txtCostPrice.Location = new Point(6, 37);
             txtCostPrice.Name = "txtCostPrice";
+            txtCostPrice.PlaceholderText = "0,00";
             txtCostPrice.Size = new Size(100, 23);
             txtCostPrice.TabIndex = 18;
+            txtCostPrice.KeyPress += txtCostPrice_KeyPress;
             // 
             // lblCostPrice
             // 
@@ -440,6 +447,7 @@
             // 
             txtLocation.Location = new Point(760, 35);
             txtLocation.Name = "txtLocation";
+            txtLocation.ReadOnly = true;
             txtLocation.Size = new Size(100, 23);
             txtLocation.TabIndex = 23;
             // 
@@ -467,6 +475,7 @@
             // 
             txtMaxStock.Location = new Point(230, 37);
             txtMaxStock.Name = "txtMaxStock";
+            txtMaxStock.ReadOnly = true;
             txtMaxStock.Size = new Size(100, 23);
             txtMaxStock.TabIndex = 19;
             // 
@@ -474,6 +483,7 @@
             // 
             txtMinStock.Location = new Point(120, 37);
             txtMinStock.Name = "txtMinStock";
+            txtMinStock.ReadOnly = true;
             txtMinStock.Size = new Size(100, 23);
             txtMinStock.TabIndex = 18;
             // 
@@ -481,6 +491,7 @@
             // 
             txtStock.Location = new Point(6, 37);
             txtStock.Name = "txtStock";
+            txtStock.ReadOnly = true;
             txtStock.Size = new Size(100, 23);
             txtStock.TabIndex = 17;
             // 
@@ -530,7 +541,7 @@
             gbGeneral.Controls.Add(lblCategory);
             gbGeneral.Controls.Add(txtRefSupplier);
             gbGeneral.Controls.Add(lblRefSupplier);
-            gbGeneral.Controls.Add(txtDescricao);
+            gbGeneral.Controls.Add(txtDescription);
             gbGeneral.Controls.Add(lblDescricao);
             gbGeneral.Controls.Add(txtBarCode);
             gbGeneral.Controls.Add(lblBarCode);
@@ -550,6 +561,7 @@
             txtProductId.Name = "txtProductId";
             txtProductId.Size = new Size(102, 23);
             txtProductId.TabIndex = 21;
+            txtProductId.KeyPress += txtProductId_KeyPress;
             // 
             // chkAticve
             // 
@@ -615,12 +627,12 @@
             lblRefSupplier.TabIndex = 14;
             lblRefSupplier.Text = "Código Forn.";
             // 
-            // txtDescricao
+            // txtDescription
             // 
-            txtDescricao.Location = new Point(100, 53);
-            txtDescricao.Name = "txtDescricao";
-            txtDescricao.Size = new Size(622, 23);
-            txtDescricao.TabIndex = 13;
+            txtDescription.Location = new Point(100, 53);
+            txtDescription.Name = "txtDescription";
+            txtDescription.Size = new Size(622, 23);
+            txtDescription.TabIndex = 13;
             // 
             // lblDescricao
             // 
@@ -637,6 +649,7 @@
             txtBarCode.Name = "txtBarCode";
             txtBarCode.Size = new Size(150, 23);
             txtBarCode.TabIndex = 11;
+            txtBarCode.KeyPress += txtBarCode_KeyPress;
             // 
             // lblBarCode
             // 
@@ -750,7 +763,7 @@
         private ComboBox cmbProductType;
         private TextBox txtRefSupplier;
         private Label lblRefSupplier;
-        private TextBox txtDescricao;
+        private TextBox txtDescription;
         private Label lblDescricao;
         private TextBox txtBarCode;
         private Label lblBarCode;
@@ -798,7 +811,7 @@
         private CheckBox chkWeighing;
         private CheckBox chkService;
         private CheckBox chkFractional;
-        private TextBox textBox1;
+        private TextBox txtNotes;
         private Label lblNotes;
         private TextBox txtProductId;
     }

@@ -2,12 +2,14 @@
 using SisPDV.Application.DTOs.Cfop;
 using SisPDV.Application.DTOs.Company;
 using SisPDV.Application.DTOs.Config.PrintSector;
+using SisPDV.Application.DTOs.Product;
 using SisPDV.Application.DTOs.ProductType;
 using SisPDV.Application.DTOs.Unities;
 using SisPDV.Application.Helper;
 using SisPDV.Application.Interfaces;
 using SisPDV.Domain.Entities;
 using SisPDV.Domain.Enum;
+using SisPDV.Domain.Helpers;
 
 namespace SisPDV.APP.ProductMenu
 {
@@ -45,6 +47,8 @@ namespace SisPDV.APP.ProductMenu
             await LoadCombosUnity();
             LoadEnumCombo();
             gbStock.Enabled = SystemConfig.UseStockControl;
+            chkStockControlled.Checked = SystemConfig.UseStockControl;
+            chkAllowZeroStockSale.Checked = SystemConfig.SalesZeroStock;
             gbPrinters.Enabled = SystemConfig.UsePrintSector;
             if (SystemConfig.UsePrintSector)
             {
@@ -142,6 +146,76 @@ namespace SisPDV.APP.ProductMenu
         private void chkPrintersSector_CheckedChanged(object sender, EventArgs e)
         {
             EnabledPrintFields(chkPrintersSector.Checked);
+        }
+
+        private void txtProductId_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (ValidationHelper.JustNumbers(e.KeyChar))
+                e.Handled = true;
+        }
+
+        private void txtBarCode_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (ValidationHelper.JustNumbers(e.KeyChar))
+                e.Handled = true;
+        }
+
+        private void txtCostPrice_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (ValidationHelper.JustDecimal(txtCostPrice.Text, e.KeyChar))
+                e.Handled = true;
+        }
+
+        private void txtSalePrice_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (ValidationHelper.JustDecimal(txtSalePrice.Text, e.KeyChar))
+                e.Handled = true;
+        }
+
+        private void txtNCM_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (ValidationHelper.JustNumbers(e.KeyChar))
+                e.Handled = true;
+        }
+        private void txtCEST_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (ValidationHelper.JustNumbers(e.KeyChar))
+                e.Handled = true;
+        }
+
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            var resquest = MapFormToDTO();
+        }
+        private ProductDTO MapFormToDTO()
+        {
+            return new ProductDTO
+            {
+                Id = int.TryParse(txtProductId.Text, out var id) ? id : 0,
+                Description = txtDescription.Text.Trim(),
+                Type = cmbProductType.SelectedItem?.ToString() ?? "",
+                NCM = txtNCM.Text.Trim(),
+                CEST = txtCEST.Text.Trim(),
+                CfopId = (int)(cmbCFOP.SelectedValue ?? 0),
+                UnityId = (int)(cmbUnity.SelectedValue ?? 0),
+                CategoryId = (int?)(cmbCategory.SelectedValue ?? null),
+                CST_CSOSN = (CSOSN?)cmbCSTCSOSN.SelectedItem,
+                
+                Notes = txtNotes.Text.Trim(),
+
+                // Conversão para decimal (antes de virar int no helper)
+                CostPrice = Convert.ToDecimal(txtCostPrice.Text),
+                Price = Convert.ToDecimal(txtSalePrice.Text),
+                ProfitMargin = Convert.ToDecimal(txtProfitMargin.Text),
+
+                UseStockControl = chkStockControlled.Checked,
+                AllowZeroStockSale = chkAllowZeroStockSale.Checked,
+                
+
+                PrintInSector = chkPrintersSector.Checked,
+                SectorPrinterId = (int?)(cmbPrintSector.SelectedValue ?? null),
+                //ImagePath = txtImagePath.Text.Trim()
+            };
         }
     }
 }

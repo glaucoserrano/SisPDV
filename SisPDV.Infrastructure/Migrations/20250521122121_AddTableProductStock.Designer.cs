@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using SisPDV.Infrastructure.Persistence;
@@ -11,9 +12,11 @@ using SisPDV.Infrastructure.Persistence;
 namespace SisPDV.Infrastructure.Migrations
 {
     [DbContext(typeof(PDVDbContext))]
-    partial class PDVDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250521122121_AddTableProductStock")]
+    partial class AddTableProductStock
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -725,9 +728,6 @@ namespace SisPDV.Infrastructure.Migrations
                     b.Property<bool>("Active")
                         .HasColumnType("boolean");
 
-                    b.Property<bool>("AllowZeroStockSale")
-                        .HasColumnType("boolean");
-
                     b.Property<string>("Barcode")
                         .HasColumnType("text");
 
@@ -740,8 +740,8 @@ namespace SisPDV.Infrastructure.Migrations
                     b.Property<int?>("CfopId")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("CostPrice")
-                        .HasColumnType("integer");
+                    b.Property<decimal?>("CostPrice")
+                        .HasColumnType("numeric");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
@@ -751,9 +751,6 @@ namespace SisPDV.Infrastructure.Migrations
 
                     b.Property<string>("ImagePath")
                         .HasColumnType("text");
-
-                    b.Property<decimal?>("MarginProfit")
-                        .HasColumnType("numeric");
 
                     b.Property<string>("NCM")
                         .HasColumnType("text");
@@ -765,8 +762,8 @@ namespace SisPDV.Infrastructure.Migrations
                     b.Property<string>("Notes")
                         .HasColumnType("text");
 
-                    b.Property<int>("Price")
-                        .HasColumnType("integer");
+                    b.Property<decimal>("Price")
+                        .HasColumnType("numeric");
 
                     b.Property<int?>("PrinterSectorId")
                         .HasColumnType("integer");
@@ -784,9 +781,6 @@ namespace SisPDV.Infrastructure.Migrations
                         .HasColumnType("text");
 
                     b.Property<bool>("UsePrinterSector")
-                        .HasColumnType("boolean");
-
-                    b.Property<bool>("UseStockControl")
                         .HasColumnType("boolean");
 
                     b.HasKey("Id");
@@ -814,9 +808,6 @@ namespace SisPDV.Infrastructure.Migrations
 
                     b.Property<DateTime>("LastUpdate")
                         .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("Location")
-                        .HasColumnType("text");
 
                     b.Property<decimal>("MaximumQuantity")
                         .HasColumnType("numeric");

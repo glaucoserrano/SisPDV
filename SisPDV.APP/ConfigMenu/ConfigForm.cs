@@ -46,7 +46,7 @@ namespace SisPDV.APP.ConfigMenu
             }
         }
 
-        private async void chkPrinterSector_CheckedChanged(object sender, EventArgs e)
+        private void chkPrinterSector_CheckedChanged(object sender, EventArgs e)
         {
             dgvPrintSectors.Visible = chkPrinterSector.Checked;
             btnAddSector.Visible = chkPrinterSector.Checked;

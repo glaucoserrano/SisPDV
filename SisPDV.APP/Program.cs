@@ -41,27 +41,29 @@ namespace SisPDV.APP
                 var productTypeService = new ProductTypeService(dbContext);
                 var cfopService = new CfopService(dbContext);
                 var unityService = new UnityService(dbContext);
+                var productService = new ProductService(dbContext);
             
 
 
-            var cnpjService = new CnpjService();
-            var cepService = new CepService();
+                var cnpjService = new CnpjService();
+                var cepService = new CepService();
             
 
-            WindowsForms.Application.Run(new LoginForm(
-                userService,
-                currentUserService,
-                menuService,
-                userMenuService,
-                cnpjService,
-                cepService,
-                companyService,
-                printerSectorService,
-                configService,
-                PersonService,
-                productTypeService,
-                cfopService,
-                unityService));
+                WindowsForms.Application.Run(new LoginForm(
+                    userService,
+                    currentUserService,
+                    menuService,
+                    userMenuService,
+                    cnpjService,
+                    cepService,
+                    companyService,
+                    printerSectorService,
+                    configService,
+                    PersonService,
+                    productTypeService,
+                    cfopService,
+                    unityService,
+                    productService));
             }
         }
     }

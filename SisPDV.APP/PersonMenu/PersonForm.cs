@@ -161,7 +161,7 @@ namespace SisPDV.APP.PersonMenu
         {
             var request = BuildPersonDTOFromForm();
 
-            var results = await validateDate(request);
+            var results = await validateData(request);
 
             if (!results)
                 return;
@@ -222,13 +222,13 @@ namespace SisPDV.APP.PersonMenu
             return IEIndicator.ContribuinteICMS; // padrão
         }
 
-        private async Task<bool> validateDate(PersonDTO personDate)
+        private async Task<bool> validateData(PersonDTO personDate)
         {
-            var validateDate = await _personService.ValidateAsync(personDate);
+            var validateData = await _personService.ValidateAsync(personDate);
 
-            if (!validateDate.IsValid)
+            if (!validateData.IsValid)
             {
-                MessageBox.Show(string.Join("\n", validateDate.Errors), "SisPDV", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(string.Join("\n", validateData.Errors), "SisPDV", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
             }
             return true;

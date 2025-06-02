@@ -31,6 +31,7 @@ namespace SisPDV.APP.Main
         private readonly IProductTypeService _productTypeService;
         private readonly ICfopService _cfopService;
         private readonly IUnityService _unityService;
+        private readonly IProductService _productService;
 
         private readonly int? _userID;
         private readonly string? _userName;
@@ -50,7 +51,8 @@ namespace SisPDV.APP.Main
             IPersonService personService,
             IProductTypeService productTypeService,
             ICfopService cfopService,
-            IUnityService unityService
+            IUnityService unityService,
+            IProductService productService
            )
         {
             InitializeComponent();
@@ -68,6 +70,7 @@ namespace SisPDV.APP.Main
             _productTypeService = productTypeService;
             _cfopService = cfopService;
             _unityService = unityService;
+            _productService = productService;
 
             string? version = Assembly.
                 GetExecutingAssembly().
@@ -166,7 +169,8 @@ namespace SisPDV.APP.Main
                         _cfopService, 
                         _companyService, 
                         _unityService,
-                        _configServices),
+                        _configServices,
+                        _productService),
                     _ => null
                 };
                 form?.ShowDialog();

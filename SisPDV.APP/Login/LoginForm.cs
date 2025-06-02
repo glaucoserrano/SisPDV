@@ -22,6 +22,7 @@ namespace SisPDV.APP.Login
         private readonly IProductTypeService _productTypeService;
         private readonly ICfopService _cfopService;
         private readonly IUnityService _unityService;
+        private readonly IProductService _productService;
 
         public LoginForm(
             IUserService userService, 
@@ -36,7 +37,8 @@ namespace SisPDV.APP.Login
             IPersonService personService,
             IProductTypeService productTypeService,
             ICfopService cfopService,
-            IUnityService unityService)
+            IUnityService unityService,
+            IProductService productService)
         {
             InitializeComponent();
             _userService = userService;
@@ -52,6 +54,7 @@ namespace SisPDV.APP.Login
             _productTypeService = productTypeService;
             _cfopService = cfopService;
             _unityService = unityService;
+            _productService = productService;
         }
 
         private async void btnLogin_Click(object sender, EventArgs e)
@@ -89,7 +92,8 @@ namespace SisPDV.APP.Login
                         personService: _personService,
                         productTypeService: _productTypeService,
                         cfopService: _cfopService,
-                        unityService: _unityService);
+                        unityService: _unityService,
+                        productService: _productService);
                     mainForm.WindowState = FormWindowState.Maximized;
 
                     mainForm.FormClosed += (s, e) => this.Close();

@@ -30,15 +30,6 @@ namespace SisPDV.Application.Services
             if (request.UnityId == null || request.UnityId <= 0)
                 errors.Add("Unidade de venda é obrigatória.");
 
-            if (request.CostPrice < 0)
-                errors.Add("Preço de custo inválido.");
-
-            if (request.Price < 0)
-                errors.Add("Preço de venda inválido.");
-
-            if (request.Price == null && request.ProfitMargin == null)
-                errors.Add("Informe o preço de venda ou a margem de lucro.");
-
 
             var result = new ValidationResults
             {

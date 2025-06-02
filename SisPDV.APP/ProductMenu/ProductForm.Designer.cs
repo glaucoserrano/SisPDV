@@ -380,6 +380,7 @@
             txtSalePrice.Size = new Size(100, 23);
             txtSalePrice.TabIndex = 22;
             txtSalePrice.KeyPress += txtSalePrice_KeyPress;
+            txtSalePrice.Leave += txtSalePrice_Leave;
             // 
             // lblSalePrice
             // 
@@ -396,6 +397,7 @@
             txtProfitMargin.Name = "txtProfitMargin";
             txtProfitMargin.Size = new Size(80, 23);
             txtProfitMargin.TabIndex = 20;
+            txtProfitMargin.Leave += txtProfitMargin_Leave;
             // 
             // lblProfitMargin
             // 

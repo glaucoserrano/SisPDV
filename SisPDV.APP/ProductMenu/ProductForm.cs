@@ -2,11 +2,13 @@
 using SisPDV.Application.DTOs.Cfop;
 using SisPDV.Application.DTOs.Company;
 using SisPDV.Application.DTOs.Config.PrintSector;
+using SisPDV.Application.DTOs.Person;
 using SisPDV.Application.DTOs.Product;
 using SisPDV.Application.DTOs.ProductType;
 using SisPDV.Application.DTOs.Unities;
 using SisPDV.Application.Helper;
 using SisPDV.Application.Interfaces;
+using SisPDV.Application.Services;
 using SisPDV.Domain.Entities;
 using SisPDV.Domain.Enum;
 using SisPDV.Domain.Helpers;
@@ -20,7 +22,9 @@ namespace SisPDV.APP.ProductMenu
         private readonly ICompanyService _companyService;
         private readonly IUnityService _unityService;
         private readonly IConfigService _configServices;
-
+        private readonly IProductService _productService;
+        private bool _updatingPrice = false;
+        private bool _updatingMargin = false;
 
         private CompanyDTO? _company;
         public ProductForm(
@@ -28,7 +32,8 @@ namespace SisPDV.APP.ProductMenu
             ICfopService cfopService,
             ICompanyService companyService,
             IUnityService unityService,
-            IConfigService configServices)
+            IConfigService configServices,
+            IProductService productService)
         {
 
             InitializeComponent();
@@ -37,6 +42,7 @@ namespace SisPDV.APP.ProductMenu
             _companyService = companyService;
             _unityService = unityService;
             _configServices = configServices;
+            _productService = productService;
         }
 
         private async void ProductForm_Load(object sender, EventArgs e)
@@ -183,10 +189,28 @@ namespace SisPDV.APP.ProductMenu
                 e.Handled = true;
         }
 
-        private void btnSave_Click(object sender, EventArgs e)
+        private async void btnSave_Click(object sender, EventArgs e)
         {
-            var resquest = MapFormToDTO();
+            var request = MapFormToDTO();
+
+            var results = await validateData(request);
+
+            if (!results)
+                return;
         }
+
+        private async Task<bool> validateData(ProductDTO request)
+        {
+            var validateData = await _productService.ValidateAsync(request);
+
+            if (!validateData.IsValid)
+            {
+                MessageBox.Show(string.Join("\n", validateData.Errors), "SisPDV", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+            return true;
+        }
+
         private ProductDTO MapFormToDTO()
         {
             return new ProductDTO
@@ -199,23 +223,60 @@ namespace SisPDV.APP.ProductMenu
                 CfopId = (int)(cmbCFOP.SelectedValue ?? 0),
                 UnityId = (int)(cmbUnity.SelectedValue ?? 0),
                 CategoryId = (int?)(cmbCategory.SelectedValue ?? null),
-                CST_CSOSN = (CSOSN?)cmbCSTCSOSN.SelectedItem,
-                
+
+                Weighing = chkWeighing.Checked,
+                Fractional = chkFractional.Checked,
+                Service = chkService.Checked,
                 Notes = txtNotes.Text.Trim(),
 
                 // Conversão para decimal (antes de virar int no helper)
-                CostPrice = Convert.ToDecimal(txtCostPrice.Text),
-                Price = Convert.ToDecimal(txtSalePrice.Text),
-                ProfitMargin = Convert.ToDecimal(txtProfitMargin.Text),
+                CostPrice = TryParseHelper.SafeParseDecimal(txtCostPrice.Text, "Preço de Custo"),
+
+                Price = TryParseHelper.SafeParseDecimal(txtSalePrice.Text, "Preço de Venda"),
+                ProfitMargin = TryParseHelper.SafeParseDecimal(txtProfitMargin.Text, "Margem de Lucro"),
 
                 UseStockControl = chkStockControlled.Checked,
                 AllowZeroStockSale = chkAllowZeroStockSale.Checked,
-                
+
 
                 PrintInSector = chkPrintersSector.Checked,
                 SectorPrinterId = (int?)(cmbPrintSector.SelectedValue ?? null),
                 //ImagePath = txtImagePath.Text.Trim()
             };
+        }
+
+        private void txtProfitMargin_Leave(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(txtSalePrice.Text))
+                _updatingPrice = false;
+
+            if (_updatingPrice) return;
+
+            if (decimal.TryParse(txtCostPrice.Text, out var cost) &&
+                decimal.TryParse(txtProfitMargin.Text, out var profit))
+            {
+                _updatingMargin = true;
+                var price = cost + (cost * (profit / 100));
+                txtSalePrice.Text = price.ToString("N2");
+                _updatingPrice = false;
+            }
+        }
+
+        private void txtSalePrice_Leave(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(txtProfitMargin.Text))
+                _updatingMargin = false;
+            
+            if (_updatingMargin) return;
+
+            if (decimal.TryParse(txtCostPrice.Text, out var cost) &&
+                decimal.TryParse(txtSalePrice.Text, out var sale) && cost > 0)
+            {
+                _updatingPrice = true;
+                var margin = ((sale - cost) / cost) * 100;
+                txtProfitMargin.Text = margin.ToString("N2");
+                _updatingMargin = false;
+            }
         }
     }
 }

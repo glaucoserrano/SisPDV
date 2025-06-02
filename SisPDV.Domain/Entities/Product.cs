@@ -6,7 +6,7 @@ namespace SisPDV.Domain.Entities
     {
         public int Id { get; set; }
 
-        public string Name { get; set; } = string.Empty;
+        public string Description { get; set; } = string.Empty;
         public string? Barcode { get; set; }
 
         public int ProductTypeId { get; set; }
@@ -41,5 +41,9 @@ namespace SisPDV.Domain.Entities
         // Configurações específicas
         public bool UseStockControl { get; set; } = true;
         public bool AllowZeroStockSale { get; set; } = false;
+
+        public bool Weighing { get; set; } 
+        public bool Fractional { get; set; } 
+        public bool Service { get; set; } 
     }
 }

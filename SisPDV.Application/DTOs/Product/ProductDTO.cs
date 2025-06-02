@@ -15,13 +15,7 @@ namespace SisPDV.Application.DTOs.Product
         public int? CategoryId { get; set; }
         public int? UnityId { get; set; }
 
-        public ProductOrigin? Origin { get; set; }
-        public CSOSN? CST_CSOSN { get; set; }
-        public CST_ICMS? CST_ICMS { get; set; }
-        public CST_PIS? CST_PIS { get; set; }
-        public CST_COFINS? CST_COFINS { get; set; }
-
-        public decimal? IVA { get; set; }
+        
         public string? Notes { get; set; }
 
         // Preços (em reais, convertidos para centavos ao salvar)
@@ -40,5 +34,9 @@ namespace SisPDV.Application.DTOs.Product
 
         // Imagem
         public string? ImagePath { get; set; }
+
+        public bool Weighing { get; set; } 
+        public bool Fractional { get; set; } 
+        public bool Service { get; set; } 
     }
 }

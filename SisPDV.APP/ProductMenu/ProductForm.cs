@@ -96,12 +96,17 @@ namespace SisPDV.APP.ProductMenu
         {
             if (_company!.TaxRegime == TaxRegime.SimplesNacional)
             {
-                LoadEnumToComboHelper.LoadEnumToComboBox<CSOSN>(cmbCSTCSOSN);
+                LoadEnumToComboHelper.LoadEnumToComboBox<CSOSN>(cmbCSTCSOSN,addDefaultItem: true,
+                    defaultText:"00 - Selecione",defaultValue: 0);
             }
             else
             {
-                LoadEnumToComboHelper.LoadEnumToComboBox<CST_ICMS>(cmbCSTCSOSN);
+                LoadEnumToComboHelper.LoadEnumToComboBox<CST_ICMS>(cmbCSTCSOSN, addDefaultItem: true,
+                    defaultText: "00 - Selecione", defaultValue: 0);
             }
+
+            LoadEnumToComboHelper.LoadEnumToComboBox<Status>(cmbSearchStatus, addDefaultItem: true,
+                    defaultText: "Todos", defaultValue: -1);
         }
 
         private async Task LoadComboCfops()
@@ -113,12 +118,28 @@ namespace SisPDV.APP.ProductMenu
                 nameof(CfopDTO.Id),
                 defaultDisplay: "Selecione",
                 defaultValue: 0);
+
+            await ComboHelper.LoadComboBoxAsync(
+                cmbSearchCFOP,
+                () => _cfopService.GetCfopAsync(),
+                nameof(CfopDTO.Display),
+                nameof(CfopDTO.Id),
+                defaultDisplay: "Selecione",
+                defaultValue: 0);
         }
 
         private async Task LoadComboProductType()
         {
             await ComboHelper.LoadComboBoxAsync(
                 cmbProductType,
+                () => _productTypeServices.GetProductTypesAsync(),
+                nameof(ProductTypeDTO.Type),
+                nameof(ProductTypeDTO.Id),
+                defaultDisplay: "Selecione",
+                defaultValue: 0);
+
+            await ComboHelper.LoadComboBoxAsync(
+                cmbSearchProductType,
                 () => _productTypeServices.GetProductTypesAsync(),
                 nameof(ProductTypeDTO.Type),
                 nameof(ProductTypeDTO.Id),

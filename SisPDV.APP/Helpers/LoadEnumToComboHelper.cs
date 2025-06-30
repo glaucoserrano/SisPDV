@@ -4,7 +4,8 @@ namespace SisPDV.APP.Helpers
 {
     public static class LoadEnumToComboHelper
     {
-        public static void LoadEnumToComboBox<TEnum>(ComboBox comboBox) where TEnum : struct, Enum
+        public static void LoadEnumToComboBox<TEnum>(ComboBox comboBox, bool addDefaultItem = false,
+               string defaultText = "00 - Selecione", int? defaultValue = 0) where TEnum : struct, Enum
         {
             var values = Enum.GetValues(typeof(TEnum))
                             .Cast<TEnum>();
@@ -15,10 +16,10 @@ namespace SisPDV.APP.Helpers
                             })
                             .ToList();
 
-           if(!values.Any(e => Convert.ToInt32(e)==0))
+           if(addDefaultItem)
             {
                 // Adiciona o item padrão "0 - Selecione" no início da lista
-                items.Insert(0, new { Value = 0, Description = "00 - Selecione" });
+                items.Insert(0, new { Value = defaultValue ?? -1, Description = defaultText });
             }
             
 

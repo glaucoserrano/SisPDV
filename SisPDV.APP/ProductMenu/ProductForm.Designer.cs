@@ -81,6 +81,18 @@
             btnAddImage = new FontAwesome.Sharp.IconButton();
             pbProductImage = new PictureBox();
             tabList = new TabPage();
+            panel1 = new Panel();
+            dgvSearchProducts = new DataGridView();
+            groupBox2 = new GroupBox();
+            btnSearch = new FontAwesome.Sharp.IconButton();
+            cmbSearchCFOP = new ComboBox();
+            label4 = new Label();
+            cmbSearchStatus = new ComboBox();
+            label3 = new Label();
+            cmbSearchProductType = new ComboBox();
+            label2 = new Label();
+            txtSearchProductDescription = new TextBox();
+            label1 = new Label();
             tabControl.SuspendLayout();
             tabRegister.SuspendLayout();
             groupBox1.SuspendLayout();
@@ -90,6 +102,10 @@
             gbGeneral.SuspendLayout();
             gbImage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pbProductImage).BeginInit();
+            tabList.SuspendLayout();
+            panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvSearchProducts).BeginInit();
+            groupBox2.SuspendLayout();
             SuspendLayout();
             // 
             // tabControl
@@ -727,11 +743,130 @@
             // tabList
             // 
             tabList.BackColor = SystemColors.Control;
+            tabList.Controls.Add(panel1);
+            tabList.Controls.Add(groupBox2);
             tabList.Location = new Point(4, 24);
             tabList.Name = "tabList";
             tabList.Size = new Size(892, 572);
             tabList.TabIndex = 1;
             tabList.Text = "Consulta";
+            // 
+            // panel1
+            // 
+            panel1.Controls.Add(dgvSearchProducts);
+            panel1.Location = new Point(8, 118);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(881, 446);
+            panel1.TabIndex = 1;
+            // 
+            // dgvSearchProducts
+            // 
+            dgvSearchProducts.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvSearchProducts.Dock = DockStyle.Fill;
+            dgvSearchProducts.Location = new Point(0, 0);
+            dgvSearchProducts.Name = "dgvSearchProducts";
+            dgvSearchProducts.Size = new Size(881, 446);
+            dgvSearchProducts.TabIndex = 0;
+            // 
+            // groupBox2
+            // 
+            groupBox2.Controls.Add(btnSearch);
+            groupBox2.Controls.Add(cmbSearchCFOP);
+            groupBox2.Controls.Add(label4);
+            groupBox2.Controls.Add(cmbSearchStatus);
+            groupBox2.Controls.Add(label3);
+            groupBox2.Controls.Add(cmbSearchProductType);
+            groupBox2.Controls.Add(label2);
+            groupBox2.Controls.Add(txtSearchProductDescription);
+            groupBox2.Controls.Add(label1);
+            groupBox2.Location = new Point(3, 3);
+            groupBox2.Name = "groupBox2";
+            groupBox2.Size = new Size(881, 109);
+            groupBox2.TabIndex = 0;
+            groupBox2.TabStop = false;
+            groupBox2.Text = "Consulta";
+            // 
+            // btnSearch
+            // 
+            btnSearch.IconChar = FontAwesome.Sharp.IconChar.Search;
+            btnSearch.IconColor = Color.Black;
+            btnSearch.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            btnSearch.IconSize = 16;
+            btnSearch.ImageAlign = ContentAlignment.MiddleLeft;
+            btnSearch.Location = new Point(766, 67);
+            btnSearch.Name = "btnSearch";
+            btnSearch.Size = new Size(109, 24);
+            btnSearch.TabIndex = 33;
+            btnSearch.Text = "Pesquisar";
+            btnSearch.UseVisualStyleBackColor = true;
+            // 
+            // cmbSearchCFOP
+            // 
+            cmbSearchCFOP.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbSearchCFOP.FormattingEnabled = true;
+            cmbSearchCFOP.Location = new Point(330, 68);
+            cmbSearchCFOP.Name = "cmbSearchCFOP";
+            cmbSearchCFOP.Size = new Size(231, 23);
+            cmbSearchCFOP.TabIndex = 32;
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Location = new Point(287, 71);
+            label4.Name = "label4";
+            label4.Size = new Size(37, 15);
+            label4.TabIndex = 31;
+            label4.Text = "CFOP";
+            // 
+            // cmbSearchStatus
+            // 
+            cmbSearchStatus.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbSearchStatus.FormattingEnabled = true;
+            cmbSearchStatus.Location = new Point(70, 68);
+            cmbSearchStatus.Name = "cmbSearchStatus";
+            cmbSearchStatus.Size = new Size(200, 23);
+            cmbSearchStatus.TabIndex = 19;
+            // 
+            // label3
+            // 
+            label3.Location = new Point(6, 71);
+            label3.Name = "label3";
+            label3.Size = new Size(100, 23);
+            label3.TabIndex = 18;
+            label3.Text = "Status";
+            // 
+            // cmbSearchProductType
+            // 
+            cmbSearchProductType.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbSearchProductType.FormattingEnabled = true;
+            cmbSearchProductType.Location = new Point(675, 22);
+            cmbSearchProductType.Name = "cmbSearchProductType";
+            cmbSearchProductType.Size = new Size(200, 23);
+            cmbSearchProductType.TabIndex = 17;
+            // 
+            // label2
+            // 
+            label2.Location = new Point(567, 22);
+            label2.Name = "label2";
+            label2.Size = new Size(100, 23);
+            label2.TabIndex = 16;
+            label2.Text = "Tipo de Produto";
+            // 
+            // txtSearchProductDescription
+            // 
+            txtSearchProductDescription.Location = new Point(70, 22);
+            txtSearchProductDescription.Name = "txtSearchProductDescription";
+            txtSearchProductDescription.Size = new Size(491, 23);
+            txtSearchProductDescription.TabIndex = 15;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new Point(6, 25);
+            label1.Name = "label1";
+            label1.Size = new Size(58, 15);
+            label1.TabIndex = 14;
+            label1.Text = "Descrição";
             // 
             // ProductForm
             // 
@@ -758,6 +893,11 @@
             gbGeneral.PerformLayout();
             gbImage.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pbProductImage).EndInit();
+            tabList.ResumeLayout(false);
+            panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)dgvSearchProducts).EndInit();
+            groupBox2.ResumeLayout(false);
+            groupBox2.PerformLayout();
             ResumeLayout(false);
         }
         private Label lblProductType;
@@ -816,5 +956,17 @@
         private TextBox txtNotes;
         private Label lblNotes;
         private TextBox txtProductId;
+        private GroupBox groupBox2;
+        private ComboBox cmbSearchStatus;
+        private Label label3;
+        private ComboBox cmbSearchProductType;
+        private Label label2;
+        private TextBox txtSearchProductDescription;
+        private Label label1;
+        private ComboBox cmbSearchCFOP;
+        private Label label4;
+        private Panel panel1;
+        private DataGridView dgvSearchProducts;
+        private FontAwesome.Sharp.IconButton btnSearch;
     }
 }

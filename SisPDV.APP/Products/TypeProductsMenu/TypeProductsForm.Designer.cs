@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             grpFields = new GroupBox();
+            cmbCfop = new ComboBox();
             btnClean = new FontAwesome.Sharp.IconButton();
             btnSave = new FontAwesome.Sharp.IconButton();
             txtNotes = new TextBox();
@@ -50,7 +51,6 @@
             lblTypeName = new Label();
             grpList = new GroupBox();
             dgvTypes = new DataGridView();
-            cmbCfop = new ComboBox();
             grpFields.SuspendLayout();
             grpList.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvTypes).BeginInit();
@@ -84,6 +84,15 @@
             grpFields.TabIndex = 0;
             grpFields.TabStop = false;
             grpFields.Text = "Dados do Tipo de Produto";
+            // 
+            // cmbCfop
+            // 
+            cmbCfop.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbCfop.FormattingEnabled = true;
+            cmbCfop.Location = new Point(150, 107);
+            cmbCfop.Name = "cmbCfop";
+            cmbCfop.Size = new Size(250, 23);
+            cmbCfop.TabIndex = 26;
             // 
             // btnClean
             // 
@@ -292,15 +301,6 @@
             dgvTypes.Size = new Size(840, 294);
             dgvTypes.TabIndex = 0;
             dgvTypes.CellDoubleClick += dgvTypes_CellDoubleClick;
-            // 
-            // cmbCfop
-            // 
-            cmbCfop.DropDownStyle = ComboBoxStyle.DropDownList;
-            cmbCfop.FormattingEnabled = true;
-            cmbCfop.Location = new Point(150, 107);
-            cmbCfop.Name = "cmbCfop";
-            cmbCfop.Size = new Size(250, 23);
-            cmbCfop.TabIndex = 26;
             // 
             // TypeProductsForm
             // 

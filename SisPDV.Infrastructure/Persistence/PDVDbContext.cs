@@ -29,6 +29,7 @@ namespace SisPDV.Infrastructure.Persistence
         public DbSet<Product> products { get; set; }
         public DbSet<Category> categories { get; set; }
         public DbSet<ProductStock> productStock { get; set; }
+        public DbSet<Accountant> accountants { get; set; }
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {

@@ -22,6 +22,74 @@ namespace SisPDV.Infrastructure.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("SisPDV.Domain.Entities.Accountant", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Address")
+                        .HasColumnType("text");
+
+                    b.Property<string>("CEP")
+                        .HasColumnType("text");
+
+                    b.Property<string>("CNPJ")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("CPF")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("CRC")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("City")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Neighborhood")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Number")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Phone")
+                        .HasColumnType("text");
+
+                    b.Property<string>("State")
+                        .HasColumnType("text");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("accountants");
+                });
+
             modelBuilder.Entity("SisPDV.Domain.Entities.Category", b =>
                 {
                     b.Property<int>("Id")
@@ -29,6 +97,9 @@ namespace SisPDV.Infrastructure.Migrations
                         .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("Active")
+                        .HasColumnType("boolean");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
@@ -38,7 +109,8 @@ namespace SisPDV.Infrastructure.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(60)
+                        .HasColumnType("character varying(60)");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
@@ -59,6 +131,9 @@ namespace SisPDV.Infrastructure.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<bool>("Active")
+                        .HasColumnType("boolean");
+
                     b.Property<string>("Code")
                         .IsRequired()
                         .HasColumnType("text");
@@ -71,6 +146,9 @@ namespace SisPDV.Infrastructure.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Notes")
                         .HasColumnType("text");
 
                     b.Property<DateTime?>("UpdatedAt")
@@ -87,28 +165,34 @@ namespace SisPDV.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
+                            Active = true,
                             Code = "5102",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = "System",
                             Description = "Venda de mercadoria adquirida ou recebida de terceiros",
+                            Notes = "",
                             UpdatedBy = ""
                         },
                         new
                         {
                             Id = 2,
+                            Active = true,
                             Code = "5101",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = "System",
                             Description = "Venda de produção do estabelecimento",
+                            Notes = "",
                             UpdatedBy = ""
                         },
                         new
                         {
                             Id = 3,
+                            Active = true,
                             Code = "5405",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = "System",
                             Description = "Venda de mercadoria adquirida de terceiros, com ST",
+                            Notes = "",
                             UpdatedBy = ""
                         });
                 });
@@ -548,6 +632,53 @@ namespace SisPDV.Infrastructure.Migrations
                             Title = "Cadastro de Produtos",
                             UpdatedBy = "",
                             Visible = true
+                        },
+                        new
+                        {
+                            Id = 11,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = "System",
+                            Order = 9,
+                            ParentId = 7,
+                            Title = "Outros Cadastros",
+                            UpdatedBy = "",
+                            Visible = true
+                        },
+                        new
+                        {
+                            Id = 12,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = "System",
+                            FormName = "CFOPForm",
+                            Order = 9,
+                            ParentId = 11,
+                            Title = "CFOP",
+                            UpdatedBy = "",
+                            Visible = true
+                        },
+                        new
+                        {
+                            Id = 13,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = "System",
+                            FormName = "CategoriesForm",
+                            Order = 10,
+                            ParentId = 11,
+                            Title = "Categorias",
+                            UpdatedBy = "",
+                            Visible = true
+                        },
+                        new
+                        {
+                            Id = 14,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = "System",
+                            FormName = "AccountantForm",
+                            Order = 11,
+                            ParentId = 11,
+                            Title = "Contador",
+                            UpdatedBy = "",
+                            Visible = true
                         });
                 });
 
@@ -768,7 +899,7 @@ namespace SisPDV.Infrastructure.Migrations
                     b.Property<string>("Notes")
                         .HasColumnType("text");
 
-                    b.Property<int>("Price")
+                    b.Property<int?>("Price")
                         .HasColumnType("integer");
 
                     b.Property<int?>("PrinterSectorId")
@@ -777,10 +908,14 @@ namespace SisPDV.Infrastructure.Migrations
                     b.Property<int>("ProductTypeId")
                         .HasColumnType("integer");
 
+                    b.Property<string>("RefSupplier")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<bool>("Service")
                         .HasColumnType("boolean");
 
-                    b.Property<int>("UnityId")
+                    b.Property<int?>("UnityId")
                         .HasColumnType("integer");
 
                     b.Property<DateTime?>("UpdatedAt")
@@ -1150,9 +1285,7 @@ namespace SisPDV.Infrastructure.Migrations
 
                     b.HasOne("SisPDV.Domain.Entities.Unity", "Unity")
                         .WithMany()
-                        .HasForeignKey("UnityId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UnityId");
 
                     b.Navigation("Category");
 

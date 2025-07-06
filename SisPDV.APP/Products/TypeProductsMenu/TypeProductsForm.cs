@@ -68,7 +68,7 @@ namespace SisPDV.APP.Products.TypeProductsMenu
             }
             LoadEnumToComboHelper.LoadEnumToComboBox<CST_COFINS>(cmbCSTCOFINS);
             LoadEnumToComboHelper.LoadEnumToComboBox<CST_PIS>(cmbCSTPIS);
-            await ComboHelper.LoadComboBoxAsync<CfopDTO>(combobox: cmbCfop, () => _cfopService.GetCfopAsync(),
+            await ComboHelper.LoadComboBoxAsync<CfopDTO>(combobox: cmbCfop, () => _cfopService.GetCfopsActiveAsync(),
                 nameof(CfopDTO.Display),
                 nameof(CfopDTO.Id),
                 defaultDisplay: "Selecione",

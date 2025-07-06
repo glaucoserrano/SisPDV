@@ -1,4 +1,5 @@
-﻿using SisPDV.Application.DTOs.ProductType;
+﻿using SisPDV.Application.DTOs.Product;
+using SisPDV.Application.DTOs.ProductType;
 using SisPDV.Application.DTOs.Validation;
 
 namespace SisPDV.Application.Interfaces

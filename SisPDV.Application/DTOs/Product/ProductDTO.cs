@@ -6,14 +6,19 @@ namespace SisPDV.Application.DTOs.Product
     {
         public int Id { get; set; }
         public string Description { get; set; } = string.Empty;
+        public string Barcode { get; set; } = string.Empty;
+        public bool Active { get; set; }
 
-        public string Type { get; set; } = string.Empty;
+        public int ProductTypeId { get; set; }
+        public string ProductType { get; set; } = string.Empty;
         public string? NCM { get; set; }
         public string? CEST { get; set; }
 
-        public int CfopId { get; set; }
+        public int? CfopId { get; set; }
+        public string Cfop { get; set; } = string.Empty;
         public int? CategoryId { get; set; }
         public int? UnityId { get; set; }
+        public string Unity { get; set; } = string.Empty;
 
         
         public string? Notes { get; set; }
@@ -37,6 +42,7 @@ namespace SisPDV.Application.DTOs.Product
 
         public bool Weighing { get; set; } 
         public bool Fractional { get; set; } 
-        public bool Service { get; set; } 
+        public bool Service { get; set; }
+        public string RefSupplier { get; set; } = string.Empty;
     }
 }

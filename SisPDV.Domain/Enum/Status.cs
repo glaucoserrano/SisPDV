@@ -7,6 +7,6 @@ namespace SisPDV.Domain.Enum
         [Description("Ativos")]
         Active = 1,
         [Description("Inativos")]
-        Inactive = 0,
+        Inactive = 0
     }
 }

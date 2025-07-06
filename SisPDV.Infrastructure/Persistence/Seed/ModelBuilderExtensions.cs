@@ -107,6 +107,46 @@ namespace SisPDV.Infrastructure.Persistence.Seed
                     Order = 8,
                     Visible = true,
                     CreatedBy = "System"
+                },
+                new Menu
+                {
+                    Id = 11,
+                    ParentId = 7,
+                    Title = "Outros Cadastros",
+                    FormName = null,
+                    Order = 9,
+                    Visible = true,
+                    CreatedBy = "System"
+                },
+                new Menu
+                {
+                    Id = 12,
+                    ParentId = 11,
+                    Title = "CFOP",
+                    FormName = "CFOPForm",
+                    Order = 9,
+                    Visible = true,
+                    CreatedBy = "System"
+                },
+                new Menu
+                {
+                    Id = 13,
+                    ParentId = 11,
+                    Title = "Categorias",
+                    FormName = "CategoriesForm",
+                    Order = 10,
+                    Visible = true,
+                    CreatedBy = "System"
+                },
+                new Menu
+                {
+                    Id = 14,
+                    ParentId = 11,
+                    Title = "Contador",
+                    FormName = "AccountantForm",
+                    Order = 11,
+                    Visible = true,
+                    CreatedBy = "System"
                 }
             );
         }

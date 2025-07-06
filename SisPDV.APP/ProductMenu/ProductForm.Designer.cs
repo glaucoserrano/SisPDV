@@ -82,7 +82,7 @@
             pbProductImage = new PictureBox();
             tabList = new TabPage();
             panel1 = new Panel();
-            dgvSearchProducts = new DataGridView();
+            dgvProducts = new DataGridView();
             groupBox2 = new GroupBox();
             btnSearch = new FontAwesome.Sharp.IconButton();
             cmbSearchCFOP = new ComboBox();
@@ -104,7 +104,7 @@
             ((System.ComponentModel.ISupportInitialize)pbProductImage).BeginInit();
             tabList.SuspendLayout();
             panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dgvSearchProducts).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dgvProducts).BeginInit();
             groupBox2.SuspendLayout();
             SuspendLayout();
             // 
@@ -220,6 +220,7 @@
             chkAutoPrint.TabIndex = 33;
             chkAutoPrint.Text = "Imprimir Automaticamente";
             chkAutoPrint.UseVisualStyleBackColor = true;
+            chkAutoPrint.Visible = false;
             // 
             // chkShowInOrder
             // 
@@ -230,6 +231,7 @@
             chkShowInOrder.TabIndex = 32;
             chkShowInOrder.Text = "Mostrar em pedido";
             chkShowInOrder.UseVisualStyleBackColor = true;
+            chkShowInOrder.Visible = false;
             // 
             // cmbPrintSector
             // 
@@ -276,6 +278,7 @@
             btnClean.TabIndex = 12;
             btnClean.Text = "   Limpar";
             btnClean.UseVisualStyleBackColor = false;
+            btnClean.Click += btnClean_Click;
             // 
             // btnSave
             // 
@@ -580,6 +583,7 @@
             txtProductId.Size = new Size(102, 23);
             txtProductId.TabIndex = 21;
             txtProductId.KeyPress += txtProductId_KeyPress;
+            txtProductId.Leave += txtProductId_Leave;
             // 
             // chkAticve
             // 
@@ -635,6 +639,7 @@
             txtRefSupplier.Name = "txtRefSupplier";
             txtRefSupplier.Size = new Size(100, 23);
             txtRefSupplier.TabIndex = 15;
+            txtRefSupplier.Leave += txtRefSupplier_Leave;
             // 
             // lblRefSupplier
             // 
@@ -668,6 +673,7 @@
             txtBarCode.Size = new Size(150, 23);
             txtBarCode.TabIndex = 11;
             txtBarCode.KeyPress += txtBarCode_KeyPress;
+            txtBarCode.Leave += txtBarCode_Leave;
             // 
             // lblBarCode
             // 
@@ -729,6 +735,7 @@
             btnAddImage.TabIndex = 1;
             btnAddImage.Text = "     Adicionar";
             btnAddImage.UseVisualStyleBackColor = true;
+            btnAddImage.Click += btnAddImage_Click;
             // 
             // pbProductImage
             // 
@@ -753,20 +760,21 @@
             // 
             // panel1
             // 
-            panel1.Controls.Add(dgvSearchProducts);
+            panel1.Controls.Add(dgvProducts);
             panel1.Location = new Point(8, 118);
             panel1.Name = "panel1";
             panel1.Size = new Size(881, 446);
             panel1.TabIndex = 1;
             // 
-            // dgvSearchProducts
+            // dgvProducts
             // 
-            dgvSearchProducts.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvSearchProducts.Dock = DockStyle.Fill;
-            dgvSearchProducts.Location = new Point(0, 0);
-            dgvSearchProducts.Name = "dgvSearchProducts";
-            dgvSearchProducts.Size = new Size(881, 446);
-            dgvSearchProducts.TabIndex = 0;
+            dgvProducts.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvProducts.Dock = DockStyle.Fill;
+            dgvProducts.Location = new Point(0, 0);
+            dgvProducts.Name = "dgvProducts";
+            dgvProducts.Size = new Size(881, 446);
+            dgvProducts.TabIndex = 0;
+            dgvProducts.CellDoubleClick += dgvProducts_CellDoubleClick;
             // 
             // groupBox2
             // 
@@ -799,6 +807,7 @@
             btnSearch.TabIndex = 33;
             btnSearch.Text = "Pesquisar";
             btnSearch.UseVisualStyleBackColor = true;
+            btnSearch.Click += btnSearch_Click;
             // 
             // cmbSearchCFOP
             // 
@@ -895,7 +904,7 @@
             ((System.ComponentModel.ISupportInitialize)pbProductImage).EndInit();
             tabList.ResumeLayout(false);
             panel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)dgvSearchProducts).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dgvProducts).EndInit();
             groupBox2.ResumeLayout(false);
             groupBox2.PerformLayout();
             ResumeLayout(false);
@@ -966,7 +975,7 @@
         private ComboBox cmbSearchCFOP;
         private Label label4;
         private Panel panel1;
-        private DataGridView dgvSearchProducts;
+        private DataGridView dgvProducts;
         private FontAwesome.Sharp.IconButton btnSearch;
     }
 }

@@ -42,7 +42,8 @@ namespace SisPDV.APP
                 var cfopService = new CfopService(dbContext);
                 var unityService = new UnityService(dbContext);
                 var productService = new ProductService(dbContext);
-            
+                var categoryService = new CategoryService(dbContext);
+                var accountantService = new AccountantService(dbContext);
 
 
                 var cnpjService = new CnpjService();
@@ -63,7 +64,9 @@ namespace SisPDV.APP
                     productTypeService,
                     cfopService,
                     unityService,
-                    productService));
+                    productService,
+                    categoryService,
+                    accountantService));
             }
         }
     }

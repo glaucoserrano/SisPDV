@@ -1,6 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore.Storage.Json;
+﻿using SisPDV.APP.Accountant;
+using SisPDV.APP.Categories;
+using SisPDV.APP.CFOP;
 using SisPDV.APP.CompanyMenu;
-using SisPDV.APP.Config;
 using SisPDV.APP.ConfigMenu;
 using SisPDV.APP.Helpers;
 using SisPDV.APP.PermissionMenu;
@@ -8,11 +9,10 @@ using SisPDV.APP.PersonMenu;
 using SisPDV.APP.ProductMenu;
 using SisPDV.APP.Products.TypeProductsMenu;
 using SisPDV.APP.User;
+using SisPDV.Application.DTOs.Menus;
 using SisPDV.Application.ExternalInterfaces;
 using SisPDV.Application.Interfaces;
-using SisPDV.Domain.Entities;
 using System.Reflection;
-using System.Text.Json;
 using WindowsForms = System.Windows.Forms;
 
 namespace SisPDV.APP.Main
@@ -32,6 +32,8 @@ namespace SisPDV.APP.Main
         private readonly ICfopService _cfopService;
         private readonly IUnityService _unityService;
         private readonly IProductService _productService;
+        private readonly ICategoryService _categoryService;
+        private readonly IAccountantService _accountantService;
 
         private readonly int? _userID;
         private readonly string? _userName;
@@ -52,7 +54,9 @@ namespace SisPDV.APP.Main
             IProductTypeService productTypeService,
             ICfopService cfopService,
             IUnityService unityService,
-            IProductService productService
+            IProductService productService,
+            ICategoryService categoryService,
+            IAccountantService accountantService
            )
         {
             InitializeComponent();
@@ -71,6 +75,8 @@ namespace SisPDV.APP.Main
             _cfopService = cfopService;
             _unityService = unityService;
             _productService = productService;
+            _categoryService = categoryService;
+            _accountantService = accountantService;
 
             string? version = Assembly.
                 GetExecutingAssembly().
@@ -120,22 +126,17 @@ namespace SisPDV.APP.Main
                 await _menuService.GetAllMenuAsync() :
                 await _menuService.GetMenusUserIdAsync(user.Id);
 
-            var rootMenus = menus.Where(m => m.ParentId == null).OrderBy(m => m.Order);
+            var ordernedMenus = menus.OrderBy(m => m.Order).ToList();
+            var rootMenus = ordernedMenus.Where(m => m.ParentId == null);
 
-            foreach( var root in rootMenus)
+            foreach (var root in rootMenus)
             {
-                var rootMenuItem = new ToolStripMenuItem(root.Title);
-                MainMenuStrip!.Items.Add(rootMenuItem);
+                var rootItem = new ToolStripMenuItem(root.Title);
+                rootItem.Tag = root.FormName;
 
-                var childMenus = menus.Where(m => m.ParentId == root.Id).OrderBy(m => m.Order);
+                AddChild(rootItem, root.Id, ordernedMenus);
 
-                foreach(var child in childMenus)
-                {
-                    var menuItem = new ToolStripMenuItem(child.Title);
-                    menuItem.Tag = child.FormName;
-                    menuItem.Click += MenuItem_Click;
-                    rootMenuItem.DropDownItems.Add(menuItem);
-                }
+                MainMenuStrip!.Items.Add(rootItem);
             }
             var configMenu = MainMenuStrip!.Items.Cast<ToolStripMenuItem>()
                 .FirstOrDefault(m => m.Text == "Configurações");
@@ -150,7 +151,27 @@ namespace SisPDV.APP.Main
                 configMenu.DropDownItems.Add(changePwd);
             }
         }
+        private void AddChild(ToolStripMenuItem parentItem, int parentId, List<MenuDTO> ordernedMenus)
+        {
+            var children = ordernedMenus
+                .Where(m => m.ParentId == parentId)
+                .OrderBy(m => m.Order);
 
+            foreach (var child in children)
+            {
+                var childItem = new ToolStripMenuItem(child.Title)
+                {
+                    Tag = child.FormName
+                };
+
+                childItem.Click += MenuItem_Click;
+
+                AddChild(childItem, child.Id, ordernedMenus);
+
+                parentItem.DropDownItems.Add(childItem);
+            }
+        }
+        
         private void MenuItem_Click(Object? sender, EventArgs e)
         {
             if(sender is ToolStripMenuItem menuItem && menuItem.Tag is string formName)
@@ -163,14 +184,18 @@ namespace SisPDV.APP.Main
                     "CompanyForm" => new CompanyForm(_cnpjService, _cepService, _companyService, _userID, _userService),
                     "ConfigForm" => new ConfigForm(_printerSectorsServices, _configServices),
                     "PersonForm" => new PersonForm(_cepService, _personService),
-                    "TypeProductsForm" => new TypeProductsForm(_companyService, _productTypeService,_cfopService),
+                    "TypeProductsForm" => new TypeProductsForm(_companyService, _productTypeService, _cfopService),
                     "ProductForm" => new ProductForm(
-                        _productTypeService, 
-                        _cfopService, 
-                        _companyService, 
+                        _productTypeService,
+                        _cfopService,
+                        _companyService,
                         _unityService,
                         _configServices,
-                        _productService),
+                        _productService,
+                        _categoryService),
+                    "CFOPForm" => new CFOPForm(_cfopService),
+                    "CategoriesForm" => new CategoriesForm(_categoryService),
+                    "AccountantForm" => new AccountantForm(_cepService, _accountantService),
                     _ => null
                 };
                 form?.ShowDialog();

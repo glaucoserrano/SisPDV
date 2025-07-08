@@ -44,8 +44,6 @@
             txtCEP = new MaskedTextBox();
             txtUF = new TextBox();
             lblUF = new Label();
-            txtCityCode = new TextBox();
-            lblCityCode = new Label();
             txtCity = new TextBox();
             lblCity = new Label();
             lblCEP = new Label();
@@ -113,9 +111,10 @@
             btnClean.Location = new Point(600, 274);
             btnClean.Name = "btnClean";
             btnClean.Size = new Size(75, 23);
-            btnClean.TabIndex = 26;
+            btnClean.TabIndex = 14;
             btnClean.Text = "   Limpar";
             btnClean.UseVisualStyleBackColor = false;
+            btnClean.Click += btnClean_Click;
             // 
             // btnSave
             // 
@@ -130,7 +129,7 @@
             btnSave.Location = new Point(681, 274);
             btnSave.Name = "btnSave";
             btnSave.Size = new Size(75, 23);
-            btnSave.TabIndex = 25;
+            btnSave.TabIndex = 13;
             btnSave.Text = "   Salvar";
             btnSave.UseVisualStyleBackColor = false;
             btnSave.Click += btnSave_Click;
@@ -154,7 +153,7 @@
             txtEmail.Name = "txtEmail";
             txtEmail.PlaceholderText = "E-mail";
             txtEmail.Size = new Size(180, 23);
-            txtEmail.TabIndex = 21;
+            txtEmail.TabIndex = 12;
             // 
             // lblEmail
             // 
@@ -171,7 +170,7 @@
             txtPhone.Mask = "(99)99999-9999";
             txtPhone.Name = "txtPhone";
             txtPhone.Size = new Size(180, 23);
-            txtPhone.TabIndex = 19;
+            txtPhone.TabIndex = 11;
             // 
             // lblPhone
             // 
@@ -187,8 +186,6 @@
             grpAddress.Controls.Add(txtCEP);
             grpAddress.Controls.Add(txtUF);
             grpAddress.Controls.Add(lblUF);
-            grpAddress.Controls.Add(txtCityCode);
-            grpAddress.Controls.Add(lblCityCode);
             grpAddress.Controls.Add(txtCity);
             grpAddress.Controls.Add(lblCity);
             grpAddress.Controls.Add(lblCEP);
@@ -211,7 +208,7 @@
             txtCEP.Mask = "99999-999";
             txtCEP.Name = "txtCEP";
             txtCEP.Size = new Size(90, 23);
-            txtCEP.TabIndex = 23;
+            txtCEP.TabIndex = 5;
             txtCEP.Leave += txtCEP_Leave;
             // 
             // txtUF
@@ -220,7 +217,7 @@
             txtUF.Name = "txtUF";
             txtUF.PlaceholderText = "UF";
             txtUF.Size = new Size(90, 23);
-            txtUF.TabIndex = 22;
+            txtUF.TabIndex = 10;
             // 
             // lblUF
             // 
@@ -231,30 +228,13 @@
             lblUF.TabIndex = 21;
             lblUF.Text = "UF";
             // 
-            // txtCityCode
-            // 
-            txtCityCode.Location = new Point(392, 74);
-            txtCityCode.Name = "txtCityCode";
-            txtCityCode.PlaceholderText = "Código IBGE";
-            txtCityCode.Size = new Size(180, 23);
-            txtCityCode.TabIndex = 20;
-            // 
-            // lblCityCode
-            // 
-            lblCityCode.AutoSize = true;
-            lblCityCode.Location = new Point(313, 77);
-            lblCityCode.Name = "lblCityCode";
-            lblCityCode.Size = new Size(73, 15);
-            lblCityCode.TabIndex = 19;
-            lblCityCode.Text = "Código IBGE";
-            // 
             // txtCity
             // 
             txtCity.Location = new Point(122, 74);
             txtCity.Name = "txtCity";
             txtCity.PlaceholderText = "Cidade";
             txtCity.Size = new Size(180, 23);
-            txtCity.TabIndex = 18;
+            txtCity.TabIndex = 9;
             // 
             // lblCity
             // 
@@ -280,7 +260,7 @@
             txtDistrict.Name = "txtDistrict";
             txtDistrict.PlaceholderText = "Bairro";
             txtDistrict.Size = new Size(450, 23);
-            txtDistrict.TabIndex = 14;
+            txtDistrict.TabIndex = 8;
             // 
             // lblDistrict
             // 
@@ -297,7 +277,7 @@
             txtNumber.Name = "txtNumber";
             txtNumber.PlaceholderText = "Número";
             txtNumber.Size = new Size(90, 23);
-            txtNumber.TabIndex = 12;
+            txtNumber.TabIndex = 6;
             // 
             // lblNumber
             // 
@@ -314,7 +294,7 @@
             txtStreet.Name = "txtStreet";
             txtStreet.PlaceholderText = "Logradouro";
             txtStreet.Size = new Size(450, 23);
-            txtStreet.TabIndex = 10;
+            txtStreet.TabIndex = 7;
             // 
             // lblStreet
             // 
@@ -331,7 +311,7 @@
             txtCRC.Name = "txtCRC";
             txtCRC.PlaceholderText = "Conselho Regional de Contabilidade";
             txtCRC.Size = new Size(250, 23);
-            txtCRC.TabIndex = 22;
+            txtCRC.TabIndex = 4;
             // 
             // lblCRC
             // 
@@ -348,7 +328,7 @@
             txtCPF.Mask = "999,999,999-99";
             txtCPF.Name = "txtCPF";
             txtCPF.Size = new Size(129, 23);
-            txtCPF.TabIndex = 20;
+            txtCPF.TabIndex = 2;
             // 
             // label1
             // 
@@ -365,7 +345,7 @@
             txtCNPJ.Mask = "99,999,999/9999-99";
             txtCNPJ.Name = "txtCNPJ";
             txtCNPJ.Size = new Size(167, 23);
-            txtCNPJ.TabIndex = 18;
+            txtCNPJ.TabIndex = 3;
             // 
             // lblCNPJ
             // 
@@ -382,7 +362,7 @@
             txtAccontant.Name = "txtAccontant";
             txtAccontant.PlaceholderText = "Nome do Contador";
             txtAccontant.Size = new Size(643, 23);
-            txtAccontant.TabIndex = 11;
+            txtAccontant.TabIndex = 1;
             // 
             // lblAccontant
             // 
@@ -396,6 +376,8 @@
             // chkActive
             // 
             chkActive.AutoSize = true;
+            chkActive.Checked = true;
+            chkActive.CheckState = CheckState.Checked;
             chkActive.Location = new Point(6, 277);
             chkActive.Name = "chkActive";
             chkActive.Size = new Size(54, 19);
@@ -416,6 +398,7 @@
             dgvAccountants.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvAccountants.Size = new Size(765, 189);
             dgvAccountants.TabIndex = 2;
+            dgvAccountants.CellDoubleClick += dgvAccountants_CellDoubleClick;
             // 
             // gbFilter
             // 
@@ -445,6 +428,7 @@
             txtSearch.Name = "txtSearch";
             txtSearch.Size = new Size(410, 23);
             txtSearch.TabIndex = 0;
+            txtSearch.TextChanged += txtSearch_TextChanged;
             // 
             // rbAll
             // 
@@ -456,6 +440,7 @@
             rbAll.TabIndex = 1;
             rbAll.TabStop = true;
             rbAll.Text = "Todos";
+            rbAll.CheckedChanged += rbAll_CheckedChanged;
             // 
             // rbActive
             // 
@@ -465,6 +450,7 @@
             rbActive.Size = new Size(58, 19);
             rbActive.TabIndex = 2;
             rbActive.Text = "Ativos";
+            rbActive.CheckedChanged += rbActive_CheckedChanged;
             // 
             // rbInactive
             // 
@@ -474,6 +460,7 @@
             rbInactive.Size = new Size(66, 19);
             rbInactive.TabIndex = 3;
             rbInactive.Text = "Inativos";
+            rbInactive.CheckedChanged += rbInactive_CheckedChanged;
             // 
             // AccountantForm
             // 
@@ -514,8 +501,6 @@
         private MaskedTextBox txtCEP;
         private TextBox txtUF;
         private Label lblUF;
-        private TextBox txtCityCode;
-        private Label lblCityCode;
         private TextBox txtCity;
         private Label lblCity;
         private Label lblCEP;

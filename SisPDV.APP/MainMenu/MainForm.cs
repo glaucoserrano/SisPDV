@@ -4,6 +4,7 @@ using SisPDV.APP.CFOP;
 using SisPDV.APP.CompanyMenu;
 using SisPDV.APP.ConfigMenu;
 using SisPDV.APP.Helpers;
+using SisPDV.APP.PaymentMethod;
 using SisPDV.APP.PermissionMenu;
 using SisPDV.APP.PersonMenu;
 using SisPDV.APP.ProductMenu;
@@ -34,6 +35,7 @@ namespace SisPDV.APP.Main
         private readonly IProductService _productService;
         private readonly ICategoryService _categoryService;
         private readonly IAccountantService _accountantService;
+        private readonly IPaymentMethodService _paymentMethodService;
 
         private readonly int? _userID;
         private readonly string? _userName;
@@ -56,7 +58,8 @@ namespace SisPDV.APP.Main
             IUnityService unityService,
             IProductService productService,
             ICategoryService categoryService,
-            IAccountantService accountantService
+            IAccountantService accountantService,
+            IPaymentMethodService paymentMethodService
            )
         {
             InitializeComponent();
@@ -77,6 +80,7 @@ namespace SisPDV.APP.Main
             _productService = productService;
             _categoryService = categoryService;
             _accountantService = accountantService;
+            _paymentMethodService = paymentMethodService;
 
             string? version = Assembly.
                 GetExecutingAssembly().
@@ -196,6 +200,7 @@ namespace SisPDV.APP.Main
                     "CFOPForm" => new CFOPForm(_cfopService),
                     "CategoriesForm" => new CategoriesForm(_categoryService),
                     "AccountantForm" => new AccountantForm(_cepService, _accountantService),
+                    "PaymentMethodForm" => new PaymentMethodForm(_paymentMethodService),
                     _ => null
                 };
                 form?.ShowDialog();

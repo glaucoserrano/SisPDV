@@ -1,14 +1,7 @@
 ﻿using SisPDV.Application.DTOs.Accountant;
 using SisPDV.Application.ExternalInterfaces;
 using SisPDV.Application.Interfaces;
-using SisPDV.Application.Services;
 using SisPDV.Domain.Helpers;
-using System.Reflection.Emit;
-using System.Threading.Tasks;
-using System.Xml.Linq;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-using static System.Windows.Forms.AxHost;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 
 namespace SisPDV.APP.Accountant
 {
@@ -100,7 +93,6 @@ namespace SisPDV.APP.Accountant
 
                 txtStreet.Text = cepDto.logradouro;
                 txtCity.Text = cepDto.localidade;
-                txtCityCode.Text = cepDto.ibge;
                 txtDistrict.Text = cepDto.bairro;
                 txtUF.Text = cepDto.uf;
             }
@@ -124,6 +116,8 @@ namespace SisPDV.APP.Accountant
             {
                 MessageBox.Show("Cadastro alterado com sucesso", "Sis_PDV", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
+            cleanData();
+            await LoadAccountantAsync();
         }
 
         private async Task<bool> validateData(AccountantDTO request)
@@ -135,7 +129,7 @@ namespace SisPDV.APP.Accountant
                 MessageBox.Show(string.Join("\n", validate.Errors), "SisPDV", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
             }
-            return true; ;
+            return true;
         }
 
         private AccountantDTO MapFormToDTO()
@@ -159,6 +153,98 @@ namespace SisPDV.APP.Accountant
                 IsActive = chkActive.Checked,
 
             };
+        }
+
+        private async void dgvAccountants_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                var id = (int)dgvAccountants.Rows[e.RowIndex].Cells["colId"].Value;
+
+                var accountant = await _accountantService.GetByIdAsync(id);
+
+                if (accountant != null)
+                {
+                    txtAccontant.Text = accountant.Name;
+                    txtCRC.Text = accountant.CRC;
+                    txtCPF.Text = accountant.CPF;
+                    txtCNPJ.Text = accountant.CNPJ;
+                    txtEmail.Text = accountant.Email;
+                    txtPhone.Text = accountant.Phone;
+
+                    txtStreet.Text = accountant.Street;
+                    txtNumber.Text = accountant.Number;
+                    txtDistrict.Text = accountant.District;
+                    txtCity.Text = accountant.City;
+                    txtUF.Text = accountant.State;
+                    txtCEP.Text = accountant.ZipCode;
+                    chkActive.Checked = accountant.IsActive;
+
+
+                    _accountantid = id;
+                }
+            }
+        }
+
+        private void btnClean_Click(object sender, EventArgs e)
+        {
+            cleanData();
+        }
+        private void cleanData()
+        {
+            txtAccontant.Text = "";
+            txtCRC.Text = "";
+            txtCPF.Text = "";
+            txtCNPJ.Text = "";
+            txtEmail.Text = "";
+            txtPhone.Text = "";
+
+            txtStreet.Text = "";
+            txtNumber.Text = "";
+            txtDistrict.Text = "";
+            txtCity.Text = "";
+            txtUF.Text = "";
+            txtCEP.Text = "";
+            chkActive.Checked = true;
+
+
+            _accountantid = 0;
+        }
+        private async Task LoadAsyncSearchAccountant()
+        {
+            var search = txtSearch.Text;
+            var statusFilter = GetStatusFilter();
+
+            var list = await _accountantService.SearchAsync(search, statusFilter);
+
+            dgvAccountants.DataSource = list;
+        }
+
+        private int GetStatusFilter()
+        {
+            if (rbActive.Checked) return 0; //ativo
+            if (rbInactive.Checked) return 1; //inativo
+            return -1; //todos
+        }
+
+        private async void txtSearch_TextChanged(object sender, EventArgs e)
+        {
+            await LoadAsyncSearchAccountant();
+        }
+
+        private async void rbActive_CheckedChanged(object sender, EventArgs e)
+        {
+            await LoadAsyncSearchAccountant();
+        }
+
+        private async void rbInactive_CheckedChanged(object sender, EventArgs e)
+        {
+            await LoadAsyncSearchAccountant();
+        }
+
+        private async void rbAll_CheckedChanged(object sender, EventArgs e)
+        {
+            await LoadAsyncSearchAccountant();
         }
     }
 }

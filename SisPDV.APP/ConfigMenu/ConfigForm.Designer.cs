@@ -95,6 +95,7 @@
             txtVersionNFe = new TextBox();
             lblNFEVersion = new Label();
             tabDigitalCertificate = new TabPage();
+            chkCertificateA1 = new CheckBox();
             grbCertificateDigital = new GroupBox();
             txtPasswordCertificate = new TextBox();
             lbltxtPasswordCertificate = new Label();
@@ -104,7 +105,6 @@
             panel1 = new Panel();
             btnCancel = new FontAwesome.Sharp.IconButton();
             btnSave = new FontAwesome.Sharp.IconButton();
-            chkCertificateA1 = new CheckBox();
             tabConfig.SuspendLayout();
             tabGeneral.SuspendLayout();
             groupBox1.SuspendLayout();
@@ -637,6 +637,7 @@
             cmbNFePayment.Name = "cmbNFePayment";
             cmbNFePayment.Size = new Size(401, 23);
             cmbNFePayment.TabIndex = 48;
+            cmbNFePayment.Visible = false;
             // 
             // lblNFePayment
             // 
@@ -646,6 +647,7 @@
             lblNFePayment.Size = new Size(121, 15);
             lblNFePayment.TabIndex = 47;
             lblNFePayment.Text = "Forma de Pagamento";
+            lblNFePayment.Visible = false;
             // 
             // cmbNFePresence
             // 
@@ -858,6 +860,19 @@
             tabDigitalCertificate.Text = "Certificado Digital";
             tabDigitalCertificate.UseVisualStyleBackColor = true;
             // 
+            // chkCertificateA1
+            // 
+            chkCertificateA1.AutoSize = true;
+            chkCertificateA1.BackColor = SystemColors.Control;
+            chkCertificateA1.FlatStyle = FlatStyle.Flat;
+            chkCertificateA1.Location = new Point(8, 3);
+            chkCertificateA1.Name = "chkCertificateA1";
+            chkCertificateA1.Size = new Size(98, 19);
+            chkCertificateA1.TabIndex = 21;
+            chkCertificateA1.Text = "Certificado A1";
+            chkCertificateA1.UseVisualStyleBackColor = false;
+            chkCertificateA1.CheckedChanged += chkCertificateA1_CheckedChanged;
+            // 
             // grbCertificateDigital
             // 
             grbCertificateDigital.BackColor = SystemColors.Control;
@@ -969,19 +984,6 @@
             btnSave.Text = "   Salvar";
             btnSave.UseVisualStyleBackColor = false;
             btnSave.Click += btnSave_Click;
-            // 
-            // chkCertificateA1
-            // 
-            chkCertificateA1.AutoSize = true;
-            chkCertificateA1.BackColor = SystemColors.Control;
-            chkCertificateA1.FlatStyle = FlatStyle.Flat;
-            chkCertificateA1.Location = new Point(8, 3);
-            chkCertificateA1.Name = "chkCertificateA1";
-            chkCertificateA1.Size = new Size(98, 19);
-            chkCertificateA1.TabIndex = 21;
-            chkCertificateA1.Text = "Certificado A1";
-            chkCertificateA1.UseVisualStyleBackColor = false;
-            chkCertificateA1.CheckedChanged += chkCertificateA1_CheckedChanged;
             // 
             // ConfigForm
             // 

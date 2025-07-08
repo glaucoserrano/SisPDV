@@ -44,6 +44,7 @@ namespace SisPDV.APP
                 var productService = new ProductService(dbContext);
                 var categoryService = new CategoryService(dbContext);
                 var accountantService = new AccountantService(dbContext);
+                var paymentMethodService = new PaymentMethodService(dbContext);
 
 
                 var cnpjService = new CnpjService();
@@ -66,7 +67,8 @@ namespace SisPDV.APP
                     unityService,
                     productService,
                     categoryService,
-                    accountantService));
+                    accountantService,
+                    paymentMethodService));
             }
         }
     }

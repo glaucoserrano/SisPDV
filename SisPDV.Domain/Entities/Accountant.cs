@@ -18,7 +18,7 @@ namespace SisPDV.Domain.Entities
         public string? City { get; set; }
         public string? State { get; set; }
         public string? CEP { get; set; }
-        public Status Status { get; set; } = Status.Active;
+        public bool Active { get; set; } = true;
     }
 
 }

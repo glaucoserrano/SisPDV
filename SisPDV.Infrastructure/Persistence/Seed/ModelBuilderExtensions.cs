@@ -147,6 +147,16 @@ namespace SisPDV.Infrastructure.Persistence.Seed
                     Order = 11,
                     Visible = true,
                     CreatedBy = "System"
+                },
+                new Menu
+                {
+                    Id = 15,
+                    ParentId = 11,
+                    Title = "Forma de Pagamento",
+                    FormName = "PaymentMethodForm",
+                    Order = 12,
+                    Visible = true,
+                    CreatedBy = "System"
                 }
             );
         }

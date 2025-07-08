@@ -30,7 +30,7 @@ namespace SisPDV.APP.Helpers
         private static string GetEnumDescription<TEnum>(TEnum value) where TEnum : struct, Enum
         {
             var fi = value.GetType().GetField(value.ToString());
-            var attributes = (DescriptionAttribute[])fi.GetCustomAttributes(typeof(DescriptionAttribute), false);
+            var attributes = (DescriptionAttribute[])fi!.GetCustomAttributes(typeof(DescriptionAttribute), false);
 
             return attributes.Length > 0 ? attributes[0].Description : value.ToString();
         }

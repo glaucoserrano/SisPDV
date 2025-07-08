@@ -84,7 +84,7 @@ namespace SisPDV.Domain.Entities
         public PresenceIndicator NFePresenceIndicator { get; set; } = PresenceIndicator.Presencial;
 
         [Required]
-        public PaymentType NFePaymentForm { get; set; } = PaymentType.AVista;
+        public PaymentType NFePaymentForm { get; set; } = PaymentType.Outros;
         //Configuraçoes Gerais
         public bool UseStockControl { get; set; } // Usar Controle de Estoque
         public bool SalesZeroStock { get; set; } //Permite venda com estoque zerado

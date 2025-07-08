@@ -118,7 +118,7 @@ namespace SisPDV.Application.Services
             var errors = new List<string>();
 
             if (string.IsNullOrWhiteSpace(request.Description))
-                errors.Add("A Descrição do CFOP é obrigatória.");
+                errors.Add("A Descrição da categoria é obrigatória.");
 
             var result = new ValidationResults
             {

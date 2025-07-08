@@ -4,11 +4,25 @@ namespace SisPDV.Domain.Enum
 {
     public enum PaymentType
     {
-        [Description("01 - A Vista")]
-        AVista = 1,
-        [Description("02 - A Prazo")]
-        APrazo = 2,
-        [Description("03 - Outros")]
-        Outros = 3
+        [Description("1 - Dinheiro")]
+        Dinheiro,
+
+        [Description("2 - Cartão de Crédito")]
+        CartaoCredito,
+
+        [Description("3 - Cartão de Débito")]
+        CartaoDebito,
+
+        [Description("4 - Pix")]
+        Pix,
+
+        [Description("5 - Boleto")]
+        Boleto,
+
+        [Description("6 - Cheque")]
+        Cheque,
+
+        [Description("7 - Outros")]
+        Outros
     }
 }

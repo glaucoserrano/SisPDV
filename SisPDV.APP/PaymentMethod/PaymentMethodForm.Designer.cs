@@ -134,7 +134,7 @@
             btnClean.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnClean.IconSize = 20;
             btnClean.ImageAlign = ContentAlignment.MiddleLeft;
-            btnClean.Location = new Point(610, 61);
+            btnClean.Location = new Point(705, 61);
             btnClean.Name = "btnClean";
             btnClean.Size = new Size(75, 23);
             btnClean.TabIndex = 29;
@@ -152,7 +152,7 @@
             btnSave.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnSave.IconSize = 20;
             btnSave.ImageAlign = ContentAlignment.MiddleLeft;
-            btnSave.Location = new Point(705, 61);
+            btnSave.Location = new Point(624, 61);
             btnSave.Name = "btnSave";
             btnSave.Size = new Size(75, 23);
             btnSave.TabIndex = 28;

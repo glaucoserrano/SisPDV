@@ -471,6 +471,9 @@ namespace SisPDV.APP.ProductMenu
 
             chkPrintersSector.Checked = false;
             cmbPrintSector.SelectedIndex = 0;
+            txtMaxStock.Clear();
+            txtMinStock.Clear();
+            txtLocation.Clear();
 
             txtNotes.Clear();
 
@@ -537,6 +540,9 @@ namespace SisPDV.APP.ProductMenu
                 pbProductImage.Image = null;
                 _imagePath = string.Empty;
             }
+            txtMinStock.Text = product.minQuantity.ToString();
+            txtMaxStock.Text = product.maxQuantity.ToString();
+            txtLocation.Text = product.Location;
         }
 
         private async void txtProductId_Leave(object sender, EventArgs e)

@@ -1,13 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SisPDV.Application.DTOs.Product;
-using SisPDV.Application.DTOs.ProductType;
+using SisPDV.Application.DTOs.Stock;
 using SisPDV.Application.DTOs.Validation;
 using SisPDV.Application.Interfaces;
 using SisPDV.Domain.Entities;
 using SisPDV.Domain.Enum;
 using SisPDV.Domain.Helpers;
 using SisPDV.Infrastructure.Persistence;
-using System.Diagnostics;
 
 namespace SisPDV.Application.Services
 {
@@ -154,7 +153,9 @@ namespace SisPDV.Application.Services
 
             if (product == null)
                 return null;
-
+            var productStock = await _context.productStock
+                .AsNoTracking()
+                .FirstOrDefaultAsync(ps => ps.ProductId == product.Id);
             return new ProductDTO
             {
                 Id = product.Id,
@@ -179,7 +180,10 @@ namespace SisPDV.Application.Services
                 PrintInSector = product.UsePrinterSector,
                 SectorPrinterId = product.PrinterSectorId,
                 ImagePath = product.ImagePath,
-                Active = product.Active
+                Active = product.Active,
+                maxQuantity = productStock!.MaximumQuantity,
+                minQuantity = productStock!.MinimumQuantity,
+                Location = productStock.Location
             };
         }
 
@@ -220,5 +224,33 @@ namespace SisPDV.Application.Services
                 .ToListAsync();
             return result;
         }
+
+        public async Task<List<ProductStockSearchDTO>> GetProductsForStockAsync()
+        {
+            return await _context.products
+                .Where(p => p.UseStockControl && p.Active == true)
+                .Select(p => new ProductStockSearchDTO
+                {
+                    Id = p.Id,
+                    Description = p.Description,
+                    Code = p.Id.ToString(), // Ou outro campo se houver
+                    Barcode = p.Barcode ?? "",
+                    SupplierCode = p.RefSupplier ?? ""
+                })
+            .ToListAsync();
+        }
+        public async Task<ProductDTO> GetByIdAsync(int id)
+        {
+            var product =  await _context.products.AsNoTracking().FirstOrDefaultAsync(p => p.Id == id && p.Active == true);
+
+            if (product == null)
+                return new ProductDTO();
+
+            return new ProductDTO
+            {
+                Id = product.Id,
+                Description = product.Description
+            };
+        }   
     }
 }

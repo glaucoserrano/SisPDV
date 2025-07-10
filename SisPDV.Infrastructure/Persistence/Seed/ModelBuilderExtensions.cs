@@ -157,6 +157,26 @@ namespace SisPDV.Infrastructure.Persistence.Seed
                     Order = 12,
                     Visible = true,
                     CreatedBy = "System"
+                },
+                new Menu
+                {
+                    Id = 16,
+                    ParentId = null,
+                    Title = "Estoque",
+                    FormName = null,
+                    Order = 6,
+                    Visible = true,
+                    CreatedBy = "System"
+                },
+                new Menu
+                {
+                    Id = 17,
+                    ParentId = 16,
+                    Title = "Configuração",
+                    FormName = "StockForm",
+                    Order = 6,
+                    Visible = true,
+                    CreatedBy = "System"
                 }
             );
         }

@@ -44,5 +44,9 @@ namespace SisPDV.Application.DTOs.Product
         public bool Fractional { get; set; } 
         public bool Service { get; set; }
         public string RefSupplier { get; set; } = string.Empty;
+        public decimal? minQuantity { get; set; }
+        public decimal? maxQuantity { get; set; }
+        public string? Location { get; set; } = string.Empty;
+
     }
 }

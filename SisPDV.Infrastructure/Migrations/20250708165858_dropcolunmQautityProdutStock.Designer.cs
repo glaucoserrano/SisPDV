@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using SisPDV.Infrastructure.Persistence;
@@ -11,9 +12,11 @@ using SisPDV.Infrastructure.Persistence;
 namespace SisPDV.Infrastructure.Migrations
 {
     [DbContext(typeof(PDVDbContext))]
-    partial class PDVDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250708165858_dropcolunmQautityProdutStock")]
+    partial class dropcolunmQautityProdutStock
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -689,28 +692,6 @@ namespace SisPDV.Infrastructure.Migrations
                             Order = 12,
                             ParentId = 11,
                             Title = "Forma de Pagamento",
-                            UpdatedBy = "",
-                            Visible = true
-                        },
-                        new
-                        {
-                            Id = 16,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedBy = "System",
-                            Order = 6,
-                            Title = "Estoque",
-                            UpdatedBy = "",
-                            Visible = true
-                        },
-                        new
-                        {
-                            Id = 17,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedBy = "System",
-                            FormName = "StockForm",
-                            Order = 6,
-                            ParentId = 16,
-                            Title = "Configuração",
                             UpdatedBy = "",
                             Visible = true
                         });

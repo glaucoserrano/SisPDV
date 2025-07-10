@@ -9,6 +9,7 @@ using SisPDV.APP.PermissionMenu;
 using SisPDV.APP.PersonMenu;
 using SisPDV.APP.ProductMenu;
 using SisPDV.APP.Products.TypeProductsMenu;
+using SisPDV.APP.Stock;
 using SisPDV.APP.User;
 using SisPDV.Application.DTOs.Menus;
 using SisPDV.Application.ExternalInterfaces;
@@ -36,6 +37,7 @@ namespace SisPDV.APP.Main
         private readonly ICategoryService _categoryService;
         private readonly IAccountantService _accountantService;
         private readonly IPaymentMethodService _paymentMethodService;
+        private readonly IProductStockService _productStockService;
 
         private readonly int? _userID;
         private readonly string? _userName;
@@ -59,7 +61,8 @@ namespace SisPDV.APP.Main
             IProductService productService,
             ICategoryService categoryService,
             IAccountantService accountantService,
-            IPaymentMethodService paymentMethodService
+            IPaymentMethodService paymentMethodService,
+            IProductStockService productStockService
            )
         {
             InitializeComponent();
@@ -81,6 +84,7 @@ namespace SisPDV.APP.Main
             _categoryService = categoryService;
             _accountantService = accountantService;
             _paymentMethodService = paymentMethodService;
+            _productStockService = productStockService;
 
             string? version = Assembly.
                 GetExecutingAssembly().
@@ -201,6 +205,7 @@ namespace SisPDV.APP.Main
                     "CategoriesForm" => new CategoriesForm(_categoryService),
                     "AccountantForm" => new AccountantForm(_cepService, _accountantService),
                     "PaymentMethodForm" => new PaymentMethodForm(_paymentMethodService),
+                    "StockForm" => new StockForm(_productService,_productStockService),
                     _ => null
                 };
                 form?.ShowDialog();

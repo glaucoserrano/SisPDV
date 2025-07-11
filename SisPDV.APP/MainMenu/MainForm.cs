@@ -38,6 +38,7 @@ namespace SisPDV.APP.Main
         private readonly IAccountantService _accountantService;
         private readonly IPaymentMethodService _paymentMethodService;
         private readonly IProductStockService _productStockService;
+        private readonly IStockMovementService _stockMovementService;
 
         private readonly int? _userID;
         private readonly string? _userName;
@@ -62,7 +63,8 @@ namespace SisPDV.APP.Main
             ICategoryService categoryService,
             IAccountantService accountantService,
             IPaymentMethodService paymentMethodService,
-            IProductStockService productStockService
+            IProductStockService productStockService,
+            IStockMovementService stockMovementService
            )
         {
             InitializeComponent();
@@ -85,6 +87,7 @@ namespace SisPDV.APP.Main
             _accountantService = accountantService;
             _paymentMethodService = paymentMethodService;
             _productStockService = productStockService;
+            _stockMovementService = stockMovementService;
 
             string? version = Assembly.
                 GetExecutingAssembly().
@@ -205,7 +208,8 @@ namespace SisPDV.APP.Main
                     "CategoriesForm" => new CategoriesForm(_categoryService),
                     "AccountantForm" => new AccountantForm(_cepService, _accountantService),
                     "PaymentMethodForm" => new PaymentMethodForm(_paymentMethodService),
-                    "StockForm" => new StockForm(_productService,_productStockService),
+                    "StockForm" => new StockForm(_productService, _productStockService),
+                    "StockEntryForm" => new StockEntryForm(_productService, _stockMovementService, _productStockService),
                     _ => null
                 };
                 form?.ShowDialog();

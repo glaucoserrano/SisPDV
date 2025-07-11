@@ -8,5 +8,6 @@
         public decimal minQuantity { get; set; }
         public decimal maxQuantity { get; set; }
         public string? Location { get; set; }
+        public decimal Quantity { get; set; }
     }
 }

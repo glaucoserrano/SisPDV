@@ -1,6 +1,4 @@
-﻿using SisPDV.APP.Stock;
-
-namespace SisPDV.APP.Helpers
+﻿namespace SisPDV.APP.Helpers
 {
     public static class ProductAutoCompleteHelper
     {
@@ -26,7 +24,10 @@ namespace SisPDV.APP.Helpers
 
                 lstSuggestions.Items.Clear();
                 lstSuggestions.Items.AddRange(filtered.Cast<object>().ToArray());
-                lstSuggestions.Location = new Point(txtSearch.Left, txtSearch.Bottom);
+                var screenPoint = txtSearch.PointToScreen(new Point(0, txtSearch.Height));
+                var formPoint = lstSuggestions.FindForm()!.PointToClient(screenPoint);
+
+                lstSuggestions.Location = formPoint;
                 lstSuggestions.Width = txtSearch.Width;
                 lstSuggestions.Visible = filtered.Any();
             };

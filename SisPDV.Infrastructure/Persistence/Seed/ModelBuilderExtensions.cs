@@ -84,7 +84,7 @@ namespace SisPDV.Infrastructure.Persistence.Seed
                     ParentId = 7,
                     Title = "Cadastro de Pessoas (Cliente, Fornecedor, Transportadora)",
                     FormName = "PersonForm",
-                    Order = 6,
+                    Order = 7,
                     Visible = true,
                     CreatedBy = "System"
                 },
@@ -94,7 +94,7 @@ namespace SisPDV.Infrastructure.Persistence.Seed
                     ParentId = 7,
                     Title = "Tipo de Produtos",
                     FormName = "TypeProductsForm",
-                    Order = 7,
+                    Order = 8,
                     Visible = true,
                     CreatedBy = "System"
                 },
@@ -104,7 +104,7 @@ namespace SisPDV.Infrastructure.Persistence.Seed
                     ParentId = 7,
                     Title = "Cadastro de Produtos",
                     FormName = "ProductForm",
-                    Order = 8,
+                    Order = 9,
                     Visible = true,
                     CreatedBy = "System"
                 },
@@ -114,7 +114,7 @@ namespace SisPDV.Infrastructure.Persistence.Seed
                     ParentId = 7,
                     Title = "Outros Cadastros",
                     FormName = null,
-                    Order = 9,
+                    Order = 10,
                     Visible = true,
                     CreatedBy = "System"
                 },
@@ -124,7 +124,7 @@ namespace SisPDV.Infrastructure.Persistence.Seed
                     ParentId = 11,
                     Title = "CFOP",
                     FormName = "CFOPForm",
-                    Order = 9,
+                    Order = 11,
                     Visible = true,
                     CreatedBy = "System"
                 },
@@ -134,7 +134,7 @@ namespace SisPDV.Infrastructure.Persistence.Seed
                     ParentId = 11,
                     Title = "Categorias",
                     FormName = "CategoriesForm",
-                    Order = 10,
+                    Order = 12,
                     Visible = true,
                     CreatedBy = "System"
                 },
@@ -144,7 +144,7 @@ namespace SisPDV.Infrastructure.Persistence.Seed
                     ParentId = 11,
                     Title = "Contador",
                     FormName = "AccountantForm",
-                    Order = 11,
+                    Order = 13,
                     Visible = true,
                     CreatedBy = "System"
                 },
@@ -154,7 +154,7 @@ namespace SisPDV.Infrastructure.Persistence.Seed
                     ParentId = 11,
                     Title = "Forma de Pagamento",
                     FormName = "PaymentMethodForm",
-                    Order = 12,
+                    Order = 14,
                     Visible = true,
                     CreatedBy = "System"
                 },
@@ -164,7 +164,7 @@ namespace SisPDV.Infrastructure.Persistence.Seed
                     ParentId = null,
                     Title = "Estoque",
                     FormName = null,
-                    Order = 6,
+                    Order = 15,
                     Visible = true,
                     CreatedBy = "System"
                 },
@@ -174,7 +174,17 @@ namespace SisPDV.Infrastructure.Persistence.Seed
                     ParentId = 16,
                     Title = "Configuração",
                     FormName = "StockForm",
-                    Order = 6,
+                    Order = 16,
+                    Visible = true,
+                    CreatedBy = "System"
+                },
+                new Menu
+                {
+                    Id = 18,
+                    ParentId = 16,
+                    Title = "Movimentação",
+                    FormName = "StockEntryForm",
+                    Order = 17,
                     Visible = true,
                     CreatedBy = "System"
                 }

@@ -183,7 +183,8 @@ namespace SisPDV.Application.Services
                 Active = product.Active,
                 maxQuantity = productStock!.MaximumQuantity,
                 minQuantity = productStock!.MinimumQuantity,
-                Location = productStock.Location
+                Location = productStock.Location,
+                Stock = productStock.Quantity
             };
         }
 

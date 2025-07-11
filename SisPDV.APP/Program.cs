@@ -46,6 +46,7 @@ namespace SisPDV.APP
                 var accountantService = new AccountantService(dbContext);
                 var paymentMethodService = new PaymentMethodService(dbContext);
                 var productStockService = new ProductStockService(dbContext);
+                var stockMovementService = new StockMovementService(dbContext);
 
 
                 var cnpjService = new CnpjService();
@@ -70,7 +71,8 @@ namespace SisPDV.APP
                     categoryService,
                     accountantService,
                     paymentMethodService,
-                    productStockService));
+                    productStockService,
+                    stockMovementService));
             }
         }
     }

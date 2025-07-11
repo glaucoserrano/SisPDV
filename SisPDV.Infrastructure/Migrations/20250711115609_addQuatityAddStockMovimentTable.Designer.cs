@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using SisPDV.Infrastructure.Persistence;
@@ -11,9 +12,11 @@ using SisPDV.Infrastructure.Persistence;
 namespace SisPDV.Infrastructure.Migrations
 {
     [DbContext(typeof(PDVDbContext))]
-    partial class PDVDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250711115609_addQuatityAddStockMovimentTable")]
+    partial class addQuatityAddStockMovimentTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -603,7 +606,7 @@ namespace SisPDV.Infrastructure.Migrations
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = "System",
                             FormName = "PersonForm",
-                            Order = 7,
+                            Order = 6,
                             ParentId = 7,
                             Title = "Cadastro de Pessoas (Cliente, Fornecedor, Transportadora)",
                             UpdatedBy = "",
@@ -615,7 +618,7 @@ namespace SisPDV.Infrastructure.Migrations
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = "System",
                             FormName = "TypeProductsForm",
-                            Order = 8,
+                            Order = 7,
                             ParentId = 7,
                             Title = "Tipo de Produtos",
                             UpdatedBy = "",
@@ -627,7 +630,7 @@ namespace SisPDV.Infrastructure.Migrations
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = "System",
                             FormName = "ProductForm",
-                            Order = 9,
+                            Order = 8,
                             ParentId = 7,
                             Title = "Cadastro de Produtos",
                             UpdatedBy = "",
@@ -638,7 +641,7 @@ namespace SisPDV.Infrastructure.Migrations
                             Id = 11,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = "System",
-                            Order = 10,
+                            Order = 9,
                             ParentId = 7,
                             Title = "Outros Cadastros",
                             UpdatedBy = "",
@@ -650,7 +653,7 @@ namespace SisPDV.Infrastructure.Migrations
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = "System",
                             FormName = "CFOPForm",
-                            Order = 11,
+                            Order = 9,
                             ParentId = 11,
                             Title = "CFOP",
                             UpdatedBy = "",
@@ -662,7 +665,7 @@ namespace SisPDV.Infrastructure.Migrations
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = "System",
                             FormName = "CategoriesForm",
-                            Order = 12,
+                            Order = 10,
                             ParentId = 11,
                             Title = "Categorias",
                             UpdatedBy = "",
@@ -674,7 +677,7 @@ namespace SisPDV.Infrastructure.Migrations
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = "System",
                             FormName = "AccountantForm",
-                            Order = 13,
+                            Order = 11,
                             ParentId = 11,
                             Title = "Contador",
                             UpdatedBy = "",
@@ -686,7 +689,7 @@ namespace SisPDV.Infrastructure.Migrations
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = "System",
                             FormName = "PaymentMethodForm",
-                            Order = 14,
+                            Order = 12,
                             ParentId = 11,
                             Title = "Forma de Pagamento",
                             UpdatedBy = "",
@@ -697,7 +700,7 @@ namespace SisPDV.Infrastructure.Migrations
                             Id = 16,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = "System",
-                            Order = 15,
+                            Order = 6,
                             Title = "Estoque",
                             UpdatedBy = "",
                             Visible = true
@@ -708,21 +711,9 @@ namespace SisPDV.Infrastructure.Migrations
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = "System",
                             FormName = "StockForm",
-                            Order = 16,
+                            Order = 6,
                             ParentId = 16,
                             Title = "Configuração",
-                            UpdatedBy = "",
-                            Visible = true
-                        },
-                        new
-                        {
-                            Id = 18,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedBy = "System",
-                            FormName = "StockEntryForm",
-                            Order = 17,
-                            ParentId = 16,
-                            Title = "Movimentação",
                             UpdatedBy = "",
                             Visible = true
                         });

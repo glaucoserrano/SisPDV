@@ -33,6 +33,7 @@ namespace SisPDV.Application.Services
                 maxQuantity = productStock.MaximumQuantity,
                 Location = productStock.Location,
                 ProductDescription = productStock.Product.Description,
+                Quantity = productStock.Quantity
             };
         }
 

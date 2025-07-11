@@ -474,6 +474,7 @@ namespace SisPDV.APP.ProductMenu
             txtMaxStock.Clear();
             txtMinStock.Clear();
             txtLocation.Clear();
+            txtStock.Clear();
 
             txtNotes.Clear();
 
@@ -543,6 +544,7 @@ namespace SisPDV.APP.ProductMenu
             txtMinStock.Text = product.minQuantity.ToString();
             txtMaxStock.Text = product.maxQuantity.ToString();
             txtLocation.Text = product.Location;
+            txtStock.Text = product.Stock.ToString();
         }
 
         private async void txtProductId_Leave(object sender, EventArgs e)

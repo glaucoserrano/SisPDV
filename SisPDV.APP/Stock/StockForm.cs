@@ -1,10 +1,7 @@
 ﻿using SisPDV.APP.Helpers;
-using SisPDV.Application.DTOs.PaymentMethod;
 using SisPDV.Application.DTOs.Stock;
 using SisPDV.Application.Helper;
 using SisPDV.Application.Interfaces;
-using SisPDV.Application.Services;
-using SisPDV.Domain.Enum;
 
 namespace SisPDV.APP.Stock
 {
@@ -17,7 +14,7 @@ namespace SisPDV.APP.Stock
         private int _productStockId;
         private int _currentStockId;
         private ListBox lstSuggestions = new ListBox();
-        private List<ProductStockSearchDTO> _stockProducts = new();
+
         public StockForm(IProductService productService, IProductStockService productStockService)
         {
             InitializeComponent();

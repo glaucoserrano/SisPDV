@@ -1,4 +1,5 @@
 ﻿using SisPDV.APP.Accountant;
+using SisPDV.APP.Cash;
 using SisPDV.APP.Categories;
 using SisPDV.APP.CFOP;
 using SisPDV.APP.CompanyMenu;
@@ -14,6 +15,7 @@ using SisPDV.APP.User;
 using SisPDV.Application.DTOs.Menus;
 using SisPDV.Application.ExternalInterfaces;
 using SisPDV.Application.Interfaces;
+using SisPDV.Infrastructure.Globals;
 using System.Reflection;
 using WindowsForms = System.Windows.Forms;
 
@@ -39,6 +41,7 @@ namespace SisPDV.APP.Main
         private readonly IPaymentMethodService _paymentMethodService;
         private readonly IProductStockService _productStockService;
         private readonly IStockMovementService _stockMovementService;
+        private readonly ICashRegisterService _cashRegisterService;
 
         private readonly int? _userID;
         private readonly string? _userName;
@@ -64,7 +67,8 @@ namespace SisPDV.APP.Main
             IAccountantService accountantService,
             IPaymentMethodService paymentMethodService,
             IProductStockService productStockService,
-            IStockMovementService stockMovementService
+            IStockMovementService stockMovementService,
+            ICashRegisterService cashRegisterService
            )
         {
             InitializeComponent();
@@ -88,6 +92,7 @@ namespace SisPDV.APP.Main
             _paymentMethodService = paymentMethodService;
             _productStockService = productStockService;
             _stockMovementService = stockMovementService;
+            _cashRegisterService = cashRegisterService;
 
             string? version = Assembly.
                 GetExecutingAssembly().
@@ -115,18 +120,51 @@ namespace SisPDV.APP.Main
             }
             
             await LoadMenuAsync();
+            await CheckCashStatusAsync();
+            UpdateFooterCashStatus();
+
         }
+        private void UpdateFooterCashStatus()
+        {
+            sslUser.Text += $" - Status do Caixa: {CashRegisterStatus.StatusMessage}";
+        }
+        private async Task CheckCashStatusAsync()
+        {
+            var cashNumber = Convert.ToInt32(CashNumberHelper.GetPDVNumber());
+
+            var lastCash = await _cashRegisterService.CanOpenCashRegisterAsync(cashNumber);
+
+            if (lastCash is null)
+            {
+                CashRegisterStatus.IsOpen = false;
+                CashRegisterStatus.StatusMessage = "Caixa nunca foi aberto.";
+                return;
+            }
+
+            if (lastCash.CloseDate == null && lastCash.OpenDate.Equals(DateTime.Today))
+            {
+                CashRegisterStatus.IsOpen = true;
+                CashRegisterStatus.CashRegisterId = lastCash.Id;
+                CashRegisterStatus.OpenDate = lastCash.OpenDate;
+                CashRegisterStatus.StatusMessage = $"Caixa aberto em {lastCash.OpenDate:dd/MM/yyyy HH:mm}";
+            }
+            else if (lastCash.CloseDate == null && lastCash.OpenDate < DateTimeKind.Utc)
+            {
+                CashRegisterStatus.IsOpen = false;
+                CashRegisterStatus.StatusMessage = $"Caixa de {lastCash.OpenDate:dd/MM} não foi fechado!";
+            }
+            else
+            {
+                CashRegisterStatus.IsOpen = false;
+                CashRegisterStatus.StatusMessage = "Caixa fechado. Pronto para abertura.";
+            }
+        }
+
         private static string GetPDVNumber()
         {
-            string path = AppDomain.CurrentDomain.BaseDirectory;
+            var cashNumber = CashNumberHelper.GetPDVNumber();
 
-            var cashNumber = CashNumberHelper.GetCashNumber(path);
-
-            if(cashNumber == 0 )
-                return "Não configurado";
-
-            return cashNumber.ToString() ?? "Não configurado";
-
+            return cashNumber;
         }
 
         private async Task LoadMenuAsync()
@@ -209,7 +247,11 @@ namespace SisPDV.APP.Main
                     "AccountantForm" => new AccountantForm(_cepService, _accountantService),
                     "PaymentMethodForm" => new PaymentMethodForm(_paymentMethodService),
                     "StockForm" => new StockForm(_productService, _productStockService),
-                    "StockEntryForm" => new StockEntryForm(_productService, _stockMovementService, _productStockService),
+                    "StockEntryForm" => new StockEntryForm(
+                        _productService,
+                        _stockMovementService,
+                        _productStockService),
+                    "CashOpeningForm" => new CashOpeningForm(),
                     _ => null
                 };
                 form?.ShowDialog();

@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using SisPDV.Infrastructure.Persistence;
@@ -11,9 +12,11 @@ using SisPDV.Infrastructure.Persistence;
 namespace SisPDV.Infrastructure.Migrations
 {
     [DbContext(typeof(PDVDbContext))]
-    partial class PDVDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250712125232_altertablestockmovement")]
+    partial class altertablestockmovement
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -88,101 +91,6 @@ namespace SisPDV.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("accountants");
-                });
-
-            modelBuilder.Entity("SisPDV.Domain.Entities.CashMovement", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("Amount")
-                        .HasColumnType("integer");
-
-                    b.Property<int?>("CashRegisterId")
-                        .HasColumnType("integer");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("MovementDateTime")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("Origin")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasColumnType("text");
-
-                    b.Property<int?>("paymentMethodId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("type")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CashRegisterId");
-
-                    b.HasIndex("paymentMethodId");
-
-                    b.ToTable("cashMovements");
-                });
-
-            modelBuilder.Entity("SisPDV.Domain.Entities.CashRegister", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("text");
-
-                    b.Property<bool>("IsOpen")
-                        .HasColumnType("boolean");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasColumnType("text");
-
-                    b.Property<int>("cashNumber")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("closingAmount")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("closingDateTime")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("openingAmount")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("openingDateTime")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("cashRegisters");
                 });
 
             modelBuilder.Entity("SisPDV.Domain.Entities.Category", b =>
@@ -818,28 +726,6 @@ namespace SisPDV.Infrastructure.Migrations
                             Order = 17,
                             ParentId = 16,
                             Title = "Movimentação",
-                            UpdatedBy = "",
-                            Visible = true
-                        },
-                        new
-                        {
-                            Id = 19,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedBy = "System",
-                            Order = 18,
-                            Title = "Caixa",
-                            UpdatedBy = "",
-                            Visible = true
-                        },
-                        new
-                        {
-                            Id = 20,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedBy = "System",
-                            FormName = "CashOpeningForm",
-                            Order = 19,
-                            ParentId = 19,
-                            Title = "Abertura de Caixa",
                             UpdatedBy = "",
                             Visible = true
                         });
@@ -1507,21 +1393,6 @@ namespace SisPDV.Infrastructure.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("userMenu");
-                });
-
-            modelBuilder.Entity("SisPDV.Domain.Entities.CashMovement", b =>
-                {
-                    b.HasOne("SisPDV.Domain.Entities.CashRegister", "CashRegister")
-                        .WithMany()
-                        .HasForeignKey("CashRegisterId");
-
-                    b.HasOne("SisPDV.Domain.Entities.PaymentMethod", "PaymentMethod")
-                        .WithMany()
-                        .HasForeignKey("paymentMethodId");
-
-                    b.Navigation("CashRegister");
-
-                    b.Navigation("PaymentMethod");
                 });
 
             modelBuilder.Entity("SisPDV.Domain.Entities.Menu", b =>

@@ -50,6 +50,7 @@ namespace SisPDV.Application.Services
                 Type = request.Type,
                 Notes = request.Notes,
                 Origin = request.Origin,
+                DocumentNumber = request.DocumentNumber,
                 Date = DateTime.SpecifyKind(request.Date, DateTimeKind.Utc),
             };
 

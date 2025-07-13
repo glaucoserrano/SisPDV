@@ -6,6 +6,7 @@ namespace SisPDV.Application.Interfaces
     public interface IStockMovementService
     {
         Task<ValidationResults> ValidateAsync(StockMovementDTO request);
+        Task<StockMovementDTO> GetByIdAsync(int Id);
         Task SaveAsync(StockMovementDTO request);
         Task<List<StockMovementDTO>> SearchAsync(string search);
     }

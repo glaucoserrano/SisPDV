@@ -2,6 +2,7 @@
 using SisPDV.Application.DTOs.Stock;
 using SisPDV.Application.Interfaces;
 using SisPDV.Application.Services;
+using SisPDV.Domain.Entities;
 using SisPDV.Domain.Enum;
 using System.Threading.Tasks;
 
@@ -17,7 +18,7 @@ namespace SisPDV.APP.Stock
 
         private int _productId;
         private int _currentStockMovementId;
-        public StockEntryForm(IProductService productService, 
+        public StockEntryForm(IProductService productService,
             IStockMovementService stockMovementService,
             IProductStockService productStockService)
         {
@@ -33,6 +34,7 @@ namespace SisPDV.APP.Stock
             _currentStockMovementId = 0;
             txtProductSearch.Focus();
             lblCurrentStock.Text = "Estoque Atual: 0";
+            DisableForm(true);
             LoadComboBox();
             LoadStockMovementGrid();
             InitializeSuggestionBox();
@@ -48,13 +50,14 @@ namespace SisPDV.APP.Stock
                 Height = 100
             };
 
-            lstSuggestions.Click += (s, e) =>
+            lstSuggestions.Click += async (s, e) =>
             {
                 if (lstSuggestions.SelectedItem is ProductAutoCompleteItem selected)
                 {
                     txtProductSearch.Text = selected.Display;
                     lstSuggestions.Visible = false;
                     txtQuantity.Focus();
+                    await LoadStockMovementByProductId(selected.Id);
                 }
             };
             this.Controls.Add(lstSuggestions);
@@ -195,6 +198,7 @@ namespace SisPDV.APP.Stock
 
             txtQuantity.Text = "0";
             cmbMovementType.SelectedIndex = 0;
+            txtDocumentNumber.Clear();
 
             txtNotes.Clear();
             lstSuggestions.Visible = false;
@@ -203,6 +207,7 @@ namespace SisPDV.APP.Stock
             txtProductSearch.Focus();
 
             dtpDate.Text = DateTime.UtcNow.ToString();
+            DisableForm(true);
         }
 
         private async Task<bool> ValidateData(StockMovementDTO request)
@@ -224,6 +229,7 @@ namespace SisPDV.APP.Stock
                 ProductId = _productId,
                 Quantity = int.TryParse(txtQuantity.Text, out var quantity) ? quantity : 0,
                 Type = (StockMovementType)cmbMovementType.SelectedValue!,
+                DocumentNumber = txtDocumentNumber.Text.Trim(),
                 Notes = txtNotes.Text.Trim(),
                 Origin = "StockMovementForm",
                 Date = DateTime.TryParse(dtpDate.Text, out var date)
@@ -246,6 +252,46 @@ namespace SisPDV.APP.Stock
             }
             await LoadFilteredStockGridAsync(searchTerm);
 
+        }
+        private async void dgvMovements_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                var id = (int)dgvMovements.Rows[e.RowIndex].Cells["colId"].Value;
+
+                var StockMovement = await _stockMovementService.GetByIdAsync(id);
+
+                if (StockMovement != null)
+                {
+                    txtProductSearch.Text = StockMovement.ProductDescription;
+                    txtQuantity.Text = StockMovement.Quantity.ToString();
+                    dtpDate.Text = StockMovement.Date.Date.ToString();
+                    cmbMovementType.SelectedIndex = (int)StockMovement.Type;
+                    txtDocumentNumber.Text = StockMovement.DocumentNumber;
+                    txtNotes.Text = StockMovement.Notes;
+
+                    _currentStockMovementId = StockMovement.Id;
+                    _productId = StockMovement.ProductId;
+                    lstSuggestions.Visible = false;
+                    DisableForm(false);
+                }
+            }
+        }
+
+        private void DisableForm(bool disable)
+        {
+            txtProductSearch.Enabled = disable;
+            txtQuantity.Enabled = disable;
+            cmbMovementType.Enabled = disable;
+            txtDocumentNumber.Enabled = disable;
+            txtNotes.Enabled = disable;
+            dtpDate.Enabled = disable;
+            btnSave.Enabled = disable;
+        }
+
+        private void btnClean_Click(object sender, EventArgs e)
+        {
+            cleanData();
         }
     }
 }

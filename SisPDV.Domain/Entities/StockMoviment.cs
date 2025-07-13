@@ -12,7 +12,7 @@ namespace SisPDV.Domain.Entities
         public Decimal Quantity { get; set; }
         public StockMovementType Type { get; set; } // Entrada, Saída, Ajuste
         public string? Notes { get; set; }
-        public int? DocumentNumber { get; set; } // NF, Cupom etc
+        public string? DocumentNumber { get; set; } // NF, Cupom etc
         public string? Origin { get; set; } // Manual, XML, Ajuste
     }
 

@@ -80,7 +80,8 @@ namespace SisPDV.Application.Services
             }
 
             var result = await query
-                .OrderBy(p => p.Product.Description)
+                .OrderByDescending(p => p.Date)
+                .OrderBy(p => p.Id)
                 .Select(ps => new StockMovementDTO
                 {
                     Id = ps.Id,
@@ -92,6 +93,28 @@ namespace SisPDV.Application.Services
                     TypeDescription = EnumHelper.GetEnumDescription<StockMovementType>(ps.Type)
                 })
                 .ToListAsync();
+
+            return result;
+        }
+
+        public async Task<StockMovementDTO> GetByIdAsync(int Id)
+        {
+            var stockMovement = await _context
+                .stockMovements
+                .Include(sm => sm.Product)
+                .FirstOrDefaultAsync(sm => sm.Id == Id);
+
+            var result = new StockMovementDTO
+            {
+                Id = stockMovement!.Id,
+                ProductId = stockMovement.ProductId,
+                ProductDescription = stockMovement.Product.Description,
+                Quantity = stockMovement.Quantity,
+                Date = stockMovement.Date,
+                Type = stockMovement.Type,
+                Notes = stockMovement.Notes != null ? stockMovement.Notes : "",
+                DocumentNumber = stockMovement.DocumentNumber != null ? stockMovement.DocumentNumber : "",
+            };
 
             return result;
         }

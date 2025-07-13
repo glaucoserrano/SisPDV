@@ -1,4 +1,4 @@
-﻿using SisPDV.Application.DTOs.CashConfig;
+﻿using SisPDV.Application.DTOs.Cash;
 using System.Text.Json;
 
 namespace SisPDV.APP.Helpers
@@ -25,6 +25,17 @@ namespace SisPDV.APP.Helpers
             {
                 return 0;
             }
+        }
+        public static string GetPDVNumber()
+        {
+            string path = AppDomain.CurrentDomain.BaseDirectory;
+
+            var cashNumber = CashNumberHelper.GetCashNumber(path);
+
+            if (cashNumber == 0)
+                return "Não configurado";
+
+            return cashNumber.ToString() ?? "Não configurado";
         }
     }
 }

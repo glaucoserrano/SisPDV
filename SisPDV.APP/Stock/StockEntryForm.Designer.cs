@@ -58,12 +58,15 @@
             dgvMovements.AllowUserToResizeColumns = false;
             dgvMovements.AllowUserToResizeRows = false;
             dgvMovements.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgvMovements.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             dgvMovements.Location = new Point(12, 200);
             dgvMovements.Name = "dgvMovements";
             dgvMovements.ReadOnly = true;
+            dgvMovements.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dgvMovements.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvMovements.Size = new Size(598, 300);
             dgvMovements.TabIndex = 14;
+            dgvMovements.CellDoubleClick += dgvMovements_CellDoubleClick;
             // 
             // groupBox1
             // 
@@ -114,6 +117,7 @@
             btnClean.TabIndex = 43;
             btnClean.Text = "   Limpar";
             btnClean.UseVisualStyleBackColor = false;
+            btnClean.Click += btnClean_Click;
             // 
             // btnSave
             // 

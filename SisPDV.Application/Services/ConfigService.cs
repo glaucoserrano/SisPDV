@@ -1,11 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SisPDV.Application.DTOs.CashConfig;
+using SisPDV.Application.DTOs.Cash;
 using SisPDV.Application.DTOs.Config;
 using SisPDV.Application.DTOs.Config.PrintSector;
 using SisPDV.Application.DTOs.Validation;
 using SisPDV.Application.Interfaces;
 using SisPDV.Domain.Entities;
-using SisPDV.Domain.Helpers;
 using SisPDV.Infrastructure.Persistence;
 using System.Text.Json;
 

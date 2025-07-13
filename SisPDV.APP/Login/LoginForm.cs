@@ -3,6 +3,7 @@ using SisPDV.Application.ExternalInterfaces;
 using SisPDV.Application.Helper;
 using SisPDV.Application.Interfaces;
 using SisPDV.Infrastructure.Service;
+using System.Runtime.CompilerServices;
 using WindowsForms = System.Windows.Forms;
 
 namespace SisPDV.APP.Login
@@ -28,6 +29,7 @@ namespace SisPDV.APP.Login
         private readonly IPaymentMethodService _paymentMethodService;
         private readonly IProductStockService _productStockService;
         private readonly IStockMovementService _stockMovementService;
+        private readonly ICashRegisterService _cashRegisterService;
 
         public LoginForm(
             IUserService userService, 
@@ -48,7 +50,8 @@ namespace SisPDV.APP.Login
             IAccountantService accountantService,
             IPaymentMethodService paymentMethodService,
             IProductStockService productStockService,
-            IStockMovementService stockMovementService)
+            IStockMovementService stockMovementService,
+            ICashRegisterService cashRegisterService)
         {
             InitializeComponent();
             _userService = userService;
@@ -70,6 +73,7 @@ namespace SisPDV.APP.Login
             _paymentMethodService = paymentMethodService;
             _productStockService = productStockService;
             _stockMovementService = stockMovementService;
+            _cashRegisterService = cashRegisterService;
         }
 
         private async void btnLogin_Click(object sender, EventArgs e)
@@ -113,7 +117,8 @@ namespace SisPDV.APP.Login
                         accountantService: _accountantService,
                         paymentMethodService: _paymentMethodService,
                         productStockService: _productStockService,
-                        stockMovementService: _stockMovementService);
+                        stockMovementService: _stockMovementService,
+                        cashRegisterService: _cashRegisterService);
                     mainForm.WindowState = FormWindowState.Maximized;
 
                     mainForm.FormClosed += (s, e) => this.Close();

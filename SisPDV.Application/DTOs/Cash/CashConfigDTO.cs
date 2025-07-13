@@ -1,4 +1,4 @@
-﻿namespace SisPDV.Application.DTOs.CashConfig
+﻿namespace SisPDV.Application.DTOs.Cash
 {
     public class CashConfigDTO
     {

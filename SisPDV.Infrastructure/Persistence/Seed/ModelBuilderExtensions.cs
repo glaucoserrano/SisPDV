@@ -187,6 +187,26 @@ namespace SisPDV.Infrastructure.Persistence.Seed
                     Order = 17,
                     Visible = true,
                     CreatedBy = "System"
+                },
+                new Menu
+                {
+                    Id = 19,
+                    ParentId = null,
+                    Title = "Caixa",
+                    FormName = null,
+                    Order = 18,
+                    Visible = true,
+                    CreatedBy = "System"
+                },
+                new Menu
+                {
+                    Id = 20,
+                    ParentId = 19,
+                    Title = "Abertura de Caixa",
+                    FormName = "CashOpeningForm",
+                    Order = 19,
+                    Visible = true,
+                    CreatedBy = "System"
                 }
             );
         }

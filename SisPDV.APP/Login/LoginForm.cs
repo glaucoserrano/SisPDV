@@ -30,6 +30,7 @@ namespace SisPDV.APP.Login
         private readonly IProductStockService _productStockService;
         private readonly IStockMovementService _stockMovementService;
         private readonly ICashRegisterService _cashRegisterService;
+        private readonly ICashMovementService _cashMovementService;
 
         public LoginForm(
             IUserService userService, 
@@ -51,7 +52,8 @@ namespace SisPDV.APP.Login
             IPaymentMethodService paymentMethodService,
             IProductStockService productStockService,
             IStockMovementService stockMovementService,
-            ICashRegisterService cashRegisterService)
+            ICashRegisterService cashRegisterService,
+            ICashMovementService cashMovementService)
         {
             InitializeComponent();
             _userService = userService;
@@ -74,6 +76,7 @@ namespace SisPDV.APP.Login
             _productStockService = productStockService;
             _stockMovementService = stockMovementService;
             _cashRegisterService = cashRegisterService;
+            _cashMovementService = cashMovementService;
         }
 
         private async void btnLogin_Click(object sender, EventArgs e)
@@ -118,7 +121,8 @@ namespace SisPDV.APP.Login
                         paymentMethodService: _paymentMethodService,
                         productStockService: _productStockService,
                         stockMovementService: _stockMovementService,
-                        cashRegisterService: _cashRegisterService);
+                        cashRegisterService: _cashRegisterService,
+                        cashMovementService: _cashMovementService);
                     mainForm.WindowState = FormWindowState.Maximized;
 
                     mainForm.FormClosed += (s, e) => this.Close();

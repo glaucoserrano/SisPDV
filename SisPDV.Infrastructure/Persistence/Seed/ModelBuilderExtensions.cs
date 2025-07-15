@@ -207,6 +207,16 @@ namespace SisPDV.Infrastructure.Persistence.Seed
                     Order = 19,
                     Visible = true,
                     CreatedBy = "System"
+                },
+                new Menu
+                {
+                    Id = 21,
+                    ParentId = 19,
+                    Title = "Suprimento / Sangria",
+                    FormName = "CashMovementForm",
+                    Order = 20,
+                    Visible = true,
+                    CreatedBy = "System"
                 }
             );
         }

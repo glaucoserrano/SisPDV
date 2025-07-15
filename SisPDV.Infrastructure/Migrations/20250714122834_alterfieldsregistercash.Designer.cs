@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using SisPDV.Infrastructure.Persistence;
@@ -11,9 +12,11 @@ using SisPDV.Infrastructure.Persistence;
 namespace SisPDV.Infrastructure.Migrations
 {
     [DbContext(typeof(PDVDbContext))]
-    partial class PDVDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250714122834_alterfieldsregistercash")]
+    partial class alterfieldsregistercash
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -840,18 +843,6 @@ namespace SisPDV.Infrastructure.Migrations
                             Order = 19,
                             ParentId = 19,
                             Title = "Abertura de Caixa",
-                            UpdatedBy = "",
-                            Visible = true
-                        },
-                        new
-                        {
-                            Id = 21,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedBy = "System",
-                            FormName = "CashMovementForm",
-                            Order = 20,
-                            ParentId = 19,
-                            Title = "Suprimento / Sangria",
                             UpdatedBy = "",
                             Visible = true
                         });

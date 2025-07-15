@@ -1,6 +1,6 @@
 ﻿namespace SisPDV.APP.Cash
 {
-    partial class CashOpeningForm
+    partial class CashMovementForm
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,12 @@
         private void InitializeComponent()
         {
             grbCashOpening = new GroupBox();
-            btnOpenCash = new FontAwesome.Sharp.IconButton();
+            label1 = new Label();
+            txtNote = new TextBox();
+            grbSupply = new GroupBox();
+            rdoCashWithdrawal = new RadioButton();
+            rdoCashSupply = new RadioButton();
+            btnMovementCash = new FontAwesome.Sharp.IconButton();
             gbReceiptPreview = new GroupBox();
             btnPrintReceipt = new FontAwesome.Sharp.IconButton();
             rtbReceiptPreview = new RichTextBox();
@@ -38,43 +43,97 @@
             txtDate = new TextBox();
             lblCashNumber = new Label();
             txtCashNumber = new TextBox();
-            lblOpeningValue = new Label();
-            txtOpeningValue = new TextBox();
+            lblValue = new Label();
+            txtValue = new TextBox();
             grbCashOpening.SuspendLayout();
+            grbSupply.SuspendLayout();
             gbReceiptPreview.SuspendLayout();
             SuspendLayout();
             // 
             // grbCashOpening
             // 
-            grbCashOpening.Controls.Add(btnOpenCash);
+            grbCashOpening.Controls.Add(label1);
+            grbCashOpening.Controls.Add(txtNote);
+            grbCashOpening.Controls.Add(grbSupply);
+            grbCashOpening.Controls.Add(btnMovementCash);
             grbCashOpening.Controls.Add(gbReceiptPreview);
             grbCashOpening.Controls.Add(lblStatus);
             grbCashOpening.Controls.Add(lblDate);
             grbCashOpening.Controls.Add(txtDate);
             grbCashOpening.Controls.Add(lblCashNumber);
             grbCashOpening.Controls.Add(txtCashNumber);
-            grbCashOpening.Controls.Add(lblOpeningValue);
-            grbCashOpening.Controls.Add(txtOpeningValue);
+            grbCashOpening.Controls.Add(lblValue);
+            grbCashOpening.Controls.Add(txtValue);
             grbCashOpening.Location = new Point(12, 12);
             grbCashOpening.Name = "grbCashOpening";
-            grbCashOpening.Size = new Size(576, 256);
+            grbCashOpening.Size = new Size(576, 343);
             grbCashOpening.TabIndex = 10;
             grbCashOpening.TabStop = false;
             // 
-            // btnOpenCash
+            // label1
             // 
-            btnOpenCash.IconChar = FontAwesome.Sharp.IconChar.Lock;
-            btnOpenCash.IconColor = Color.DarkRed;
-            btnOpenCash.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            btnOpenCash.IconSize = 32;
-            btnOpenCash.ImageAlign = ContentAlignment.MiddleLeft;
-            btnOpenCash.Location = new Point(16, 166);
-            btnOpenCash.Name = "btnOpenCash";
-            btnOpenCash.Size = new Size(230, 35);
-            btnOpenCash.TabIndex = 14;
-            btnOpenCash.Text = "Abrir Caixa";
-            btnOpenCash.UseVisualStyleBackColor = true;
-            btnOpenCash.Click += btnOpenCash_Click;
+            label1.Location = new Point(6, 128);
+            label1.Name = "label1";
+            label1.Size = new Size(104, 20);
+            label1.TabIndex = 16;
+            label1.Text = "Observação:";
+            // 
+            // txtNote
+            // 
+            txtNote.Location = new Point(114, 125);
+            txtNote.Multiline = true;
+            txtNote.Name = "txtNote";
+            txtNote.Size = new Size(150, 97);
+            txtNote.TabIndex = 2;
+            // 
+            // grbSupply
+            // 
+            grbSupply.Controls.Add(rdoCashWithdrawal);
+            grbSupply.Controls.Add(rdoCashSupply);
+            grbSupply.Location = new Point(16, 219);
+            grbSupply.Name = "grbSupply";
+            grbSupply.Size = new Size(230, 57);
+            grbSupply.TabIndex = 11;
+            grbSupply.TabStop = false;
+            // 
+            // rdoCashWithdrawal
+            // 
+            rdoCashWithdrawal.AutoSize = true;
+            rdoCashWithdrawal.Location = new Point(111, 25);
+            rdoCashWithdrawal.Name = "rdoCashWithdrawal";
+            rdoCashWithdrawal.Size = new Size(64, 19);
+            rdoCashWithdrawal.TabIndex = 1;
+            rdoCashWithdrawal.Text = "Sangria";
+            rdoCashWithdrawal.UseVisualStyleBackColor = true;
+            rdoCashWithdrawal.CheckedChanged += rdoCashWithdrawal_CheckedChanged;
+            // 
+            // rdoCashSupply
+            // 
+            rdoCashSupply.AutoSize = true;
+            rdoCashSupply.Checked = true;
+            rdoCashSupply.Location = new Point(6, 25);
+            rdoCashSupply.Name = "rdoCashSupply";
+            rdoCashSupply.Size = new Size(87, 19);
+            rdoCashSupply.TabIndex = 0;
+            rdoCashSupply.TabStop = true;
+            rdoCashSupply.Text = "Suprimento";
+            rdoCashSupply.UseVisualStyleBackColor = true;
+            rdoCashSupply.CheckedChanged += rdoCashSupply_CheckedChanged;
+            // 
+            // btnMovementCash
+            // 
+            btnMovementCash.IconChar = FontAwesome.Sharp.IconChar.PlusSquare;
+            btnMovementCash.IconColor = Color.DarkGreen;
+            btnMovementCash.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            btnMovementCash.IconSize = 32;
+            btnMovementCash.ImageAlign = ContentAlignment.MiddleLeft;
+            btnMovementCash.Location = new Point(16, 282);
+            btnMovementCash.Name = "btnMovementCash";
+            btnMovementCash.Size = new Size(230, 35);
+            btnMovementCash.TabIndex = 14;
+            btnMovementCash.Text = "Suprimento";
+            btnMovementCash.UseVisualStyleBackColor = true;
+            btnMovementCash.Click += btnMovementCash_Click;
             // 
             // gbReceiptPreview
             // 
@@ -82,7 +141,7 @@
             gbReceiptPreview.Controls.Add(rtbReceiptPreview);
             gbReceiptPreview.Location = new Point(270, 22);
             gbReceiptPreview.Name = "gbReceiptPreview";
-            gbReceiptPreview.Size = new Size(300, 221);
+            gbReceiptPreview.Size = new Size(300, 227);
             gbReceiptPreview.TabIndex = 13;
             gbReceiptPreview.TabStop = false;
             gbReceiptPreview.Text = "Visualização do Comprovante";
@@ -115,7 +174,7 @@
             // 
             // lblStatus
             // 
-            lblStatus.Location = new Point(6, 226);
+            lblStatus.Location = new Point(16, 320);
             lblStatus.Name = "lblStatus";
             lblStatus.Size = new Size(230, 20);
             lblStatus.TabIndex = 12;
@@ -153,36 +212,38 @@
             txtCashNumber.Size = new Size(100, 23);
             txtCashNumber.TabIndex = 9;
             // 
-            // lblOpeningValue
+            // lblValue
             // 
-            lblOpeningValue.Location = new Point(4, 99);
-            lblOpeningValue.Name = "lblOpeningValue";
-            lblOpeningValue.Size = new Size(104, 20);
-            lblOpeningValue.TabIndex = 10;
-            lblOpeningValue.Text = "Valor de Abertura:";
+            lblValue.Location = new Point(4, 99);
+            lblValue.Name = "lblValue";
+            lblValue.Size = new Size(104, 20);
+            lblValue.TabIndex = 10;
+            lblValue.Text = "Valor:";
             // 
-            // txtOpeningValue
+            // txtValue
             // 
-            txtOpeningValue.Location = new Point(114, 96);
-            txtOpeningValue.Name = "txtOpeningValue";
-            txtOpeningValue.Size = new Size(100, 23);
-            txtOpeningValue.TabIndex = 1;
-            txtOpeningValue.TextAlign = HorizontalAlignment.Right;
-            txtOpeningValue.KeyPress += txtOpeningValue_KeyPress;
+            txtValue.Location = new Point(114, 96);
+            txtValue.Name = "txtValue";
+            txtValue.Size = new Size(100, 23);
+            txtValue.TabIndex = 1;
+            txtValue.TextAlign = HorizontalAlignment.Right;
+            txtValue.KeyPress += txtValue_KeyPress;
             // 
-            // CashOpeningForm
+            // CashMovementForm
             // 
-            ClientSize = new Size(600, 280);
+            ClientSize = new Size(600, 368);
             Controls.Add(grbCashOpening);
             FormBorderStyle = FormBorderStyle.FixedDialog;
             MaximizeBox = false;
             MinimizeBox = false;
-            Name = "CashOpeningForm";
+            Name = "CashMovementForm";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "Abertura de Caixa";
-            Load += CashOpeningForm_Load;
+            Text = "Movimentação de Caixa - Suprimento / Sangria";
+            Load += CashMovementForm_Load;
             grbCashOpening.ResumeLayout(false);
             grbCashOpening.PerformLayout();
+            grbSupply.ResumeLayout(false);
+            grbSupply.PerformLayout();
             gbReceiptPreview.ResumeLayout(false);
             ResumeLayout(false);
         }
@@ -190,7 +251,7 @@
         #endregion
 
         private GroupBox grbCashOpening;
-        private FontAwesome.Sharp.IconButton btnOpenCash;
+        private FontAwesome.Sharp.IconButton btnMovementCash;
         private GroupBox gbReceiptPreview;
         private FontAwesome.Sharp.IconButton btnPrintReceipt;
         private RichTextBox rtbReceiptPreview;
@@ -199,7 +260,12 @@
         private TextBox txtDate;
         private Label lblCashNumber;
         private TextBox txtCashNumber;
-        private Label lblOpeningValue;
-        private TextBox txtOpeningValue;
+        private Label lblValue;
+        private TextBox txtValue;
+        private GroupBox grbSupply;
+        private RadioButton rdoCashWithdrawal;
+        private RadioButton rdoCashSupply;
+        private Label label1;
+        private TextBox txtNote;
     }
 }

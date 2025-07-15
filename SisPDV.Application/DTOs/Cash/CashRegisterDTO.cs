@@ -4,8 +4,9 @@
     {
         public int Id { get; set; }
         public int CashNumber { get; set; }
-        public DateTimeKind OpenDate { get; set; }
-        public DateTimeKind? CloseDate { get; set; }
+        public DateTime OpenDate { get; set; }
+        public DateTime? CloseDate { get; set; }
         public int OpeningAmount { get; set; } // Em centavos
+        public decimal amount { get; set; } // em real, para exibição na tela
     }
 }

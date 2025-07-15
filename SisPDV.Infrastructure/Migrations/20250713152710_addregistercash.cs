@@ -19,8 +19,8 @@ namespace SisPDV.Infrastructure.Migrations
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     cashNumber = table.Column<int>(type: "integer", nullable: false),
-                    openingDateTime = table.Column<int>(type: "integer", nullable: false),
-                    closingDateTime = table.Column<int>(type: "integer", nullable: false),
+                    openingDateTime = table.Column<int>(type: "timestamp with time zone", nullable: false),
+                    closingDateTime = table.Column<int>(type: "timestamp with time zone", nullable: false),
                     openingAmount = table.Column<int>(type: "integer", nullable: false),
                     closingAmount = table.Column<int>(type: "integer", nullable: false),
                     IsOpen = table.Column<bool>(type: "boolean", nullable: false),

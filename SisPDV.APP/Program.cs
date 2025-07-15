@@ -48,6 +48,7 @@ namespace SisPDV.APP
                 var productStockService = new ProductStockService(dbContext);
                 var stockMovementService = new StockMovementService(dbContext);
                 var cashRegisterService = new CashRegisterService(dbContext);
+                var cashMovementService = new CashMovementService(dbContext);
 
                 var cnpjService = new CnpjService();
                 var cepService = new CepService();
@@ -73,7 +74,8 @@ namespace SisPDV.APP
                     paymentMethodService,
                     productStockService,
                     stockMovementService,
-                    cashRegisterService));
+                    cashRegisterService,
+                    cashMovementService));
             }
         }
     }

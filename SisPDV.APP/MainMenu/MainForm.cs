@@ -42,6 +42,7 @@ namespace SisPDV.APP.Main
         private readonly IProductStockService _productStockService;
         private readonly IStockMovementService _stockMovementService;
         private readonly ICashRegisterService _cashRegisterService;
+        private readonly ICashMovementService _cashMovementService;
 
         private readonly int? _userID;
         private readonly string? _userName;
@@ -68,7 +69,8 @@ namespace SisPDV.APP.Main
             IPaymentMethodService paymentMethodService,
             IProductStockService productStockService,
             IStockMovementService stockMovementService,
-            ICashRegisterService cashRegisterService
+            ICashRegisterService cashRegisterService,
+            ICashMovementService cashMovementService
            )
         {
             InitializeComponent();
@@ -93,6 +95,7 @@ namespace SisPDV.APP.Main
             _productStockService = productStockService;
             _stockMovementService = stockMovementService;
             _cashRegisterService = cashRegisterService;
+            _cashMovementService = cashMovementService;
 
             string? version = Assembly.
                 GetExecutingAssembly().
@@ -141,22 +144,24 @@ namespace SisPDV.APP.Main
                 return;
             }
 
-            if (lastCash.CloseDate == null && lastCash.OpenDate.Equals(DateTime.Today))
+            if (lastCash.CloseDate == DateTime.MinValue && lastCash.OpenDate.Date == DateTime.Today.Date)
             {
                 CashRegisterStatus.IsOpen = true;
                 CashRegisterStatus.CashRegisterId = lastCash.Id;
                 CashRegisterStatus.OpenDate = lastCash.OpenDate;
-                CashRegisterStatus.StatusMessage = $"Caixa aberto em {lastCash.OpenDate:dd/MM/yyyy HH:mm}";
+                CashRegisterStatus.StatusMessage = $"Caixa aberto em {lastCash.OpenDate.ToLocalTime():dd/MM/yyyy HH:mm}";
             }
-            else if (lastCash.CloseDate == null && lastCash.OpenDate < DateTimeKind.Utc)
+            else if (lastCash.CloseDate == DateTime.MinValue && lastCash.OpenDate < DateTime.UtcNow)
             {
-                CashRegisterStatus.IsOpen = false;
+                CashRegisterStatus.IsOpen = true;
+                CashRegisterStatus.CashRegisterId = lastCash.Id;
+                CashRegisterStatus.OpenDate = lastCash.OpenDate;
                 CashRegisterStatus.StatusMessage = $"Caixa de {lastCash.OpenDate:dd/MM} não foi fechado!";
             }
             else
             {
                 CashRegisterStatus.IsOpen = false;
-                CashRegisterStatus.StatusMessage = "Caixa fechado. Pronto para abertura.";
+                CashRegisterStatus.StatusMessage = $"Caixa fechado em {lastCash.CloseDate?.ToLocalTime():dd/MM/yyyy HH:mm}";
             }
         }
 
@@ -251,7 +256,8 @@ namespace SisPDV.APP.Main
                         _productService,
                         _stockMovementService,
                         _productStockService),
-                    "CashOpeningForm" => new CashOpeningForm(),
+                    "CashOpeningForm" => new CashOpeningForm(_cashRegisterService, _userName),
+                    "CashMovementForm" => new CashMovementForm(_cashMovementService, _userName),
                     _ => null
                 };
                 form?.ShowDialog();

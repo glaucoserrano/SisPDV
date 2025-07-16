@@ -5,6 +5,7 @@ namespace SisPDV.Application.Interfaces
 {
     public interface ICashMovementService
     {
+        Task<List<CashMovementDTO>> GetTodayMovementsAsync(int id);
         Task SaveCashMovementAsync(CashMovementDTO request);
         Task<ValidationResults> ValidateAsync(CashMovementDTO request);
     }

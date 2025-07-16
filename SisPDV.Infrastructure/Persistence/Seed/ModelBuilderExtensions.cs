@@ -217,6 +217,16 @@ namespace SisPDV.Infrastructure.Persistence.Seed
                     Order = 20,
                     Visible = true,
                     CreatedBy = "System"
+                },
+                new Menu
+                {
+                    Id = 22,
+                    ParentId = 19,
+                    Title = "Fechamento de Caixa",
+                    FormName = "CashClosingForm",
+                    Order = 21,
+                    Visible = true,
+                    CreatedBy = "System"
                 }
             );
         }

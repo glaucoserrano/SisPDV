@@ -17,5 +17,10 @@
             rtpPreview.ReadOnly = true;                    // Opcional: só leitura
             rtpPreview.BackColor = Color.White;            // Deixa com fundo de cupom
         }
+        public static string FormatLine(string label, decimal value, bool isNegative = false)
+        {
+            var val = value.ToString("C2"); // Formata como moeda, exemplo: R$ 200,00
+            return $"{label,-18} {(isNegative ? "-" : "")}{val,10}";
+        }
     }
 }

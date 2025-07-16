@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SisPDV.Application.DTOs.Cash;
+using SisPDV.Application.DTOs.Validation;
 using SisPDV.Application.Interfaces;
 using SisPDV.Domain.Entities;
 using SisPDV.Domain.Enum;
@@ -118,5 +119,77 @@ namespace SisPDV.Application.Services
                 throw;
             }
         }
+        public async Task<CashRegisterDTO> CloseCashRegisterAsync(CashMovementDTO request)
+        {
+            using var transactions = await _context.Database.BeginTransactionAsync();
+            try
+            {
+
+                var cash = await _context.cashRegisters
+                    .FirstOrDefaultAsync(c => c.Id == request.CashRegisterId && c.IsOpen);
+
+                if (cash == null)
+                {
+                    throw new InvalidOperationException("Caixa não encontrado");
+                }
+
+                // Busca movimentações desde a abertura
+                var movements = await _context.cashMovements
+                    .Where(m => m.CashRegisterId == cash.Id && m.MovementDateTime >= cash.openingDateTime)
+                    .ToListAsync();
+
+                var totalEntradas = movements
+                    .Where(m => m.Type is (int)CashMovementType.Entry or (int)CashMovementType.Sale)
+                    .Sum(m => m.Amount);
+
+                var totalSaidas = movements
+                    .Where(m => m.Type is (int)CashMovementType.Exit)
+                    .Sum(m => m.Amount);
+
+                var expectedAmount = cash.openingAmount + totalEntradas - totalSaidas;
+                var difference = request.Amount - expectedAmount;
+
+                // Atualiza a entidade CashRegister
+                cash.closingDateTime = DateTime.UtcNow;
+                cash.ClosingExpectedAmount = expectedAmount;
+                cash.ClosingInformedAmount = request.Amount;
+                cash.ClosingDifferenceAmount = difference;
+                cash.IsOpen = false;
+
+                _context.cashRegisters.Update(cash);
+
+                // Registra o fechamento na tabela de movimentações
+                var closingMovement = new CashMovement
+                {
+                    CashRegisterId = cash.Id,
+                    MovementDateTime = DateTime.UtcNow,
+                    Type = (int)CashMovementType.Closing,
+                    Amount = request.Amount,
+                    Description = $"{request.Description} - Diferença: {PriceConverter.FromCents(difference):C2}",
+                    Origin = request.Origin,
+                };
+
+                await _context.cashMovements.AddAsync(closingMovement);
+                await _context.SaveChangesAsync();
+                await transactions.CommitAsync();
+
+                CashRegisterStatus.IsOpen = false;
+                CashRegisterStatus.StatusMessage = $"Caixa fechado em {cash.closingDateTime.ToLocalTime():dd/MM/yyyy HH:mm}";
+
+                return new CashRegisterDTO
+                {
+                    Id = cash.Id,
+                    CashNumber = cash.cashNumber,
+                    CloseDate = cash.closingDateTime,
+                    amount = PriceConverter.FromCents(cash.openingAmount)
+                };
+            }
+            catch
+            {
+                await transactions.RollbackAsync();
+                throw;
+            }
+        }
+
     }
 }

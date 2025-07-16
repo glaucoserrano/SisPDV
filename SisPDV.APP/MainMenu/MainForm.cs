@@ -258,6 +258,7 @@ namespace SisPDV.APP.Main
                         _productStockService),
                     "CashOpeningForm" => new CashOpeningForm(_cashRegisterService, _userName),
                     "CashMovementForm" => new CashMovementForm(_cashMovementService, _userName),
+                    "CashClosingForm" => new CashClosingForm(_cashRegisterService, _userName, _cashMovementService),
                     _ => null
                 };
                 form?.ShowDialog();

@@ -7,5 +7,6 @@ namespace SisPDV.Application.Interfaces
         Task<CashRegisterDTO?> CanOpenCashRegisterAsync(int cashNumber);
         Task<CashRegisterDTO?> GetTodayCashOpeningAsync(int cashNumber);
         Task<CashRegisterDTO> OpenCashRegisterAsync(int cashNumber, decimal openingAmount, string origin);
+        Task<CashRegisterDTO> CloseCashRegisterAsync(CashMovementDTO request);
     }
 }

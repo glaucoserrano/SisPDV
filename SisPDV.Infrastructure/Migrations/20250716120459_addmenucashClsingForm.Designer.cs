@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using SisPDV.Infrastructure.Persistence;
@@ -11,9 +12,11 @@ using SisPDV.Infrastructure.Persistence;
 namespace SisPDV.Infrastructure.Migrations
 {
     [DbContext(typeof(PDVDbContext))]
-    partial class PDVDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250716120459_addmenucashClsingForm")]
+    partial class addmenucashClsingForm
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -150,15 +153,6 @@ namespace SisPDV.Infrastructure.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("ClosingDifferenceAmount")
-                        .HasColumnType("integer");
-
-                    b.Property<int?>("ClosingExpectedAmount")
-                        .HasColumnType("integer");
-
-                    b.Property<int?>("ClosingInformedAmount")
-                        .HasColumnType("integer");
-
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
@@ -175,6 +169,9 @@ namespace SisPDV.Infrastructure.Migrations
                         .HasColumnType("text");
 
                     b.Property<int>("cashNumber")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("closingAmount")
                         .HasColumnType("integer");
 
                     b.Property<DateTime>("closingDateTime")

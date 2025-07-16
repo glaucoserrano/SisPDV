@@ -2,6 +2,7 @@
 using SisPDV.Application.DTOs.Cash;
 using SisPDV.Application.DTOs.Stock;
 using SisPDV.Application.Interfaces;
+using SisPDV.Domain.Enum;
 using SisPDV.Domain.Helpers;
 using SisPDV.Infrastructure.Globals;
 using System.Text;
@@ -11,7 +12,7 @@ namespace SisPDV.APP.Cash
 {
     public partial class CashMovementForm : Form
     {
-        private int _cashMovementType;
+        private CashMovementType _cashMovementType;
         private readonly string? _userName;
         private readonly ICashMovementService _cashMovementService;
         public CashMovementForm(ICashMovementService cashMovementService, string? userName)
@@ -26,14 +27,14 @@ namespace SisPDV.APP.Cash
             btnMovementCash.IconChar = FontAwesome.Sharp.IconChar.MinusSquare;
             btnMovementCash.IconColor = Color.DarkRed;
             btnMovementCash.Text = "Sangria";
-            _cashMovementType = 4; // Sangria
+            _cashMovementType = CashMovementType.Exit; // Sangria
         }
         private void rdoCashSupply_CheckedChanged(object sender, EventArgs e)
         {
             btnMovementCash.IconChar = FontAwesome.Sharp.IconChar.PlusSquare;
             btnMovementCash.IconColor = Color.DarkGreen;
             btnMovementCash.Text = "Suprimento";
-            _cashMovementType = 3; // Suprimento
+            _cashMovementType = CashMovementType.Entry; // Suprimento
         }
         private void CashMovementForm_Load(object sender, EventArgs e)
         {
@@ -41,7 +42,7 @@ namespace SisPDV.APP.Cash
             txtDate.Text = DateTime.UtcNow.Date.ToString("dd/MM/yyyy");
             txtCashNumber.Text = CashNumberHelper.GetPDVNumber();
             lblStatus.Text = CashRegisterStatus.StatusMessage;
-            _cashMovementType = 3; // Padrão para Suprimento
+            _cashMovementType = CashMovementType.Entry; // Padrão para Suprimento
             if( CashRegisterStatus.IsOpen)
             {
                 rdoCashSupply.Enabled = true;
@@ -98,11 +99,11 @@ namespace SisPDV.APP.Cash
         private void ShowMovementReceipt(CashMovementDTO result)
         {
             var sb = new StringBuilder();
-            if(result.Type == 3)
+            if(result.Type == CashMovementType.Entry)
             {
                 sb.AppendLine(ReportTextHelper.CenterLine("=== SUPRIMENTO DE CAIXA ==="));
             }
-            else if(result.Type == 4)
+            else if(result.Type == CashMovementType.Exit)
             {
                 sb.AppendLine(ReportTextHelper.CenterLine("=== SANGRIA DE CAIXA ==="));
             }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SisPDV.Application.DTOs.Cash;
+using SisPDV.Application.DTOs.PaymentMethod;
 using SisPDV.Application.DTOs.Validation;
 using SisPDV.Application.Interfaces;
 using SisPDV.Domain.Entities;
@@ -17,6 +18,48 @@ namespace SisPDV.Application.Services
             _context = context;
         }
 
+        public async Task<List<CashMovementDTO>> GetTodayMovementsAsync(int cashRegisterId)
+        {
+            var today = DateTime.UtcNow.Date;
+            
+            var cashRegister = await _context.cashRegisters
+                .FirstOrDefaultAsync(c => c.Id == cashRegisterId);
+
+            if (cashRegister == null)
+                return new List<CashMovementDTO>(); // ou lançar exceção
+
+            var fromDate = cashRegister.openingDateTime.Date; // início do caixa
+            var toDate = today; // até o momento atual
+
+            var movements = await _context.cashMovements
+                .Include(m => m.PaymentMethod)
+                .Where(m =>
+                    m.CashRegisterId == cashRegisterId &&
+                    m.MovementDateTime >= fromDate &&
+                    m.MovementDateTime <= toDate)
+                .OrderBy(m => m.MovementDateTime)
+                .ToListAsync();
+
+
+            return movements.Select(m => new CashMovementDTO
+            {
+                Id = m.Id,
+                CashRegisterId = m.CashRegisterId,
+                MovementDateTime = m.MovementDateTime,
+                Type = (CashMovementType)m.Type,
+                Amount = m.Amount,
+                Description = m.Description,
+                Origin = m.Origin,
+                PaymentMethodId = m.paymentMethodId,
+                PaymentMethod = m.PaymentMethod != null
+                    ? new PaymentMethodDTO
+                    {
+                        Id = m.PaymentMethod.Id,
+                        Description = m.PaymentMethod.Description
+                    }
+                    : null
+            }).ToList();
+        }
         public async Task SaveCashMovementAsync(CashMovementDTO request)
         {
             using var transactions = await _context.Database.BeginTransactionAsync();
@@ -32,7 +75,7 @@ namespace SisPDV.Application.Services
                 {
                     CashRegisterId = request.CashRegisterId,
                     MovementDateTime = DateTime.UtcNow,
-                    Type = request.Type,
+                    Type = (int)request.Type,
                     Amount = request.Amount,
                     Description = request.Description,
                     Origin = request.Origin

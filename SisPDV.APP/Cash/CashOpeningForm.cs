@@ -1,6 +1,8 @@
 ﻿using SisPDV.APP.Helpers;
 using SisPDV.Application.DTOs.Cash;
 using SisPDV.Application.Interfaces;
+using SisPDV.Domain.Entities;
+using SisPDV.Domain.Enum;
 using SisPDV.Domain.Helpers;
 using SisPDV.Infrastructure.Globals;
 using System.Text;
@@ -31,10 +33,17 @@ namespace SisPDV.APP.Cash
 
             if (CashRegisterStatus.IsOpen)
             {
-                btnOpenCash.IconChar = FontAwesome.Sharp.IconChar.Unlock;
-                btnOpenCash.IconColor = Color.DarkGreen;
+                btnOpenCash.IconChar = FontAwesome.Sharp.IconChar.Lock;
+                btnOpenCash.IconColor = Color.DarkRed;
                 btnOpenCash.Enabled = false;
                 txtOpeningValue.Enabled = false;
+            }
+            else
+            {
+                btnOpenCash.IconChar = FontAwesome.Sharp.IconChar.Unlock;
+                btnOpenCash.IconColor = Color.DarkGreen;
+                btnOpenCash.Enabled = true;
+                txtOpeningValue.Enabled = true;
             }
         }
 
@@ -82,8 +91,8 @@ namespace SisPDV.APP.Cash
 
                 if (CashRegisterStatus.IsOpen)
                 {
-                    btnOpenCash.IconChar = FontAwesome.Sharp.IconChar.Unlock;
-                    btnOpenCash.IconColor = Color.Green;
+                    btnOpenCash.IconChar = FontAwesome.Sharp.IconChar.Lock;
+                    btnOpenCash.IconColor = Color.DarkRed;
                     btnOpenCash.Enabled = false;
                 }
                 ShowOpeningReceipt(result);
@@ -93,7 +102,6 @@ namespace SisPDV.APP.Cash
                 MessageBox.Show($"Erro ao abrir o caixa: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-        
         private void ShowOpeningReceipt(CashRegisterDTO result)
         {
             var sb = new StringBuilder();

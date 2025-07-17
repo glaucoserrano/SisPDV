@@ -1,8 +1,6 @@
 ﻿using SisPDV.APP.Helpers;
 using SisPDV.Application.DTOs.Cash;
 using SisPDV.Application.Interfaces;
-using SisPDV.Domain.Entities;
-using SisPDV.Domain.Enum;
 using SisPDV.Domain.Helpers;
 using SisPDV.Infrastructure.Globals;
 using System.Text;
@@ -11,13 +9,16 @@ namespace SisPDV.APP.Cash
 {
     public partial class CashOpeningForm : Form
     {
-        private readonly string? _userName;
+        private string _userName;
 
         private readonly ICashRegisterService _cashRegisterService;
-        public CashOpeningForm(ICashRegisterService cashRegisterService, string? userName)
+        public CashOpeningForm(ICashRegisterService cashRegisterService)
         {
             InitializeComponent();
             _cashRegisterService = cashRegisterService;
+        }
+        public void Initialize(string userName)
+        {
             _userName = userName;
         }
 

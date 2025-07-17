@@ -1,4 +1,5 @@
-﻿using SisPDV.Application.DTOs.Company;
+﻿using SisPDV.APP.Factory.Interface;
+using SisPDV.Application.DTOs.Company;
 using SisPDV.Application.ExternalInterfaces;
 using SisPDV.Application.Interfaces;
 using SisPDV.Domain.Entities;
@@ -10,28 +11,28 @@ namespace SisPDV.APP.CompanyMenu
 {
     public partial class CompanyForm : Form
     {
-        private readonly int? _userId;
+        private  int? _userId;
         private readonly ICnpjService _cnpjService;
         private readonly ICepService _cepService;
         private readonly ICompanyService _companyService;
         private readonly IUserService _userService;
 
         private CompanyDTO? _actualCompany;
-
         public CompanyForm(ICnpjService cnpjService,
             ICepService cepService,
             ICompanyService companyService,
-            int? userId,
             IUserService userService)
         {
             InitializeComponent();
             _cnpjService = cnpjService;
             _cepService = cepService;
             _companyService = companyService;
-            _userId = userId;
             _userService = userService;
         }
-
+        public void Initialize(int userId)
+        {
+            _userId = userId;
+        }
         private async void CompanyForm_Load(object sender, EventArgs e)
         {
             LoadTaxRegimeCombo();

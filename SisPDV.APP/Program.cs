@@ -1,10 +1,8 @@
-using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using SisPDV.APP.Helpers;
+using SisPDV.APP.Infrastructure.IoC;
 using SisPDV.APP.Login;
-using SisPDV.Application.ExternalServices;
 using SisPDV.Application.Services;
-using SisPDV.Infrastructure.Persistence;
-using SisPDV.Infrastructure.Service;
-using System.Configuration;
 using WindowsForms = System.Windows.Forms;
 
 namespace SisPDV.APP
@@ -21,62 +19,12 @@ namespace SisPDV.APP
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
 
-            var connectionString = ConfigurationManager.ConnectionStrings["PDVDb"].ConnectionString;
-            var currentUserService = new CurrentUserService();
-            
-            var options = new DbContextOptionsBuilder<PDVDbContext>()
-                .UseNpgsql(connectionString)
-                .Options;
+            var serviceProvider = DependencyInjection.Configure();
 
-            using( var dbContext = new PDVDbContext(options, currentUserService))
-            {
+            ValidadateForNames.ValidateFormNames(serviceProvider);
+            var loginForm = serviceProvider.GetRequiredService<LoginForm>();
 
-                var userService = new UserService(dbContext);
-                var menuService = new MenuService(dbContext);
-                var userMenuService = new UserMenuService(dbContext);
-                var companyService = new CompanyService(dbContext);
-                var printerSectorService = new PrinterSectorsService(dbContext);
-                var configService = new ConfigService(dbContext);
-                var PersonService = new PersonService(dbContext);
-                var productTypeService = new ProductTypeService(dbContext);
-                var cfopService = new CfopService(dbContext);
-                var unityService = new UnityService(dbContext);
-                var productService = new ProductService(dbContext);
-                var categoryService = new CategoryService(dbContext);
-                var accountantService = new AccountantService(dbContext);
-                var paymentMethodService = new PaymentMethodService(dbContext);
-                var productStockService = new ProductStockService(dbContext);
-                var stockMovementService = new StockMovementService(dbContext);
-                var cashRegisterService = new CashRegisterService(dbContext);
-                var cashMovementService = new CashMovementService(dbContext);
-
-                var cnpjService = new CnpjService();
-                var cepService = new CepService();
-            
-
-                WindowsForms.Application.Run(new LoginForm(
-                    userService,
-                    currentUserService,
-                    menuService,
-                    userMenuService,
-                    cnpjService,
-                    cepService,
-                    companyService,
-                    printerSectorService,
-                    configService,
-                    PersonService,
-                    productTypeService,
-                    cfopService,
-                    unityService,
-                    productService,
-                    categoryService,
-                    accountantService,
-                    paymentMethodService,
-                    productStockService,
-                    stockMovementService,
-                    cashRegisterService,
-                    cashMovementService));
-            }
+            WindowsForms.Application.Run(loginForm);
         }
     }
 }

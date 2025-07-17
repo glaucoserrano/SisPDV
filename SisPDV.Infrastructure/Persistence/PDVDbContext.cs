@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SisPDV.Domain.Entities;
 using SisPDV.Domain.Entities.Base;
-using SisPDV.Domain.Helpers;
 using SisPDV.Infrastructure.Persistence.Seed;
 using SisPDV.Infrastructure.Service;
 

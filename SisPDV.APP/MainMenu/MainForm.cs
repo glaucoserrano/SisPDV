@@ -1,9 +1,12 @@
-﻿using SisPDV.APP.Accountant;
+﻿using Microsoft.Extensions.DependencyInjection;
+using SisPDV.APP.Accountant;
 using SisPDV.APP.Cash;
 using SisPDV.APP.Categories;
 using SisPDV.APP.CFOP;
 using SisPDV.APP.CompanyMenu;
 using SisPDV.APP.ConfigMenu;
+using SisPDV.APP.Factory.Interface;
+using SisPDV.APP.Factory.Service;
 using SisPDV.APP.Helpers;
 using SisPDV.APP.PaymentMethod;
 using SisPDV.APP.PermissionMenu;
@@ -13,7 +16,6 @@ using SisPDV.APP.Products.TypeProductsMenu;
 using SisPDV.APP.Stock;
 using SisPDV.APP.User;
 using SisPDV.Application.DTOs.Menus;
-using SisPDV.Application.ExternalInterfaces;
 using SisPDV.Application.Interfaces;
 using SisPDV.Infrastructure.Globals;
 using System.Reflection;
@@ -25,77 +27,56 @@ namespace SisPDV.APP.Main
     {
         private readonly IUserService _userService;
         private readonly IMenuService _menuService;
-        private readonly IUserMenuService _userMenuService;
+        private readonly IServiceProvider _serviceProvider;
         private readonly ICompanyService _companyService;
-        private readonly IPrinterSerctorsServices _printerSectorsServices;
-        private readonly IConfigService _configServices;
-        private readonly ICnpjService _cnpjService;
-        private readonly ICepService _cepService;
-        private readonly IPersonService _personService;
-        private readonly IProductTypeService _productTypeService;
-        private readonly ICfopService _cfopService;
-        private readonly IUnityService _unityService;
-        private readonly IProductService _productService;
-        private readonly ICategoryService _categoryService;
-        private readonly IAccountantService _accountantService;
-        private readonly IPaymentMethodService _paymentMethodService;
-        private readonly IProductStockService _productStockService;
-        private readonly IStockMovementService _stockMovementService;
         private readonly ICashRegisterService _cashRegisterService;
-        private readonly ICashMovementService _cashMovementService;
 
-        private readonly int? _userID;
-        private readonly string? _userName;
+        private int? _userID;
+        private string? _userName;
+
+        private readonly Dictionary<string, Func<Form>> _formFactories;
 
 
         public MainForm(
-            int? userId,
-            string? userName,
             IUserService userService,
             IMenuService menuService,
-            IUserMenuService userMenuService,
-            ICnpjService cnpjService,
-            ICepService cepService,
+            IServiceProvider serviceProvider,
             ICompanyService companyService,
-            IPrinterSerctorsServices printerSectorsServices,
-            IConfigService configServices,
-            IPersonService personService,
-            IProductTypeService productTypeService,
-            ICfopService cfopService,
-            IUnityService unityService,
-            IProductService productService,
-            ICategoryService categoryService,
-            IAccountantService accountantService,
-            IPaymentMethodService paymentMethodService,
-            IProductStockService productStockService,
-            IStockMovementService stockMovementService,
             ICashRegisterService cashRegisterService,
-            ICashMovementService cashMovementService
+            IUserScopedFormFactory<UserChangePassword> changePasswordFactory,
+            IUserScopedFormFactory<CompanyForm> companyFormFactory,
+            IUserNameScopedFormFactory<CashClosingForm> cashClosingFactory,
+            IUserNameScopedFormFactory<CashMovementForm> CashMovementFactory,
+            IUserNameScopedFormFactory<CashOpeningForm> cashOpeningFactory
            )
         {
             InitializeComponent();
-            _userID = userId;
-            _userName = userName;
             _userService = userService;
             _menuService = menuService;
-            _userMenuService = userMenuService;
-            _cnpjService = cnpjService;
-            _cepService = cepService;
+            _serviceProvider = serviceProvider;
             _companyService = companyService;
-            _printerSectorsServices = printerSectorsServices;
-            _configServices = configServices;
-            _personService = personService;
-            _productTypeService = productTypeService;
-            _cfopService = cfopService;
-            _unityService = unityService;
-            _productService = productService;
-            _categoryService = categoryService;
-            _accountantService = accountantService;
-            _paymentMethodService = paymentMethodService;
-            _productStockService = productStockService;
-            _stockMovementService = stockMovementService;
             _cashRegisterService = cashRegisterService;
-            _cashMovementService = cashMovementService;
+            _formFactories = new Dictionary<string, Func<Form>>
+            {
+                {"UserAddForm", () => _serviceProvider.GetRequiredService<UserAddForm>() },
+                { "CFOPForm", () => _serviceProvider.GetRequiredService<CFOPForm>() },
+                { "ConfigForm", () => _serviceProvider.GetRequiredService<ConfigForm>() },
+                { "PermissionMenuForm", () => _serviceProvider.GetRequiredService<PermissionMenuForm>() },
+                { "ProductForm", () => _serviceProvider.GetRequiredService<ProductForm>() },
+                { "CategoriesForm", () => _serviceProvider.GetRequiredService<CategoriesForm>() },
+                { "PersonForm", () => _serviceProvider.GetRequiredService<PersonForm>() },
+                { "TypeProductsForm", () => _serviceProvider.GetRequiredService<TypeProductsForm>() },
+                { "AccountantForm", () => _serviceProvider.GetRequiredService<AccountantForm>() },
+                { "PaymentMethodForm", () => _serviceProvider.GetRequiredService<PaymentMethodForm>() },
+                { "StockForm", () => _serviceProvider.GetRequiredService<StockForm>() },
+                { "StockEntryForm", () => _serviceProvider.GetRequiredService<StockEntryForm>() },
+
+                { "UserChangePassword", () => changePasswordFactory.Create(_userID ?? 0) },
+                { "CompanyForm", () => companyFormFactory.Create(_userID ?? 0) },
+                { "CashClosingForm", () => cashClosingFactory.Create(_userName ?? "") },
+                { "CashMovementForm", () => CashMovementFactory.Create(_userName ?? "") },
+                { "CashOpeningForm", () => cashOpeningFactory.Create(_userName ?? "") }
+            };
 
             string? version = Assembly.
                 GetExecutingAssembly().
@@ -105,6 +86,11 @@ namespace SisPDV.APP.Main
             this.Text = $"SisPDV - Sistema de Vendas versão: {version}";
             sslUser.Text = $"Usuário: {_userName} - Caixa {GetPDVNumber()} - Data/Hora {DateTime.Now.ToString("dd/MM/yyyy HH:mm")}";
             
+        }
+        public void Initialize(int userId, string userName)
+        {
+            _userID = userId;
+            _userName = userName;
         }
         private async void MainForm_Load(object sender, EventArgs e)
         {
@@ -228,40 +214,36 @@ namespace SisPDV.APP.Main
         
         private void MenuItem_Click(Object? sender, EventArgs e)
         {
-            if(sender is ToolStripMenuItem menuItem && menuItem.Tag is string formName)
+            if(sender is ToolStripMenuItem menuItem && menuItem.Tag is string formTypeName)
             {
-                Form? form = formName switch
+                // Primeiro tenta resolver via dicionário (forms com parâmetros)
+                if (_formFactories.TryGetValue(formTypeName, out var formResolver))
                 {
-                    "UserAddForm" => new UserAddForm(_userService),
-                    "UserChangePassword" => new UserChangePassword(_userID, _userService),
-                    "PermissionMenuForm" => new PermissionMenuForm(_userService, _menuService, _userMenuService),
-                    "CompanyForm" => new CompanyForm(_cnpjService, _cepService, _companyService, _userID, _userService),
-                    "ConfigForm" => new ConfigForm(_printerSectorsServices, _configServices),
-                    "PersonForm" => new PersonForm(_cepService, _personService),
-                    "TypeProductsForm" => new TypeProductsForm(_companyService, _productTypeService, _cfopService),
-                    "ProductForm" => new ProductForm(
-                        _productTypeService,
-                        _cfopService,
-                        _companyService,
-                        _unityService,
-                        _configServices,
-                        _productService,
-                        _categoryService),
-                    "CFOPForm" => new CFOPForm(_cfopService),
-                    "CategoriesForm" => new CategoriesForm(_categoryService),
-                    "AccountantForm" => new AccountantForm(_cepService, _accountantService),
-                    "PaymentMethodForm" => new PaymentMethodForm(_paymentMethodService),
-                    "StockForm" => new StockForm(_productService, _productStockService),
-                    "StockEntryForm" => new StockEntryForm(
-                        _productService,
-                        _stockMovementService,
-                        _productStockService),
-                    "CashOpeningForm" => new CashOpeningForm(_cashRegisterService, _userName),
-                    "CashMovementForm" => new CashMovementForm(_cashMovementService, _userName),
-                    "CashClosingForm" => new CashClosingForm(_cashRegisterService, _userName, _cashMovementService),
-                    _ => null
-                };
-                form?.ShowDialog();
+                    var form = formResolver();
+                    form.ShowDialog();
+                    return;
+                }
+
+                // Se não estiver no dicionário, tenta resolver via factory genérica (sem parâmetros)
+                var type = Type.GetType(formTypeName);
+                if (type == null)
+                {
+                    MessageBox.Show("Formulário não encontrado: " + formTypeName);
+                    return;
+                }
+
+                var factoryType = typeof(IFormFactory<>).MakeGenericType(type);
+                var factory = _serviceProvider.GetService(factoryType) as dynamic;
+
+                if (factory is not null)
+                {
+                    Form form = factory.Create();
+                    form.ShowDialog();
+                }
+                else
+                {
+                    MessageBox.Show("Erro ao carregar formulário: " + formTypeName);
+                }
             }
         }
     }

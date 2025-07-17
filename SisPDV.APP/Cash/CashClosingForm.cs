@@ -13,18 +13,21 @@ namespace SisPDV.APP.Cash
 {
     public partial class CashClosingForm : Form
     {
-        private readonly string? _userName;
+        private string? _userName;
         private int _totalInClosed;
         private List<CashMovementDTO> _movements = new List<CashMovementDTO>();
 
         private readonly ICashRegisterService _cashRegisterService;
         private readonly ICashMovementService _cashMovementService;
-        public CashClosingForm(ICashRegisterService cashRegisterService, string? userName, ICashMovementService cashMovementService)
+        public CashClosingForm(ICashRegisterService cashRegisterService, ICashMovementService cashMovementService)
         {
             InitializeComponent();
             _cashRegisterService = cashRegisterService;
-            _userName = userName;
             _cashMovementService = cashMovementService;
+        }
+        public void Initialize(string userName)
+        {
+            _userName = userName;
         }
 
         private async void CashClosingForm_Load(object sender, EventArgs e)

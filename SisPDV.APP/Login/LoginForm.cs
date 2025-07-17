@@ -1,4 +1,5 @@
-﻿using SisPDV.APP.Main;
+﻿using SisPDV.APP.Factory.Interface;
+using SisPDV.APP.Main;
 using SisPDV.Application.ExternalInterfaces;
 using SisPDV.Application.Helper;
 using SisPDV.Application.Interfaces;
@@ -12,78 +13,26 @@ namespace SisPDV.APP.Login
     {
         private readonly IUserService _userService;
         private readonly ICurrentUserService _currentUserService;
-        private readonly IMenuService _menuService;
-        private readonly IUserMenuService _userMenuService;
-        private readonly ICnpjService _cnpjService;
-        private readonly ICepService _cepService;
-        private readonly ICompanyService _companyServices;
-        private readonly IPrinterSerctorsServices _printerSectorsServices;
         private readonly IConfigService _configServices;
-        private readonly IPersonService _personService;
-        private readonly IProductTypeService _productTypeService;
-        private readonly ICfopService _cfopService;
-        private readonly IUnityService _unityService;
-        private readonly IProductService _productService;
-        private readonly ICategoryService _categoryService;
-        private readonly IAccountantService _accountantService;
-        private readonly IPaymentMethodService _paymentMethodService;
-        private readonly IProductStockService _productStockService;
-        private readonly IStockMovementService _stockMovementService;
-        private readonly ICashRegisterService _cashRegisterService;
-        private readonly ICashMovementService _cashMovementService;
+        private readonly IMainFormFactory _mainFormFactory;
 
         public LoginForm(
             IUserService userService, 
             ICurrentUserService currentUserService,
-            IMenuService menuService,
-            IUserMenuService userMenuService,
-            ICnpjService cnpjService,
-            ICepService cepService,
-            ICompanyService companyServices,
-            IPrinterSerctorsServices printerSectorsServices,
-            IConfigService configServices,
-            IPersonService personService,
-            IProductTypeService productTypeService,
-            ICfopService cfopService,
-            IUnityService unityService,
-            IProductService productService,
-            ICategoryService categoryService,
-            IAccountantService accountantService,
-            IPaymentMethodService paymentMethodService,
-            IProductStockService productStockService,
-            IStockMovementService stockMovementService,
-            ICashRegisterService cashRegisterService,
-            ICashMovementService cashMovementService)
+            IConfigService configService,
+            IMainFormFactory mainFormFactory)
         {
             InitializeComponent();
             _userService = userService;
             _currentUserService = currentUserService;
-            _menuService = menuService;
-            _userMenuService = userMenuService;
-            _cnpjService = cnpjService;
-            _cepService = cepService;
-            _companyServices = companyServices;
-            _printerSectorsServices = printerSectorsServices;
-            _configServices = configServices;
-            _personService = personService;
-            _productTypeService = productTypeService;
-            _cfopService = cfopService;
-            _unityService = unityService;
-            _productService = productService;
-            _categoryService = categoryService;
-            _accountantService = accountantService;
-            _paymentMethodService = paymentMethodService;
-            _productStockService = productStockService;
-            _stockMovementService = stockMovementService;
-            _cashRegisterService = cashRegisterService;
-            _cashMovementService = cashMovementService;
+            _configServices = configService;
+            _mainFormFactory = mainFormFactory;
         }
 
         private async void btnLogin_Click(object sender, EventArgs e)
         {
             try
             {
-
                 if (DataValidations())
                 {
                     var userAuth = await _userService.AuthenticateUserAsync(
@@ -100,29 +49,9 @@ namespace SisPDV.APP.Login
                     SystemConfig.Load(config);
 
                     _currentUserService.CurrentUser = userAuth!.Name;
-                    var mainForm = new MainForm(
-                        userId: userAuth?.Id, 
-                        userName: userAuth?.Name, 
-                        userService: _userService, 
-                        menuService: _menuService,
-                        userMenuService: _userMenuService,
-                        cnpjService: _cnpjService,
-                        cepService: _cepService,
-                        companyService: _companyServices,
-                        printerSectorsServices: _printerSectorsServices,
-                        configServices: _configServices,
-                        personService: _personService,
-                        productTypeService: _productTypeService,
-                        cfopService: _cfopService,
-                        unityService: _unityService,
-                        productService: _productService,
-                        categoryService: _categoryService,
-                        accountantService: _accountantService,
-                        paymentMethodService: _paymentMethodService,
-                        productStockService: _productStockService,
-                        stockMovementService: _stockMovementService,
-                        cashRegisterService: _cashRegisterService,
-                        cashMovementService: _cashMovementService);
+
+                    var mainForm = _mainFormFactory.Create(userAuth.Id, userAuth.Name);
+
                     mainForm.WindowState = FormWindowState.Maximized;
 
                     mainForm.FormClosed += (s, e) => this.Close();

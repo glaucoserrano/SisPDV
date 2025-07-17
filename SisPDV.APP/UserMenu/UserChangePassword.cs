@@ -1,19 +1,20 @@
 ﻿using SisPDV.Application.Interfaces;
-using System.Threading.Tasks;
 
 namespace SisPDV.APP.User
 {
     public partial class UserChangePassword : Form
     {
-        private readonly int? _userId;
+        private int? _userId;
         private readonly IUserService _userService;
-        public UserChangePassword(int? userId, IUserService userService)
+        public UserChangePassword(IUserService userService)
         {
             InitializeComponent();
-            _userId = userId;
             _userService = userService;
         }
-
+        public void Initialize(int userId)
+        {
+            _userId = userId;
+        }
         private async void UserChangePassword_Load(object sender, EventArgs e)
         {
             var user = await _userService.GetById(_userId);

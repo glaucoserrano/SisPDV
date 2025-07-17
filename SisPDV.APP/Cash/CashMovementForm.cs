@@ -13,15 +13,17 @@ namespace SisPDV.APP.Cash
     public partial class CashMovementForm : Form
     {
         private CashMovementType _cashMovementType;
-        private readonly string? _userName;
+        private string? _userName;
         private readonly ICashMovementService _cashMovementService;
-        public CashMovementForm(ICashMovementService cashMovementService, string? userName)
+        public CashMovementForm(ICashMovementService cashMovementService)
         {
             InitializeComponent();
             _cashMovementService = cashMovementService;
+        }
+        public void Initialize(string userName)
+        {
             _userName = userName;
         }
-
         private void rdoCashWithdrawal_CheckedChanged(object sender, EventArgs e)
         {
             btnMovementCash.IconChar = FontAwesome.Sharp.IconChar.MinusSquare;

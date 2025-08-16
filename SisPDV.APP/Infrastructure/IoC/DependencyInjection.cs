@@ -10,6 +10,7 @@ using SisPDV.APP.Factory.Interface;
 using SisPDV.APP.Factory.Service;
 using SisPDV.APP.Login;
 using SisPDV.APP.Main;
+using SisPDV.APP.Order;
 using SisPDV.APP.PaymentMethod;
 using SisPDV.APP.PermissionMenu;
 using SisPDV.APP.PersonMenu;
@@ -91,6 +92,7 @@ namespace SisPDV.APP.Infrastructure.IoC
             service.AddTransient<CashClosingForm>();
             service.AddTransient<CashMovementForm>();
             service.AddTransient<CashOpeningForm>();
+            service.AddTransient<OrderForm>();
 
 
             service.AddScoped(typeof(IUserScopedFormFactory<>), typeof(UserScopedFormFactory<>));

@@ -23,5 +23,6 @@
         public const string CashRegisterForm = "SisPDV.APP.Cash.CashClosingForm";
         public const string CashMovementForm = "SisPDV.APP.Cash.CashMovementForm";
         public const string PermissionMenuForm = "SisPDV.APP.PermissionMenu.PrmissionMenuForm";
+        public const string OrderForm = "SisPDV.APP.Order.OrderForm";
     }
 }

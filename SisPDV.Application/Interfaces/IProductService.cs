@@ -13,5 +13,6 @@ namespace SisPDV.Application.Interfaces
         Task<List<ProductDTO>> SearchAsync(SearchFilterProductsDTO filter);
         Task<List<ProductStockSearchDTO>> GetProductsForStockAsync();
         Task<ProductDTO> GetByIdAsync(int id);
+        Task<List<ProductStockSearchDTO>> GetProductsForOrderAsync();
     }
 }

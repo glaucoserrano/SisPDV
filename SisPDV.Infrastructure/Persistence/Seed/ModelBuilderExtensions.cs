@@ -227,7 +227,27 @@ namespace SisPDV.Infrastructure.Persistence.Seed
                     Order = 21,
                     Visible = true,
                     CreatedBy = "System"
-                }
+                },
+               new Menu
+               {
+                   Id = 23,
+                   ParentId = null,
+                   Title = "Venda",
+                   FormName = null,
+                   Order = 22,
+                   Visible = true,
+                   CreatedBy = "System"
+               },
+               new Menu
+               {
+                   Id = 24,
+                   ParentId = 23,
+                   Title = "Pedido",
+                   FormName = "OrderForm",
+                   Order = 23,
+                   Visible = true,
+                   CreatedBy = "System"
+               }
             );
         }
         public static void SeedCfops(this ModelBuilder modelBuilder)

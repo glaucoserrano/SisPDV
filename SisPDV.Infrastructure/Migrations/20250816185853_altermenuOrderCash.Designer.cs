@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using SisPDV.Infrastructure.Persistence;
@@ -11,9 +12,11 @@ using SisPDV.Infrastructure.Persistence;
 namespace SisPDV.Infrastructure.Migrations
 {
     [DbContext(typeof(PDVDbContext))]
-    partial class PDVDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250816185853_altermenuOrderCash")]
+    partial class altermenuOrderCash
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -890,7 +893,6 @@ namespace SisPDV.Infrastructure.Migrations
                             CreatedBy = "System",
                             FormName = "OrderForm",
                             Order = 23,
-                            ParentId = 23,
                             Title = "Pedido",
                             UpdatedBy = "",
                             Visible = true

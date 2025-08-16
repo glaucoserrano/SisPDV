@@ -8,6 +8,7 @@ using SisPDV.APP.ConfigMenu;
 using SisPDV.APP.Factory.Interface;
 using SisPDV.APP.Factory.Service;
 using SisPDV.APP.Helpers;
+using SisPDV.APP.Order;
 using SisPDV.APP.PaymentMethod;
 using SisPDV.APP.PermissionMenu;
 using SisPDV.APP.PersonMenu;
@@ -47,7 +48,8 @@ namespace SisPDV.APP.Main
             IUserScopedFormFactory<CompanyForm> companyFormFactory,
             IUserNameScopedFormFactory<CashClosingForm> cashClosingFactory,
             IUserNameScopedFormFactory<CashMovementForm> CashMovementFactory,
-            IUserNameScopedFormFactory<CashOpeningForm> cashOpeningFactory
+            IUserNameScopedFormFactory<CashOpeningForm> cashOpeningFactory,
+            IUserNameScopedFormFactory<OrderForm> orderFormFactory
            )
         {
             InitializeComponent();
@@ -70,12 +72,13 @@ namespace SisPDV.APP.Main
                 { "PaymentMethodForm", () => _serviceProvider.GetRequiredService<PaymentMethodForm>() },
                 { "StockForm", () => _serviceProvider.GetRequiredService<StockForm>() },
                 { "StockEntryForm", () => _serviceProvider.GetRequiredService<StockEntryForm>() },
+                { "OrderForm", () =>  _serviceProvider.GetRequiredService<OrderForm>()},
 
                 { "UserChangePassword", () => changePasswordFactory.Create(_userID ?? 0) },
                 { "CompanyForm", () => companyFormFactory.Create(_userID ?? 0) },
                 { "CashClosingForm", () => cashClosingFactory.Create(_userName ?? "") },
                 { "CashMovementForm", () => CashMovementFactory.Create(_userName ?? "") },
-                { "CashOpeningForm", () => cashOpeningFactory.Create(_userName ?? "") }
+                { "CashOpeningForm", () => cashOpeningFactory.Create(_userName ?? "") },
             };
 
             string? version = Assembly.

@@ -250,8 +250,23 @@ namespace SisPDV.Application.Services
             return new ProductDTO
             {
                 Id = product.Id,
-                Description = product.Description
+                Description = product.Description,
+                Price = PriceConverter.FromCents(product.Price),
             };
-        }   
+        }
+        public async Task<List<ProductStockSearchDTO>> GetProductsForOrderAsync()
+        {
+            return await _context.products
+                .Where(p => p.Active == true)
+                .Select(p => new ProductStockSearchDTO
+                {
+                    Id = p.Id,
+                    Description = p.Description,
+                    Code = p.Id.ToString(), // Ou outro campo se houver
+                    Barcode = p.Barcode ?? "",
+                    SupplierCode = p.RefSupplier ?? ""
+                })
+            .ToListAsync();
+        }
     }
 }

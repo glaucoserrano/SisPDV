@@ -63,6 +63,7 @@ namespace SisPDV.APP.Infrastructure.IoC
             service.AddScoped<IStockMovementService, StockMovementService>();
             service.AddScoped<ICashRegisterService, CashRegisterService>();
             service.AddScoped <ICashMovementService, CashMovementService>();
+            service.AddScoped<IOrderService, OrderService>();
 
             service.AddScoped <ICnpjService, CnpjService>();
             service.AddScoped <ICepService, CepService>();

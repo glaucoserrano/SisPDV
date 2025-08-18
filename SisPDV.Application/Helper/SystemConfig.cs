@@ -1,11 +1,11 @@
-﻿using SisPDV.Application.DTOs.Config;
+﻿using SisPDV.Application.DTOs.Company;
+using SisPDV.Application.DTOs.Config;
 
 namespace SisPDV.Application.Helper
 {
     public static class SystemConfig
     {
         public static ConfigDTO Current { get; set; } = new ConfigDTO();
-
         public static void Load(ConfigDTO config)
         {
             Current = config;

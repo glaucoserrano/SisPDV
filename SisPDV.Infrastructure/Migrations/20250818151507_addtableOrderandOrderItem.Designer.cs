@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using SisPDV.Infrastructure.Persistence;
@@ -11,9 +12,11 @@ using SisPDV.Infrastructure.Persistence;
 namespace SisPDV.Infrastructure.Migrations
 {
     [DbContext(typeof(PDVDbContext))]
-    partial class PDVDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250818151507_addtableOrderandOrderItem")]
+    partial class addtableOrderandOrderItem
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -117,9 +120,6 @@ namespace SisPDV.Infrastructure.Migrations
                     b.Property<DateTime>("MovementDateTime")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<int?>("OrderId")
-                        .HasColumnType("integer");
-
                     b.Property<string>("Origin")
                         .IsRequired()
                         .HasColumnType("text");
@@ -139,8 +139,6 @@ namespace SisPDV.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CashRegisterId");
-
-                    b.HasIndex("OrderId");
 
                     b.HasIndex("paymentMethodId");
 
@@ -937,10 +935,7 @@ namespace SisPDV.Infrastructure.Migrations
                     b.Property<string>("Notes")
                         .HasColumnType("text");
 
-                    b.Property<int>("OrderNumber")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Origin")
+                    b.Property<string>("OrderNumber")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -990,15 +985,8 @@ namespace SisPDV.Infrastructure.Migrations
                     b.Property<int>("Discount")
                         .HasColumnType("integer");
 
-                    b.Property<string>("Notes")
-                        .HasColumnType("text");
-
                     b.Property<int>("OrderId")
                         .HasColumnType("integer");
-
-                    b.Property<string>("Origin")
-                        .IsRequired()
-                        .HasColumnType("text");
 
                     b.Property<int>("ProductId")
                         .HasColumnType("integer");
@@ -1698,17 +1686,11 @@ namespace SisPDV.Infrastructure.Migrations
                         .WithMany()
                         .HasForeignKey("CashRegisterId");
 
-                    b.HasOne("SisPDV.Domain.Entities.Order", "Order")
-                        .WithMany()
-                        .HasForeignKey("OrderId");
-
                     b.HasOne("SisPDV.Domain.Entities.PaymentMethod", "PaymentMethod")
                         .WithMany()
                         .HasForeignKey("paymentMethodId");
 
                     b.Navigation("CashRegister");
-
-                    b.Navigation("Order");
 
                     b.Navigation("PaymentMethod");
                 });

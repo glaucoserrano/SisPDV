@@ -30,6 +30,8 @@
         {
             rtbFiscalMirror = new RichTextBox();
             grbProducts = new GroupBox();
+            label1 = new Label();
+            txtNotes = new TextBox();
             grbOrder = new GroupBox();
             lblSubtotal = new Label();
             lblDiscountTotal = new Label();
@@ -48,9 +50,10 @@
             btnCancelOrder = new FontAwesome.Sharp.IconButton();
             btnCloseOrder = new FontAwesome.Sharp.IconButton();
             btnNewOrder = new FontAwesome.Sharp.IconButton();
-            lblCompanyName = new Label();
             btnCancelProduct = new FontAwesome.Sharp.IconButton();
             btnSwap = new FontAwesome.Sharp.IconButton();
+            lblCurrentUser = new Label();
+            rtbCompanyName = new RichTextBox();
             grbProducts.SuspendLayout();
             grbOrder.SuspendLayout();
             grbCommands.SuspendLayout();
@@ -64,12 +67,14 @@
             rtbFiscalMirror.Location = new Point(12, 69);
             rtbFiscalMirror.Name = "rtbFiscalMirror";
             rtbFiscalMirror.ReadOnly = true;
-            rtbFiscalMirror.Size = new Size(548, 393);
+            rtbFiscalMirror.Size = new Size(548, 490);
             rtbFiscalMirror.TabIndex = 20;
             rtbFiscalMirror.Text = "";
             // 
             // grbProducts
             // 
+            grbProducts.Controls.Add(label1);
+            grbProducts.Controls.Add(txtNotes);
             grbProducts.Controls.Add(grbOrder);
             grbProducts.Controls.Add(lblItemTotal);
             grbProducts.Controls.Add(lblDiscount);
@@ -84,16 +89,34 @@
             grbProducts.Enabled = false;
             grbProducts.Location = new Point(565, 152);
             grbProducts.Name = "grbProducts";
-            grbProducts.Size = new Size(509, 310);
+            grbProducts.Size = new Size(509, 400);
             grbProducts.TabIndex = 21;
             grbProducts.TabStop = false;
+            // 
+            // label1
+            // 
+            label1.Font = new Font("Segoe UI", 11F);
+            label1.Location = new Point(6, 126);
+            label1.Name = "label1";
+            label1.Size = new Size(100, 23);
+            label1.TabIndex = 45;
+            label1.Text = "Obs.:";
+            // 
+            // txtNotes
+            // 
+            txtNotes.Font = new Font("Segoe UI", 12F);
+            txtNotes.Location = new Point(6, 152);
+            txtNotes.Multiline = true;
+            txtNotes.Name = "txtNotes";
+            txtNotes.Size = new Size(497, 67);
+            txtNotes.TabIndex = 44;
             // 
             // grbOrder
             // 
             grbOrder.Controls.Add(lblSubtotal);
             grbOrder.Controls.Add(lblDiscountTotal);
             grbOrder.Controls.Add(lblTotal);
-            grbOrder.Location = new Point(3, 183);
+            grbOrder.Location = new Point(3, 271);
             grbOrder.Name = "grbOrder";
             grbOrder.Size = new Size(505, 123);
             grbOrder.TabIndex = 43;
@@ -105,27 +128,27 @@
             lblSubtotal.Font = new Font("Segoe UI", 11F);
             lblSubtotal.Location = new Point(18, 25);
             lblSubtotal.Name = "lblSubtotal";
-            lblSubtotal.Size = new Size(100, 23);
+            lblSubtotal.Size = new Size(396, 23);
             lblSubtotal.TabIndex = 39;
-            lblSubtotal.Text = "Subtotal: R$ 0,00";
+            lblSubtotal.Text = "Subtotal: R$ ";
             // 
             // lblDiscountTotal
             // 
             lblDiscountTotal.Font = new Font("Segoe UI", 11F);
             lblDiscountTotal.Location = new Point(18, 55);
             lblDiscountTotal.Name = "lblDiscountTotal";
-            lblDiscountTotal.Size = new Size(100, 23);
+            lblDiscountTotal.Size = new Size(396, 23);
             lblDiscountTotal.TabIndex = 40;
-            lblDiscountTotal.Text = "Descontos: R$ 0,00";
+            lblDiscountTotal.Text = "Descontos: R$ ";
             // 
             // lblTotal
             // 
             lblTotal.Font = new Font("Segoe UI", 13F, FontStyle.Bold);
             lblTotal.Location = new Point(18, 85);
             lblTotal.Name = "lblTotal";
-            lblTotal.Size = new Size(100, 23);
+            lblTotal.Size = new Size(396, 23);
             lblTotal.TabIndex = 41;
-            lblTotal.Text = "Total Final: R$ 0,00";
+            lblTotal.Text = "Total: R$ ";
             // 
             // lblItemTotal
             // 
@@ -179,6 +202,7 @@
             txtQuantity.Name = "txtQuantity";
             txtQuantity.Size = new Size(100, 29);
             txtQuantity.TabIndex = 31;
+            txtQuantity.KeyPress += txtQuantity_KeyPress;
             txtQuantity.Leave += txtQuantity_Leave;
             // 
             // txtUnitPrice
@@ -188,6 +212,7 @@
             txtUnitPrice.Name = "txtUnitPrice";
             txtUnitPrice.Size = new Size(120, 29);
             txtUnitPrice.TabIndex = 32;
+            txtUnitPrice.KeyPress += txtUnitPrice_KeyPress;
             txtUnitPrice.Leave += txtUnitPrice_Leave;
             // 
             // txtItemTotal
@@ -197,6 +222,7 @@
             txtItemTotal.Name = "txtItemTotal";
             txtItemTotal.Size = new Size(120, 29);
             txtItemTotal.TabIndex = 34;
+            txtItemTotal.KeyPress += txtItemTotal_KeyPress;
             // 
             // txtItemDiscount
             // 
@@ -205,16 +231,18 @@
             txtItemDiscount.Name = "txtItemDiscount";
             txtItemDiscount.Size = new Size(120, 29);
             txtItemDiscount.TabIndex = 33;
+            txtItemDiscount.KeyPress += txtItemDiscount_KeyPress;
             txtItemDiscount.Leave += txtItemDiscount_Leave;
             // 
             // btnAddItem
             // 
             btnAddItem.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
-            btnAddItem.Location = new Point(155, 137);
+            btnAddItem.Location = new Point(155, 225);
             btnAddItem.Name = "btnAddItem";
             btnAddItem.Size = new Size(200, 40);
             btnAddItem.TabIndex = 35;
-            btnAddItem.Text = "Adicionar Item (Enter)";
+            btnAddItem.Text = "Adicionar Item";
+            btnAddItem.Click += btnAddItem_Click;
             // 
             // grbCommands
             // 
@@ -273,16 +301,6 @@
             btnNewOrder.UseVisualStyleBackColor = true;
             btnNewOrder.Click += btnNewOrder_Click;
             // 
-            // lblCompanyName
-            // 
-            lblCompanyName.AutoSize = true;
-            lblCompanyName.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblCompanyName.Location = new Point(12, 39);
-            lblCompanyName.Name = "lblCompanyName";
-            lblCompanyName.Size = new Size(0, 30);
-            lblCompanyName.TabIndex = 23;
-            lblCompanyName.TextAlign = ContentAlignment.MiddleCenter;
-            // 
             // btnCancelProduct
             // 
             btnCancelProduct.Enabled = false;
@@ -291,7 +309,7 @@
             btnCancelProduct.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnCancelProduct.IconSize = 32;
             btnCancelProduct.ImageAlign = ContentAlignment.MiddleLeft;
-            btnCancelProduct.Location = new Point(720, 477);
+            btnCancelProduct.Location = new Point(720, 552);
             btnCancelProduct.Name = "btnCancelProduct";
             btnCancelProduct.Size = new Size(168, 45);
             btnCancelProduct.TabIndex = 24;
@@ -306,19 +324,41 @@
             btnSwap.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnSwap.IconSize = 32;
             btnSwap.ImageAlign = ContentAlignment.MiddleLeft;
-            btnSwap.Location = new Point(905, 477);
+            btnSwap.Location = new Point(905, 552);
             btnSwap.Name = "btnSwap";
             btnSwap.Size = new Size(168, 45);
             btnSwap.TabIndex = 25;
             btnSwap.Text = "Troca Produtos";
             btnSwap.UseVisualStyleBackColor = true;
             // 
+            // lblCurrentUser
+            // 
+            lblCurrentUser.AutoSize = true;
+            lblCurrentUser.Location = new Point(12, 585);
+            lblCurrentUser.Name = "lblCurrentUser";
+            lblCurrentUser.Size = new Size(0, 15);
+            lblCurrentUser.TabIndex = 26;
+            // 
+            // rtbCompanyName
+            // 
+            rtbCompanyName.BackColor = Color.White;
+            rtbCompanyName.BorderStyle = BorderStyle.None;
+            rtbCompanyName.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            rtbCompanyName.Location = new Point(12, 20);
+            rtbCompanyName.Name = "rtbCompanyName";
+            rtbCompanyName.ReadOnly = true;
+            rtbCompanyName.RightToLeft = RightToLeft.No;
+            rtbCompanyName.Size = new Size(548, 43);
+            rtbCompanyName.TabIndex = 27;
+            rtbCompanyName.Text = "";
+            // 
             // OrderForm
             // 
-            ClientSize = new Size(1091, 534);
+            ClientSize = new Size(1091, 609);
+            Controls.Add(rtbCompanyName);
+            Controls.Add(lblCurrentUser);
             Controls.Add(btnSwap);
             Controls.Add(btnCancelProduct);
-            Controls.Add(lblCompanyName);
             Controls.Add(grbCommands);
             Controls.Add(grbProducts);
             Controls.Add(rtbFiscalMirror);
@@ -348,19 +388,22 @@
         private TextBox txtItemDiscount;
         private Button btnAddItem;
         private GroupBox grbCommands;
-        private Label lblCompanyName;
         private FontAwesome.Sharp.IconButton btnNewOrder;
         private Label lblItemTotal;
         private Label lblDiscount;
         private Label lblPriceIUnity;
         private Label lblQuantities;
         private GroupBox grbOrder;
-        private Label lblSubtotal;
-        private Label lblDiscountTotal;
-        private Label lblTotal;
         private FontAwesome.Sharp.IconButton btnCancelOrder;
         private FontAwesome.Sharp.IconButton btnCloseOrder;
         private FontAwesome.Sharp.IconButton btnCancelProduct;
         private FontAwesome.Sharp.IconButton btnSwap;
+        private Label lblCurrentUser;
+        private RichTextBox rtbCompanyName;
+        private Label label1;
+        private TextBox txtNotes;
+        private Label lblSubtotal;
+        private Label lblDiscountTotal;
+        private Label lblTotal;
     }
 }

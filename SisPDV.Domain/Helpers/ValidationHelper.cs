@@ -61,5 +61,17 @@
 
             return false;
         }
+        public static bool JustDiscount(char text)
+        {
+            // Permitir apenas dígitos, backspace, vírgula e o símbolo de porcentagem
+            if (!char.IsControl(text)
+                && !char.IsDigit(text)
+                && text != ','
+                && text != '%')
+            {
+                return true;
+            }
+            return false;
+        }
     }
 }

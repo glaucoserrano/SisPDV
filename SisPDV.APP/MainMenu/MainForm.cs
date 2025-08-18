@@ -6,7 +6,6 @@ using SisPDV.APP.CFOP;
 using SisPDV.APP.CompanyMenu;
 using SisPDV.APP.ConfigMenu;
 using SisPDV.APP.Factory.Interface;
-using SisPDV.APP.Factory.Service;
 using SisPDV.APP.Helpers;
 using SisPDV.APP.Order;
 using SisPDV.APP.PaymentMethod;
@@ -19,6 +18,7 @@ using SisPDV.APP.User;
 using SisPDV.Application.DTOs.Menus;
 using SisPDV.Application.Interfaces;
 using SisPDV.Infrastructure.Globals;
+using SisPDV.Infrastructure.Service;
 using System.Reflection;
 using WindowsForms = System.Windows.Forms;
 
@@ -31,6 +31,7 @@ namespace SisPDV.APP.Main
         private readonly IServiceProvider _serviceProvider;
         private readonly ICompanyService _companyService;
         private readonly ICashRegisterService _cashRegisterService;
+        private readonly ICurrentUserService _currentUserService;
 
         private int? _userID;
         private string? _userName;
@@ -41,6 +42,7 @@ namespace SisPDV.APP.Main
         public MainForm(
             IUserService userService,
             IMenuService menuService,
+            ICurrentUserService currentUserService,
             IServiceProvider serviceProvider,
             ICompanyService companyService,
             ICashRegisterService cashRegisterService,
@@ -55,6 +57,7 @@ namespace SisPDV.APP.Main
             InitializeComponent();
             _userService = userService;
             _menuService = menuService;
+            _currentUserService = currentUserService;
             _serviceProvider = serviceProvider;
             _companyService = companyService;
             _cashRegisterService = cashRegisterService;
@@ -72,8 +75,16 @@ namespace SisPDV.APP.Main
                 { "PaymentMethodForm", () => _serviceProvider.GetRequiredService<PaymentMethodForm>() },
                 { "StockForm", () => _serviceProvider.GetRequiredService<StockForm>() },
                 { "StockEntryForm", () => _serviceProvider.GetRequiredService<StockEntryForm>() },
-                { "OrderForm", () =>  _serviceProvider.GetRequiredService<OrderForm>()},
-
+                { "OrderForm", () => 
+                    {
+                        if(!CashRegisterStatus.IsOpen)
+                        {
+                            MessageBox.Show("Caixa não está aberto. Abra o caixa para realizar vendas.", "SisPDV", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            return null;
+                        }
+                        return _serviceProvider.GetRequiredService<OrderForm>();
+                    }
+                },
                 { "UserChangePassword", () => changePasswordFactory.Create(_userID ?? 0) },
                 { "CompanyForm", () => companyFormFactory.Create(_userID ?? 0) },
                 { "CashClosingForm", () => cashClosingFactory.Create(_userName ?? "") },
@@ -87,7 +98,7 @@ namespace SisPDV.APP.Main
                 .InformationalVersion.Split('+')[0];
 
             this.Text = $"SisPDV - Sistema de Vendas versão: {version}";
-            sslUser.Text = $"Usuário: {_userName} - Caixa {GetPDVNumber()} - Data/Hora {DateTime.Now.ToString("dd/MM/yyyy HH:mm")}";
+            
             
         }
         public void Initialize(int userId, string userName)
@@ -118,6 +129,7 @@ namespace SisPDV.APP.Main
         }
         private void UpdateFooterCashStatus()
         {
+            sslUser.Text = $"Usuário: {_userName} - Caixa {GetPDVNumber()} - Data/Hora {DateTime.Now.ToString("dd/MM/yyyy HH:mm")}";
             sslUser.Text += $" - Status do Caixa: {CashRegisterStatus.StatusMessage}";
         }
         private async Task CheckCashStatusAsync()
@@ -222,7 +234,11 @@ namespace SisPDV.APP.Main
                 // Primeiro tenta resolver via dicionário (forms com parâmetros)
                 if (_formFactories.TryGetValue(formTypeName, out var formResolver))
                 {
+
                     var form = formResolver();
+                    if (form == null)
+                        return;
+
                     form.ShowDialog();
                     return;
                 }

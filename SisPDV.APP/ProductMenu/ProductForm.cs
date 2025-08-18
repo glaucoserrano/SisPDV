@@ -3,17 +3,13 @@ using SisPDV.Application.DTOs.Category;
 using SisPDV.Application.DTOs.Cfop;
 using SisPDV.Application.DTOs.Company;
 using SisPDV.Application.DTOs.Config.PrintSector;
-using SisPDV.Application.DTOs.Person;
 using SisPDV.Application.DTOs.Product;
 using SisPDV.Application.DTOs.ProductType;
 using SisPDV.Application.DTOs.Unities;
 using SisPDV.Application.Helper;
 using SisPDV.Application.Interfaces;
-using SisPDV.Application.Services;
-using SisPDV.Domain.Entities;
 using SisPDV.Domain.Enum;
 using SisPDV.Domain.Helpers;
-using System.Threading.Tasks;
 
 namespace SisPDV.APP.ProductMenu
 {

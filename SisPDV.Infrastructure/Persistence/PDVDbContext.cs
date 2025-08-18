@@ -33,7 +33,8 @@ namespace SisPDV.Infrastructure.Persistence
         public DbSet<StockMovement> stockMovements { get; set; }
         public DbSet<CashRegister> cashRegisters { get; set; }
         public DbSet<CashMovement> cashMovements { get; set; }
-
+        public DbSet<Order> orders { get; set; }
+        public DbSet<OrderItem> orderItems { get; set; }
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
             var entries = ChangeTracker.Entries<AuditableEntity>();

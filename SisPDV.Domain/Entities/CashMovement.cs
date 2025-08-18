@@ -12,9 +12,11 @@ namespace SisPDV.Domain.Entities
         public string Description { get; set; } = string.Empty; // Descrição do movimento
         public string Origin { get; set; } = string.Empty; // Indica tela da movimentação
         public int? paymentMethodId { get; set; } // Foreign key to PaymentMethod
+        public int? OrderId { get; set; } // Foreign key to Order, if applicable
 
         // Navigation property
         public virtual CashRegister? CashRegister { get; set; } // Caixa associado ao movimento
         public virtual PaymentMethod? PaymentMethod { get; set; } // Método de pagamento associado ao movimento
+        public virtual Order? Order { get; set; } // Pedido associado ao movimento, se houver
     }
 }
